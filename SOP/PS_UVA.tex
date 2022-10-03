@@ -1,0 +1,73 @@
+\documentclass[12pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Personal Statement - Thomas Zeng}
+\rhead{University of Virginia}
+\cfoot{\thepage}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\begin{document}
+
+% 1. Tell us about your research interest and preferred focus area(s). Please describe your passion for research, ability to overcome obstacles, and experience to manage multiple projects.
+% 2. Describe your motivation to pursue an advanced degree and explain your future career aspirations.
+
+
+
+% ability to overcome obstacles
+
+% experience to manage multiple projects
+
+
+
+
+My objective is to become a research scientist with the focus of creating robust, fair and explainable deep learning models -- specifically in high impact domains i.e. healthcare. %what does high impact even mean?
+I developed this goal starting at the end of my sophomore year of college when my interest in the intersection of linguistics and computer science led me to ponder how machine translation algorithms worked. To answer this question, I started watching the public online lectures of Stanford's CS244n -- NLP with Deep Learning Course --  which resultingly piqued my interest in the field of AI/ML/DL as a whole. 
+
+To explore this field, I first worked at a startup, SayKid, that uses speech recognition software to create interactive talking-robots for children. There I created a voice game premised on riddle solving using the Alexa Skills Kit. This experience underscored to me the transformative power of AI through the downstream tasks it makes possible. At the same time, I was not satisfied by working with high-level APIs where the specific architecture of the voice recognition models is abstracted away. Thus I decided to move into research, where I would get to interact closer with DL models.
+
+My first research position was with professor David Lieben-Nowell at my school, who is working on understanding human behavior through choice modeling. Here we quantified the effect of geographic location on people's choices -- specifically their ranking of US states by contribution to history. We used a Plackett-Luce model and found that a person's home state's geographic location has a statistically significant affect on their inidividual ranking.
+%placket luce
+While choice modeling is not machine learning, they have overlaps i.e. they both involve using a dataset and building a model around. Through this research, I gained experience with fundamental ML and data science frameworks e.g. PyTorch or Pandas. 
+Furthermore, due to the underpinning of choice models by theory and also their usage in prediction, it gave me a better appreciation for the necessity of robust and explainable models. I therefore decided to further explore robustness and explainability in the context of DL in my next research position.
+
+ Specifically I participated in a REU program hosted by DePaul University and University of Chicago. I was advised by Professor Daniela Raicu and worked on the problem of classifying lung nodules as cancerous. I mainly focused on robust models by finding hidden stratification in types of lung nodules and worked on training models optimized over the identified stratifications using group distributionally robust optimization \cite{Sagawa*2020Distributionally}. I also worked on explainability through visualizations of dimensionally reduced features extracted from our DL model. I am the first author on a paper based off this work that will be presented in the SPIE MI medical imaging conference. This program gave me a taste of full-time research and is a primary reason for my desire to pursue research through graduate school.
+It also reinforced my interest in explainability and robustness -- especially in healthcare where correct classification and early detection can mean living longer. 
+ 
+While my journey into deep learning has not been very long, it has been fruitful and given me a clear direction.
+To continue in this direction, I am now doing work on reproducibility and model robustness in NLP with my senior capstone project. I am looking at counterfactual fairness in language toxicity classification by re-implementing Counterfactual Logit Pairing \cite{garg2019counterfactual} and evaluating alternative model training methods. I am also holding ML workshops in the data science club at my school to help expose other people to ML in the hopes of bring other people to this field too.
+
+Due to the democratized nature of ML, so far I've been able to dig in depth into it by myself without formally taking any ML courses at my school.
+However, research is a fundamentally collaborative effort and not something I can learn by myself. Thus I desire to get a PhD to further prepare myself for research. Specifically, I want to further develop my research ability -- in both finding meaningful questions and also producing useful results.
+
+
+% I specifically am applying to University of Minnesota because of its sizeable faculty in machine learning and bioinformatics. I specifically would like to work with Professor Catherine Qi Zhao in the VIP Lab or with Professor Ju Sun in the GLOVEX lab. The former lab is of interest to me due to the direct focus on explainability and generizability of models i.e. domain adaptation in \cite{li2017attention} or steep slope loss in \cite{Luo_NeurIPS_2021}. The latter lab is of interest to me due to the focus on healthcare and research in methods to improve classification performance e.g. medical transfer learning in \cite{peng2021rethink} and COVID-19 in \cite{doi:10.1148/ryai.210217}. 
+% %need to reword this better
+% Besides the faculty, I also enjoy the location of Minneapolis and the cold weather -- and ultimately I think that it can provide the right environment for me to thrive and develop as a researcher.
+
+m
+
+
+
+\bibliographystyle{acm}
+\bibliography{refs} % Entries are in the refs.bib file
+
+
+
+\end{document}
