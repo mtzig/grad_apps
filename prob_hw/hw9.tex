@@ -1,0 +1,212 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Probability HW9, Thomas Zeng }
+\rhead{Math 240, Fall 2022}
+\cfoot{\thepage}
+
+\begin{document}
+\section*{1}
+%4.14
+\[P(X=0)=\sum_{y=0}^3P(X=0,Y=y)=\sum_{y=0}^3\frac{1+1}{12}=4\times\frac{2}{12}=\frac{2}{3}\]
+
+\[P(X=1)=1-P(X=0)=1-\frac{2}{3}=\frac{1}{3}\]
+As the joint distribution does not depend on $y$ at all for any value of $y$ we have
+\[P(Y=y)=\sum_{x=0}^1\frac{x+1}{12}=\frac{3}{12}=\frac{1}{4}.\]
+Thus, $P(Y=0)=P(y=1)=P(Y=2)=P(y=3)=\frac{1}{4}.$ Qualitatively, we can say $X\sim\text{Bern}(\frac{1}{3})$ and $Y\sim\text{Unif}(4)-1.$
+
+\section*{2}
+\subsection*{a}
+\begin{align*}
+    f(x) &= \int_0^\infty 0.5e^{-x}e^{-y/2}dy\\
+    &=0.5e^{-x}(-2)e^{-y/2}\Bigr |_0^\infty\\
+    &=0 - (-e^{-x})\\
+    &= e^{-x}
+\end{align*}
+Thus we have:
+\begin{equation*}
+    f(x)=\begin{cases}
+        e^{-x},\; x>0\\
+        0,\; o.w.
+    \end{cases}
+\end{equation*}
+Thus $X\sim\text{Exp}(1).$
+\subsection*{b}
+\begin{align*}
+    f(y) &= \int_0^\infty 0.5e^{-x}e^{-y/2}dx\\
+    &=0.5e^{-x}(-1)e^{-y/2}\Bigr |_0^\infty\\
+    &=0 - (-0.5e^{-y/2})\\
+    &= \frac{1}{2}e^{-y/2}
+\end{align*}
+Thus $Y\sim\text{Exp}(\frac{1}{2}).$
+
+\section*{3}
+\subsection*{a}
+From previous homework, we know that $c$ must be $4$ for $f$ to be a pdf.
+
+\begin{align*}
+    f(x) &= \int_x^\infty ce^{-2y}dy\\
+    &= -\frac{1}{2}ce^{-2y} \Bigr |_x^\infty\\
+    &= 0 - (-\frac{1}{2}ce^{-2x})\\
+    &= \frac{c}{2}e^{-2x}\\
+    &= 2e^{-2x}
+\end{align*}
+Thus $X\sim\text{Exp}(2).$
+\subsection*{b}
+\begin{align*}
+    f(y) &= \int_0^y ce^{-2y}dx\\
+    &= ce^{-2y}x \Bigr |_0^y\\
+    &= cye^{-2y}\\
+    &= 4ye^{-2y}
+\end{align*}
+Thus $Y\sim\text{Gam}(2,2).$
+
+\section*{4}
+%6.34
+\subsection*{a}
+Let $X\sim\text{Exp}(1/2)$ be the random variable denoting time until the light fails. Let $Y\sim\text{Exp}(1/3)$ denote the time until computer crashes.
+
+% As $X$ and $Y$ are independent, we thus have $f(x,y) = f_X(x)f_Y(y).$ Thus
+% \[P(X\le x, Y\le y)=\int_0^x\int_0^y 2e^{-2x}3e^{-3x}dydx = \int_0^x\int_0^y 6e^{-5x}dydx.\]
+
+% We want $P(X>2,Y>2)$ which is:
+% \begin{align*}
+%     P(X>2,Y>2) &= \int_2^\infty\int_2^\infty 6e^{-5x}dydx\\
+%     &= \int_2^\infty 6e^{-5x}y \Bigr |_2^\infty dx\\
+%     &= \int_2^\infty-12e^{-5x}dx\\
+%     &=\frac{12}{5}
+% \end{align*}
+% The joint CDF of $XY$ is $P(x,y)=\int
+As these events are independent, $P(X>2,Y>2)=P(X>2)P(Y>2) = (1-P(X\le2))(1-p(Y\le2))\approx0.19$ using \texttt{(1-pexp(2,1/2))*(1-pexp(2,1/3))}.
+
+\subsection*{b}
+We want $P(Y>x+1).$
+
+\begin{align*}
+    P(Y>x+1) &= \int_0^\infty\int_{x+1}^\infty 
+    \frac{1}{2}e^{-\frac{x}{2}}\frac{1}{3}e^{-\frac{y}{3}}dydx\\
+    &\approx 0.43\; \text{solved via Wolfram Alpha because I got lazy}
+    % &= \int_0^\infty -\frac{1}{2}e^{-\frac{1}{2}x}e^{-\frac{1}{3}y} \Bigr |_{x+1}^\infty dx\\
+    % &= \int_0^\infty \frac{1}{2}e^{-\frac{1}{2}x}e^{-\frac{1}{3}x-\frac{1}{3}}dx\\
+    % &= \int_0^\infty \frac{1}{3}e^{-\frac{5}{6}x-\frac{1}{3}}dx\\
+    % &= -\frac{2}{5}e^{-5x-3} \Bigr |_0^\infty\\
+    % &= \frac{2}{5}e^{-3}\\
+    % &\approx0.02
+\end{align*}
+
+\section*{5}
+%6.28a
+\subsection*{a}
+
+\begin{align*}
+    f_X(x) &= \int_1^e\frac{2x}{9y}dy\\
+    &= \frac{2x}{9}\int_1^e\frac{1}{y}dy\\
+    &=\frac{2x}{9}\ln y\Bigr |_1^e\\
+    &=\frac{2x}{9}
+\end{align*}
+
+\begin{align*}
+    f_Y(y) &= \int_0^3\frac{2x}{9y}dx\\
+    &= \frac{2}{9y}\int_0^3xdx\\
+    &=\frac{2}{9y} \frac{x^2}{2}\Bigr |_0^3\\
+    &= \frac{x^2}{9y} \Bigr |_0^3\\
+    &= \frac{1}{y}
+\end{align*}
+
+
+\begin{align*}
+    f_X(x)f_Y(y) &= \frac{2x}{9}\frac{1}{y}\\
+    &= \frac{2x}{9y}\\
+    &= f(x,y)
+\end{align*}
+
+Thus $X,Y$ are independent.
+% % i think its right?
+% \begin{align*}
+%     F(x,y) &= \int_0^x\int_0^y 2e^{-(x+2y)}dydx\\
+%     &= \int_0^x -e^{-(x+2y)} \Bigr |_0^y dx\\
+%     &= \int_0^x -e^{-(x+2y)} + e^{-x}dx\\
+%     &= e^{-(x+2y)} - e^{-x} \Bigr |_0^x\\
+%     &= e^{-(x+2y)}-e^{-x}-e^{-2y}+1
+% \end{align*}
+
+\section*{6}
+%4.36
+
+First we know the following:
+\begin{align*}
+    \frac{Cov[X,Y]}{\sigma\sigma}&= Corr[X,Y]\\
+    Cov[X,Y] &= Corr[X,Y]\sigma^2\\
+    &= -0.5\sigma^2
+\end{align*}
+Thus we have
+\begin{align*}
+    V[X+Y] &= V[X] + V[Y] + 2Cov[X,Y]\\
+    &= \sigma^2 + \sigma^2 + 2(-0.5\sigma^2)\\
+    &=\sigma^2
+\end{align*}
+
+\section*{7}
+\subsection*{a}
+
+As this is a circle, we have the bounds $-1\le x\le 1$ and $-\sqrt{1-x^2}\le y\le \sqrt{1-x^2}.$Thus
+
+\begin{align*}
+    E[XY] &= \int_{-1}^1\int_{-\sqrt[]{1-x^2}}^{\sqrt{1-x^2}}\frac{xy}{\pi}dydx\\
+    &=\int_{-1}^1 \frac{xy^2}{2\pi}\Bigr |_{-\sqrt[]{1-x^2}}^{\sqrt{1-x^2}} dx\\
+    &= \int_{-1}^1 \frac{x(1-x^2)}{2\pi}-\frac{x(1-x^2)}{2\pi}\\
+    &=\int_{-1}^1 0dx\\
+    &= 0
+\end{align*}
+
+\subsection*{b}
+\[Cov[X,Y]=E[XY]-E[X]E[Y]=0-0=0\]
+
+
+\subsection*{c}
+
+Covariance tells us how changing the probability value of $x$ correlates with changes in probability of different values of $y$ (in the support set). In this case, there is no change in probability of $y$ as the distribution is uniform across the support set and so there is equal probability mass in the support set. What is dependent in this case is the values $y$ can take to still be in the support set. Specifically, as the values of $x$ change, $y$ must be between $\pm\sqrt[]{1-x^2}$ to still be in the support set of the joint distribution.
+
+\section*{8}
+\subsection*{a}
+We denote $S_Y$ as the support set of $Y.$
+\begin{align*}
+    f_X(x) &= \int_{S_Y}g(x)h(y)dy\\
+    &=g(x)\int_{S_Y}h(y)dy\\
+\end{align*}
+Thus $c_X=\int_{S_Y}h(y)dy$ s.t. $f_X(x)=c_Xg(x)$.
+\subsection*{b}
+We denote $S_X$ as the support set of $X.$
+\begin{align*}
+    f_Y(y) &= \int_{S_X}g(x)h(y)dx\\
+    &=h(y)\int_{S_X}g(x)dx\\
+\end{align*}
+Thus $c_Y=\int_{S_X}g(x)dx$ s.t. $f_Y(y)=c_Yh(y)$.
+\subsection*{c}
+\begin{align*}
+    f_X(x)f_Y(y)&= c_Xg(x)c_Yh(y)\\
+    &= \left (\int_{S_Y}h(y)dy\int_{S_X}g(x)dx\right )g(x)h(y)\\
+    &= \left (\int_{S_Y}\int_{S_X}h(y)g(x)dxdy\right )g(x)h(y)\\
+    &= 1g(x)h(y)\\
+    &= f(x,y)
+\end{align*}
+\end{document}

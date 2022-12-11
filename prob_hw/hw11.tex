@@ -1,0 +1,215 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Probability HW11, Thomas Zeng }
+\rhead{Math 240, Fall 2022}
+\cfoot{\thepage}
+
+\begin{document}
+\section*{1}
+
+\begin{align*}
+    E[X|Y=2] &= \sum_x xP(X=x|Y=2)\\
+    &= 0 \times \frac{0}{0.125} + 1 \times \frac{0.05}{0.125} + 2 \times \frac{0.05}{0.125} +3 \times \frac{0.025}{0.125}\\
+    &\approx 1.80
+\end{align*}
+
+\section*{2}
+\subsection*{a}
+
+The support set of $Y$ is $0<y<1.$
+\begin{align*}
+    f_Y(y) &= \int_0^y 2dx\\
+    &= 2x\Bigr |_0^y\\
+    &= 2y
+\end{align*}
+Thus:
+\begin{align*}
+    E[Y] &= \int_0^1 yf_Y(y)dy\\
+    &= \int_0^12y^2dy\\
+    &= \frac{2}{3}y^3\Bigr |_0^1\\
+    &= \frac{2}{3}
+\end{align*}
+
+\subsection*{b}
+\begin{align*}
+    f_X(x) &= \int_x^1 2dy\\
+    &= 2y\Bigr |_x^1\\
+    &= 2 -2x
+\end{align*}
+
+\begin{align*}
+    f(y|X=x) &= \frac{f(x,y)}{f_X(x)}\\
+    &= \frac{2}{2-2x}\\
+    &= \frac{1}{1-x}
+\end{align*}
+
+When $X=0.2$, the support of $Y$ is $0.2<y<1.$
+
+\begin{align*}
+    E[Y|X=0.2] &= \int_{0.2}^1 yf(y|X=0.2)dy\\
+    &= \int_{0.2}^1 \frac{y}{0.8}dy\\
+    &= \int_{0.2}^1 \frac{5}{4}ydy\\
+    &= \frac{5}{8}y^2\Bigr |_{0.2}^1\\
+    &= 0.6
+\end{align*}
+
+When $X=0.9$ we can do exact same calculation. Alternatively as the joint was uniform, the conditional is also uniform on $0.9<y<1.$ Thus, $E[Y|X=0.9]=\frac{1+0.9}{2}=0.95.$
+
+These values are different as to the triangle (and thus non-rectangular) bounds, $X,Y$ are dependent. Thus, the marginal probabilities differ from the conditional probabilities.
+
+\subsection*{c}
+
+We use LOTUS:
+\begin{align*}
+    E\left[\frac{Y}{X}\right] &= \int_0^1\int_0^y \frac{y}{x}2dxdy
+\end{align*}
+
+\section*{3}
+\begin{align*}
+    f(x,y) &= f(x|y)f_Y(y)\\
+    &= ye^{-yx}16e^{-16y}\\
+    &= 16ye^{-(16y+yx)}
+\end{align*}
+
+\begin{align*}
+    f_X(x) &= \int_0^\infty f(x,y)dy\\
+    &= \int_0^\infty 16ye^{-(16y+yx)}dy\\ %actually solve this integral?
+    &= \frac{16}{(x+16)^2}\quad\text{Solved via Wolfram Alpha}
+\end{align*}
+
+\begin{align*}
+    f(y|x) &= \frac{f(x,y)}{f_X(x)}\\
+    &= 16ye^{-(16y+yx)}/\frac{16}{(x+16)^2}\\
+    &=ye^{-(16y+yx)}(x+16)^2
+\end{align*}
+
+Thus
+\[f(y|10) = 676ye^{-26y}\]
+therefore
+\begin{align*}
+    E[Y|X=10] &= \int_0^\infty yf(y|10)dy\\
+    &=\int_0^\infty y676ye^{-26y}dy\\
+    &= \frac{1}{13}\quad \text{Solved via Wolfram Alpha}
+\end{align*}
+Our new belief is that we expect 1 battery to die every $13$ hours.
+
+\section*{4}
+\subsection*{a}
+
+The support set is $0\le y\le x.$
+\begin{align*}
+    P(x,y)&=P(y|x)f_X(x)\\
+    &= \binom{x}{p}p^y(1-p)^{x-y}\frac{e^{-\lambda}\lambda^x}{x!}
+\end{align*}
+
+\subsection*{b}
+\begin{align*}
+    P(y) &= \sum_{x\in X}P(x,y)\\
+    &= \sum_{x=y}^\infty \binom{x}{p}p^y(1-p)^{x-y}\frac{e^{-\lambda}\lambda^x}{x!}\\
+    &= \frac{e^{-\lambda p (\lambda p)^y}}{y!} \quad \text{this is the Mussles example from class}
+\end{align*}
+
+This is a Poisson distribution with parameterized by $\lambda p.$
+
+\subsection*{c}
+
+\begin{align*}
+    E[Y] &= E[E[Y|X]]\\
+    &= E[Xp]\\
+    &= pE[X]\\
+    &= \lambda p
+\end{align*}
+This matches the expectation of that from part b. As part b was a Poisson parameterized by $\lambda p$ and so its expectation was $\lambda p.$ At $p=0.5,\lambda=100$ we have the expectation is $100\times0.5=50.$
+
+\subsection*{d}
+\begin{align*}
+    V[Y] &= E[V[Y|X]] + V[E[Y|X]]\\
+    &= E[Xp(1-p)] + V[Xp]\\
+    &= p(1-p)E[X] + p^2V[X]\\
+    &= p(1-p)\lambda + p^2\lambda\\
+    &= p\lambda
+\end{align*}
+
+This matches that from part b. As part b was a Poisson parameterized by $\lambda p$ and so its variance was $\lambda p.$ At $p=0.5,\lambda=100$ we have the variance is $100\times0.5=50.$
+
+\subsection*{e}
+\begin{align*}
+    E[Y|X=100]&= 100 \times 0.5\\
+    &= 50
+\end{align*}
+The value is equal to part c.
+
+\subsection*{f}
+\begin{align*}
+    V[Y|X=100]&= 100 \times 0.5 (1-0.5)\\
+    &= 25
+\end{align*}
+The variance is smaller than in part d.
+
+\section*{5}
+%10.1
+
+Let $Y$ be the random variable of the average waiting time. By the CLT, we approximately have that $Y\sim\text{Norm}(2, 2^2/20)=\text{Norm}(2,0.2).$ Thus $P(Y>2.5)\approx 0.13$ using \texttt{1-pnorm(2.5,2,.2\textasciicircum0.5)}.
+
+The exact distribution $S_{20}/16$ can be computed with a gamma distribution with parameters $20$ and $1/2$. Specifically we want $P(S_{20}/20 > 2.5) = P(S_{20}>50) \approx 0.13$ using \texttt{1-pgamma(50,20,.5)}.
+
+\section*{6}
+We approximately have that $X\sim\text{Norm}(50\times0.328, 50\times0.328(1-0.328)).$ In other words, we approximately have that $X\sim\text{Norm}(16.4, 11.0208).$\\
+
+Under approximation we have $P(X\le10)\approx0.027$ using \texttt{pnorm(10,16.4,11.0208\textasciicircum.5)},
+$P(X\le15)\approx0.34$ using \texttt{pnorm(15,16.4,11.0208\textasciicircum.5)},
+$P(X\le20)\approx0.86$ using \texttt{pnorm(20,16.4,11.0208\textasciicircum.5)}.
+
+
+As we know the sum of Bernoulli variables is Binomial, we actually have that $X\sim\text{Binom}(50,0.328)$
+
+We thus have $P(X\le10)= 0.034$ using \texttt{pbinom(10,50,0.328)},
+$P(X\le15)=0.40$ using \texttt{pbinom(15,50,0.328)},
+$P(X\le20)=0.89$ using \texttt{pbinom(20,50,0.328)}.
+
+\section*{7}
+\subsection*{a}
+We have that $E[X]=V[X] = \lambda.$ As each $X$ is i.i.d. $E[\bar{X}_n] = \frac{n\lambda}{n}=\lambda$ and $V[\bar{X}_n]=\frac{n\lambda}{n^2}=\frac{\lambda}{n}.$
+
+\subsection*{b}
+As $\bar{X}_n$ would be approximately normal. By the CLT, we have that approximately $\bar{X}_{100}\sim\text{Norm}(0.8,0.8/100).$
+
+Thus $P(\bar{X}_{100}>1)=1-P(\bar{X}_{100}\le1)\approx 0.01$ using \texttt{1-pnorm(1,.8,(.8/100)\textasciicircum.5)}.
+
+\subsection*{c}
+First we have that $S_{100}\sim\text{Poiss}(100\times 0.8).$ Thus we have $P(\bar{X}_{100}>1)=P(S_{100}>100)=1-P(S_{100}\le100)=0.01$ using \texttt{1-ppois(100,100*0.8)}.
+
+\section*{8}
+%10.20b
+By the CLT, we have that approximately $\bar{X}\sim\text{Norm}(\mu, \sigma^2/n).$
+We want $P(-2\sigma<\bar{X}-\mu<2\sigma)=0.99.$ If we standardized $\bar{X}$ we want 
+\[P(-\frac{2\sigma}{\sigma/\sqrt[]{n}}<\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}<\frac{2\sigma}{\sigma/\sqrt[]{n}})=0.99\]
+Using \texttt{qnorm(.005)} we find that
+\begin{align*}
+    -\frac{2\sigma}{\sigma/\sqrt{n}}&= -2.575829\\
+    2\sqrt{n} &= 2.575829\\
+    \sqrt{n} &= 1.2879145\\
+    n &\approx 1.13\\
+    n &= 2
+\end{align*}
+\end{document}

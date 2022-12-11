@@ -1,0 +1,342 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[20pt,margin=1in,innermargin=-4.5in,blockverticalspace=-0.25in]{tikzposter}
+\geometry{paperwidth=42in,paperheight=32.5in}
+\usepackage[table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\usepackage{SUtheme}
+\usepackage{mwe} % for placeholder images
+\usepackage{svg}
+
+
+\addbibresource{refs.bib}
+
+
+\def\cca#1{%
+    \pgfmathsetmacro\calc{(#1)*100/(0.176)}%
+    \edef\clrmacro{\noexpand\cellcolor{red!\calc}}%
+    \clrmacro%
+    \ifdim \calc pt>1000pt\color{white}\fi{#1}%
+}
+
+\def\ccb#1{%
+    \pgfmathsetmacro\calc{(#1)*100/(0.081)}%
+    \edef\clrmacro{\noexpand\cellcolor{red!\calc}}%
+    \clrmacro%
+    \ifdim \calc pt>1000pt\color{white}\fi{#1}%
+    %#1
+}
+
+\def\ccc#1{%
+    \pgfmathsetmacro\calc{(#1)*100/(0.226)}%
+    \edef\clrmacro{\noexpand\cellcolor{red!\calc}}%
+    \clrmacro%
+    \ifdim \calc pt>1000pt\color{white}\fi{#1}%
+    %#1
+}
+
+\def\ccd#1{%
+    \pgfmathsetmacro\calc{(#1)*100/(0.301)}%
+    \edef\clrmacro{\noexpand\cellcolor{red!\calc}}%
+    \clrmacro%
+    \ifdim \calc pt>1000pt\color{white}\fi{#1}%
+    %#1
+}
+
+\def\cce#1{%
+    \pgfmathsetmacro\calc{(#1)*100/(0.076)}%
+    \edef\clrmacro{\noexpand\cellcolor{red!\calc}}%
+    \clrmacro%
+    \ifdim \calc pt>1000pt\color{white}\fi{#1}%
+    %#1
+}
+\def\ccf#1{%
+    \pgfmathsetmacro\calc{(#1)*100/(0.133)}%
+    \edef\clrmacro{\noexpand\cellcolor{red!\calc}}%
+    \clrmacro%
+    \ifdim \calc pt>1000pt\color{white}\fi{#1}%
+    %#1
+}
+\def\ccg#1{%
+    \pgfmathsetmacro\calc{(#1)*100/(0.115)}%
+    \edef\clrmacro{\noexpand\cellcolor{red!\calc}}%
+    \clrmacro%
+    \ifdim \calc pt>1000pt\color{white}\fi{#1}%
+    %#1
+}
+\def\cch#1{%
+    \pgfmathsetmacro\calc{(#1)*100/(0.221)}%
+    \edef\clrmacro{\noexpand\cellcolor{red!\calc}}%
+    \clrmacro%
+    \ifdim \calc pt>1000pt\color{white}\fi{#1}%
+    %#1
+}
+% \def\cca#1{\cellcolor{black!#10}\ifnum #1>5\color{white}\fi{#1}}
+% set theme parameters
+\tikzposterlatexaffectionproofoff
+\usetheme{SUTheme}
+\usecolorstyle{SUStyle}
+\usetitlestyle{Filled}
+
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+
+\title{Replication of ``Counterfactual Fairness in Text Classification through Robustness''}
+\author{\textbf{Thomas Zeng}, Teagan Johnson, Jared Chen, Nathan Hedgecock}
+\institute{Carleton College}
+\titlegraphic{
+% \includesvg[width=0.06\textwidth]{carleton_logo.svg}
+\includegraphics[width=0.06\textwidth]{carleton_logo.png}
+}
+
+
+
+
+
+
+% begin document
+\begin{document}
+\maketitle
+\centering
+\begin{columns}
+    \column{0.333}
+    \block{Introduction}{
+
+    Content moderation is important for insuring online forums are inclusive and welcoming. Due to the large amounts of comments being generated, it would be ideal to create an automated system that can detect the toxicity of online comments.\\
+    
+    % cite examples of models
+    Many text classifiers have been built using deep learning to classify comments as toxic or nontoxic. While these models have good performance overall, they often  have an inherent bias to classify sentences with certain identities as toxic.\\
+
+    %table
+    \begin{center}
+        \begin{tabular}{|c|c|}
+            \hline
+            Sentence & Model Toxicity Prediction\\
+            \hline
+            Some people are \textbf{straight} & 0.03\\
+            \hline
+            Some people are \textbf{gay} & 0.99\\
+            \hline
+            Some people are \textbf{black} & 0.47\\
+            \hline
+            Some people are \textbf{Christian} & 0.02\\
+            \hline
+        \end{tabular}
+    \end{center}
+    \hfill \break
+
+    We focus on a paper \cite{garg2019counterfactual} that both proposes a metric to quantify the fairness of a machine learning model and also proposes methods to train models to be more fair Specifically, we replicate and test the robustness of their results.
+
+    }
+
+    \block{Methodology (Training)}{
+    
+    \textbf{\scalebox{1.2}{Baseline:}} No change to standard training method already used.\\
+
+    \textbf{\scalebox{1.2}{Blind:}} Mask identity terms with \texttt{identity}. \\
+
+    \begin{center}
+        \begin{tabular}{lcl}
+            % Before Blind Preprocessing & & After Blind preprocessing\\
+            Some people are \textbf{straight} & $\to$ & Some people are \texttt{identity}\\
+            Some people are \textbf{gay} & $\to$ & Some people are \texttt{identity}\\
+            Some people are \textbf{black} & $\to$ & Some people are \texttt{identity}\\
+            Some people are \textbf{Christian} & $\to$ & Some people are \texttt{identity}\\
+        \end{tabular}
+    \end{center}
+    \hfill \break
+
+    % table with example 
+    \textbf{\scalebox{1.2}{Augment:}} Generate ``counterfactual'' sentences from existing ones to augment training dataset\\
+    \begin{center}
+        \begin{tabular}{lcl}
+            % Before Blind Preprocessing & & After Blind preprocessing\\
+            He is \textbf{black} & $\to$ & He is \textbf{black}\\
+            &$\to$& He is \textbf{white}\\
+            &$\to$& He is \textbf{gay}\\
+            &$\to$& etc...\\
+            Joe is \textbf{gay} & $\to$ & Joe is \textbf{gay}\\
+            &$\to$& Joe is \textbf{black}\\
+            &$\to$& Joe is \textbf{white}\\
+            &$\to$& etc...\\
+        \end{tabular}
+    \end{center}
+    \hfill \break
+    \textbf{\scalebox{1.2}{Counterfactual Logit Pairing (CLP):}} An additional loss term that penalizes large differences in model outputs on a sentence with its counterfactual counterparts. Specifically we add the following term to the loss: 
+    \[\lambda\sum_{x\in X}\mathbb{E}_{x'\sim\text{Unif}[\Phi(x)]}|g(x)-g(x')|\]
+    where:
+    \begin{itemize}
+        \item $\lambda$ is a hyperparameter
+        \item $X$ is a set of sentences i.e. our dataset
+        \item $\Phi$ is a counterfactual generation function
+        \item $g$ is our model without the final nonlinearity
+    \end{itemize}
+
+    %show the equation?
+
+    % talk about dataset split
+    % use jigsaw dataset -- wikipedia comments
+    
+    }
+
+    
+
+    \column{0.333}
+
+    \block{Methodology (Evaluation)}{
+
+        \textbf{\scalebox{1.2}{Counterfactual Token Fairness (CTF) Gap:}} Metric to measure average difference in model output compared to counterfactual examples. It is equivalent to CLP loss, but we use model predictions ($f$) rather than model logits:\\
+        \[\sum_{x\in X}\mathbb{E}_{x'\sim\text{Unif}[\Phi(x)]}|f(x)-f(x')|\]
+
+        \textbf{Example (using table from Introduction):} If ``Some people are straight'' is the original sentence and the other sentence are counterfactuals, the CTF gap on this sentence would be:
+
+        \begin{align*}
+            \text{CTFGAP} &= \frac{|0.03-0.99|+|0.03-0.47|+|0.03-0.02|}{3}\\
+            &= 0.47.
+        \end{align*}
+
+        \textbf{\scalebox{1.2}{Private Evaluation dataset:}} Dataset the original paper used to evaluate results. It is private, and thus we do not have access.\\
+
+        \textbf{\scalebox{1.2}{Civil Comments Dataset:}} Dataset -- as discussed in \cite{koh2021wilds} -- of online comments from a shuttered content moderation service. We only measure CTF on nontoxic comments.
+
+        \begin{center}
+            \textbf{Example Sentence:} Why is this black racist crap still on the G\&M website?
+        \end{center}
+
+        \textbf{\scalebox{1.2}{Synthetic Dataset:}} Synthetic dataset from \cite{dixon2018measuring} designed specifically to test counterfactual fairness.
+        
+        \begin{center}
+            \textbf{Example Sentence:} I am a protestant, straight person, and I hate your guts.
+        \end{center}
+   
+
+
+        \textbf{\scalebox{1.2}{Identities}}: We split a set of 50 identities from \cite{dixon2018measuring} randomly. 35 are used for training and 15 are held out for evaluation of model generalizability.
+
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{Train Identities Examples:} &bisexual, trans, Muslim, older\\
+                \textbf{Held-Out Identities Examples:}& African American, gay, straight 
+            \end{tabular}
+
+
+ 
+        \end{center}
+
+    
+        % \textbf{True Postive/True Negative Rates (TPR, TNR)}\\
+    
+    }
+    \block{Results (Table 1)}{
+        Below are the CTF gaps from the paper (``Orig.'') compared to ours (``Reimp.'').
+        as
+        \begin{itemize}
+            \item The CTF values are measured using the train identities.
+            \item   ``NT'' is the nontoxic sentences and ``Tox'' is the toxic sentences.
+            \item  Each value is averaged over ten trials. 
+            \item Darker red cells have worse CTF gaps and lighter red cells have better CTF gaps
+            \item \textbf{Lower} values are \textbf{better}
+        \end{itemize}
+        % \hfill \break
+
+        \begin{center}
+        
+            \begin{tabular}{|l|cc|cc|cc|}
+            
+                \cline{2-7}
+                \multicolumn{1}{c|}{} & \multicolumn{2}{c|}{\textbf{Eval NT}} & \multicolumn{2}{c|}{\textbf{Synth NT}} & \multicolumn{2}{c|}{\textbf{Synth Tox}}\\
+                \multicolumn{1}{c|}{} & Orig. & \textbf{Reimp.} & Orig. & \textbf{Reimp.} & Orig. & \textbf{Reimp.} \\
+                \hline
+                Baseline & \cca{0.140} & \ccb{0.064} & \ccc{0.180}  & \ccd{0.239} & \cce{0.061} & \ccf{0.106}\\
+                \hline
+                Blind& \cca{0.000} & \ccb{0.000}& \ccc{0.000}  & \ccd{0.000} & \cce{0.000} & \ccf{0.000}\\
+                \hline
+                Augment & \cca{0.127} & \ccb{0.024} & \ccc{0.226}  & \ccd{0.164} & \cce{0.022} & \ccf{0.098}\\
+                \hline
+                CLP\_nontox $\lambda=1$ & \cca{0.012} & \ccb{0.052} & \ccc{0.015}  & \ccd{0.116} & \cce{0.007} & \ccf{0.095}\\
+                \hline
+                CLP $\lambda=0.05$ & \cca{0.071} & \ccb{0.034} & \ccc{0.082}  & \ccd{0.171} & \cce{0.024} & \ccf{0.085}\\
+                \hline
+                CLP $\lambda=1$ & \cca{0.007} & \ccb{0.038} & \ccc{0.015}  & \ccd{0.102} & \cce{0.007} & \ccf{0.065}\\
+                \hline
+                CLP $\lambda=5$ & \cca{0.002} & \ccb{0.020} & \ccc{0.004}  & \ccd{0.041} & \cce{0.004} & \ccf{0.023}\\
+                \hline
+            \end{tabular}
+        \end{center}
+
+   
+        
+    }
+
+    \column{0.333}
+    \block{Results (Table 2)}{
+        For testing generalizability, we also compare CTF values on held out identities on non-toxic comments.
+
+        \begin{center}
+            \begin{tabular}{|l|cc|}
+                \cline{2-3}
+                \multicolumn{1}{c|}{} & \multicolumn{2}{c|}{\textbf{Eval. Held Out}}\\
+                \multicolumn{1}{c|}{} & Orig. & \textbf{Reimp.}\\
+                \hline
+                Baseline & \ccg{0.091} & \cch{0.175}\\
+                \hline
+                Blind & \ccg{0.090} & \cch{0.179}\\
+                \hline
+                Augment & \ccg{0.087} & \cch{0.126}\\
+                \hline
+                CLP\_nontox $\lambda=1$ & \ccg{0.095} & \cch{0.125}\\
+                \hline
+                CLP $\lambda=0.05$ & \ccg{0.078} & \cch{0.141}\\
+                \hline
+                CLP $\lambda=1$ & \ccg{0.084} & \cch{0.104}\\
+                \hline
+                CLP $\lambda=5$ & \ccg{0.076} & \cch{0.035}\\
+                \hline
+    
+            \end{tabular}
+        \end{center}
+    }
+    \block{Discussion}{
+        While the raw CTF gaps differ between the original paper and our reimplementation, the general trend that using CLP improves upon baseline holds.\\
+
+        One significant difference is that in our results, augment fared much better in counterfactual fairness. We hypothesize that this is because our implementation of augment is different from the paper in that we generate more augmented examples.\\
+        
+        Furthermore, due to the lack of implementation details in the original paper, there are various factors we could not control for, including:
+        \begin{itemize}
+            \item the specific model architecture
+            \item training hyperparameters
+            \item identity train/eval split
+            \item results on private evaluation dataset
+        \end{itemize}
+
+        Thus, the overall similarity of our results compared to \cite{garg2019counterfactual} despite different implementation details suggest that the methods proposed in \cite{garg2019counterfactual} are robust.
+        % \begin{tikzfigure}[Look, my method is better.]
+        %     \includegraphics[width=0.5\linewidth]{example-image}
+        % \end{tikzfigure}
+    }
+
+    \block{Future Work}{
+        In our current work, counterfactual examples are generated naïvely by replacing the original identity term with a different one.\\
+        
+        However, there are more sophisticated methods i.e. with language modeling \cite{madaan2021generate} or word embeddings \cite{wadhwa2022fairness}. Thus, for further work, we will explore the effect of CLP loss using more involved adversarial generation function.
+    }
+    
+    
+    \block{References}{
+        \vspace{-1em}
+        \begin{footnotesize}
+        \printbibliography[heading=none]
+        \end{footnotesize}
+    }
+\end{columns}
+\end{document}
