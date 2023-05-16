@@ -1,0 +1,392 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{soul}
+
+\newcommand*{\tabulardef}[3]{\begin{tabular}[t]{@{}lp{\dimexpr\linewidth-#1}@{}}
+    #2&#3
+  \end{tabular}}
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis Final Exam}
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+
+
+\begin{document}
+
+\section*{Problem 0}
+
+I certify that all work on this write-up is my own, I have not discussed its content with anyone besides my professor, and I have not consulted the internet beyond our Moodle and the links therein to help me complete the problems.\\
+
+\noindent
+\includegraphics[width=0.4\textwidth]{signature.jpg}
+
+\newpage
+\section*{Problem 1}
+
+\subsection*{(a)}
+Yes it is.
+
+\begin{proof}
+    % 7.2.9 continuous implies integrable
+    % 7.3.2 f is bounded and integrable for c,b c in a,b then integrable on a,b
+    % 7.4.1 integrable on ac cb iff integrable on ab
+    By definition of $f,$ it attains a maximal value of $4$ and a minimal value of $1$.
+    Therefore, we have that $|f(x)|\le 4$ for all $x\in[-1,1]$ and thus $f$ is bounded (which is important as integrability only applies to bounded functions).
+
+    Now we show that $f$ is integrable on the interval $[-1,0].$ Namely, for any $c\in (-1,0),$ it follows that $f$ is the constant function on $[-1,c]$ with $f(x)=4$ for all $x\in(-1,c)$. As any constant function is continuous, by Theorem 7.2.9, $f$ is integrable on $[-1,c]$. As $c$ was arbitrary, it follows from Theorem 7.3.2 that $f$ is integrable on $[-1,0].$
+
+    By the same argument, it also follows that $f$ is integrable on $[0,1]$ (but I include it here for sake of completeness). Specifically, for any $c\in (0,1),$ it follows that $f$ is the constant function on $[c,1]$ with $f(x)=4$ for all $x\in(c,1)$. As any constant function is continuous, by Theorem 7.2.9, $f$ is integrable on $[c,1]$. As $c$ was arbitrary, it follows from Theorem 7.3.2 that $f$ is integrable on $[0,1].$
+    
+    Therefore, by theorem $7.4.1,$ we have that $f$ is integrable on $[-1, 0]$ and $[0,1]$ and thus also on $[-1,1]$ as desired.
+\end{proof}
+
+\subsection*{(b)}
+To compute the integral, it suffices to compute $U(f).$ To do this, we start with a small lemma:
+\begin{lemma}\label{lem:1}
+    Let $[a,b]\subseteq [-1,1]$ with $a\neq b.$ Then $\sup\{f(x):x\in[a,b]\}=4.$
+\end{lemma}
+
+\begin{proof}
+    Because the reals are dense, there must exist a point $x\in[a,b]$ with $x\neq 0.$ Therefore, $f(x)=4,$ the maximal attainable value of $f.$ It thus follows that $\sup\{f(x):x\in[a,b]\}=4.$
+\end{proof}
+
+\noindent
+Now for any arbitrary partition $P=\{-1=x_0,x_1,x_2,\cdots,x_n=1\}$ of $[-1,1],$ we thus have that
+\begin{alignat}{2} \label{eq:8}
+    U(f,P) &= \sum_{k=1}^n M_k (x_k-x_{k-1}) &&\text{def. of upper sum} \nonumber\\
+    &= \sum_{k=1}^n \sup\{f(x):x\in[x_{k-1},x_k]\}(x_k-x_{k-1}) \qquad&&\text{def. of $M_k$}\nonumber\\
+    &= \sum_{k=1}^n 4 (x_k-x_{k-1}) &&\text{by Lemma \ref{lem:1}}\nonumber\\
+    &=4 (x_n-x_0) &&\text{as the terms telescope and cancel out}\nonumber\\
+    &= 4 \times 2 &&\text{as $x_0=-1$ and $x_n=1$}\nonumber\\
+    &= 8.
+\end{alignat}
+As $P$ was arbitrary, it thus follows that
+\begin{alignat*}{2}
+    U(f) &= \sup\{U(f,P): P\in\mathcal{P}\} \qquad&&\text{def. of upper integral}\\
+    &= \sup\{8\} &&\text{by \eqref{eq:8}} \\
+    &= 8.
+\end{alignat*}
+Therefore, it follows from Definition 7.2.7 that
+\[\int_{-1}^{1}f=8.\]
+
+\newpage
+\section*{Problem 2}
+
+\subsection*{(a)}
+This is not possible, as it contradicts Theorem 4.4.7 which states that continuity on a compact set implies uniform continuity.
+\subsection*{(b)}
+Consider the sequence of functions $(f_n)$ defined on the compact set $[0,1]$ where
+\begin{equation*}
+    f_n(x) = \begin{cases}
+        1,& x=u/v \text{ for some }u,v\in\mathbb{N}, v\le n\\
+        0,&\text{o.w.}
+    \end{cases}
+\end{equation*}
+Let $f$ be the Dirichlet function. We claim that $(f_n)\stackrel{pw}{\to}f.$
+\begin{proof}
+    Let $x\in[0,1].$ There are two cases:
+    \begin{description}
+        \item[Case 1: $(x\notin\mathbb{Q}).$] By definition of irrationals, there are no $u,v\in\mathbb{N}$ s.t. $x=u/v.$ It thus follows that $f_n(x)=0$ for all $n\in\mathbb{N}.$ Therefore,        
+        \[(f_n(x))=(0,0,\cdots)\to 0 = f(x)\]
+        as desired.
+        \item[Case 2: $(x\in\mathbb{Q}).$] By definition of rationals, $x=u/v$ for some $u,v\in\mathbb{N}.$ Therefore, whenever $n\ge v,$ we have that $f_n(x)=1$.\footnote{Note that we do not have to worry about $u$ as $x\in[0,1]$ implies that $u\le v.$} It thus follows that
+        \[(f_n(x))=(\underbrace{0,0,0,\cdots,0,}_{\text{at most }v-1\; 0\text{'s}}\overbrace{1,1,\cdots}^{\text{infinite}\;1\text{'s}})\to 1 = f(x)\]
+        as desired.
+    \end{description}
+    Therefore, we have that $(f_n)\stackrel{pw}{\to}f.$
+\end{proof}
+
+However, it is not the case that $(f_n)\stackrel{unif}{\to}f.$ Namely, consider $\epsilon=0.5.$ For any $n\in\mathbb{N},$ consider $x=1/(n+1).$ It follows that $f_n(x)=0$ while $f(x)=1.$ Therefore, we have that
+\[|f_n(x)-f(x)|=|0-1|=1\ge 0.5=\epsilon.\]
+Thus, by the contrapositive of Definition 6.2.3, we have that $(f_n)$ does not converge uniformly to $f.$
+
+\newpage
+\section*{Problem 3}
+
+\begin{proof}
+    As $\sum |a_k|$ converges, it thus follows that $\sum a_k$ converges absolutely. Similarly, by the ALT for series, it follows that $\sum -a_k$ also converges (this is important for when we use the Order Limit Theorem later). 
+    
+    Let $(s_n)$ be the partial sums for $\sum a_k;$ $(s^-_n)$  be the partial sums for $\sum -a_k;$ and $(s^{||}_n)$ the partial sums for $\sum |a_k|$. There are now two cases:
+    \begin{description}
+        \item[Case 1: ($\sum a_k < 0$).] This implies that $-\sum a_k = |\sum a_k|.$ By the ALT for series, this implies that  $\sum -a_k = |\sum a_k|.$  Thus, to show that $|\sum a_k|\le \sum |a_k|,$ it suffices to show that $\sum -a_k\le \sum |a_k|.$ Equivalently, we need only look at the partial sums and show that
+        $\lim s^-_n \le\lim s^{||}_n.$ Now, for any $n\in\mathbb{N}$ we have that
+       \begin{alignat*}{2}
+           s^-_n &= -a_1 +  \cdots + -a_n &&\text{def. of partial sums}\\
+           &= - (a_1 + \cdots + a_n) &&\text{distrib. prop.}\\
+           &\le |a_1 + \cdots + a_n|&&\text{as $-x\le|x|$ for all $x\in\mathbb{R}$}\\
+           &\le |a_1| + \cdots + |a_n|\qquad&&\text{triangle inequality}\\
+           &= s^{||}_n.&&\text{def. of partial sums}
+       \end{alignat*}
+       Therefore, as $n$ was arbitrary, by the Order Limit Theorem, it holds that $\lim s^-_n \le\lim s^{||}_n.$ Therefore,  $\sum -a_k\le \sum |a_k|,$ and thus  $|\sum a_k|\le \sum |a_k|.$
+        \item[Case 2: ($\sum a_k \ge 0$).] This implies that $\sum a_k = |\sum a_k|.$ Thus, to show that $|\sum a_k|\le \sum |a_k|,$ it suffices to show that $\sum a_k\le \sum |a_k|.$  Equivalently, we need only look at the partial sums and show that $\lim s_n \le\lim s^{||}_n.$ Now, for any $n\in\mathbb{N}$ we have that
+        \begin{alignat*}{2}
+            s_n &= a_1 + \cdots + a_n &&\text{def. of partial sums}\\
+            &\le |a_1 + \cdots + a_n| &&\text{as $x\le|x|$ for all $x\in\mathbb{R}$}\\
+            &\le |a_1| + \cdots + |a_n|\qquad&&\text{triangle inequality}\\
+            &= s^{||}_n. &&\text{def. of partial sums}
+        \end{alignat*}
+        Therefore, as $n$ was arbitrary, by the Order Limit Theorem, it holds $\lim s_n \le\lim s^{||}_n.$ Therefore,  $\sum a_k\le \sum |a_k|,$ and thus  $|\sum a_k|\le \sum |a_k|.$
+    \end{description}
+    As we proved it in both cases, we thus have in general that $|\sum a_k|\le \sum |a_k|$ - as desired.
+\end{proof}
+
+\newpage
+\section*{Problem 4}
+% prove the power rule for fun
+% prove f is infintely differentiable
+
+\subsection*{(preliminary stuff)}
+
+We first prove the power rule as we use it in the next lemma, but it was never explicitly proved in class (if I remember correctly).
+\begin{theorem}[Power Rule]
+    Let $f(x)=x^n$ with $x\in\mathbb{Z}^{\neq0}.$ It follows that $f'(x)=nx^{n-1}.$
+\end{theorem}
+\begin{proof}
+    There are two cases:
+    \begin{description}
+        \item[Case 1: $(n>0).$] This is shown in Example 5.2.2(i).  
+        % hw 5.2.3(a)
+        \item[Case 2: $(n<0).$]  We thus have that
+        \begin{alignat*}{2}
+            f'(x) &= \frac{d}{dx}x^n\\
+            &=\frac{d}{dx}(x^{-n})^{-1}\\
+            &= -(x^{-n})^{-2} \left ( \frac{d}{dx}x^{-n}\right ) \qquad&&\text{by Chain Rule and Exercise 5.2.3(a)}\\
+            &= -(x^{-n})^{-2} (-nx^{-n-1}) &&\text{by Example 5.2.2(i)}\\
+            &=nx^{2n-n-1}\\
+            &= nx^{n-1}
+        \end{alignat*}
+        as desired.
+    \end{description}
+\end{proof}
+
+\noindent
+We next prove a lemma about the $n$'th derivative of $f$.
+
+\begin{lemma} \label{lem:d}
+    Let $f(x)=1/(1-x).$ It follows that $f^{(n)}(x)=n!/(1-x)^{n+1}$ for all $n\in\mathbb{Z}^{\ge 0}$.
+\end{lemma}
+
+\begin{proof}
+    We show this using induction. For the base case when $n=0,$ we have that
+    \[f^{0}(x)=f(x)=1/(1-x)=0!/(1-x)^{0+1}\]
+    as desired.
+
+    Now for the inductive hypothesis, assume that $f^{(k)}(x)=k!/(1-x)^{k+1}$ for some $k\in\mathbb{Z}^{\ge 0}.$ It thus follows that
+    \begin{alignat*}{2}
+        f^{(k+1)}(x) &= \frac{d}{dx}f^{(k)}(x)\\
+        &= \frac{d}{dx} k!/(1-x)^{k+1} &&\text{by the Inductive Hypothesis}\\
+        % &= \frac{d}{dx}k!(1-x)^{-(k+1)} \\
+        &= k![-(k+1)]/(1-x)^{k+2}\left ( \frac{d}{dx}1-x \right )\qquad&&\text{by Power Rule and Chain Rule}\\
+        &= k![-(k+1)]/(1-x)^{k+2} \times (-1) &&\text{by Alg. Diff. Theorem}\\
+        &= (k+1)!/(1-x)^{(k+1)+1}
+    \end{alignat*}
+    as desired for the inductive step.
+\end{proof}
+
+\noindent
+Lastly, we show that $f$ is infinitely differentiable.
+
+\begin{lemma} \label{lem:i}
+    $f$ is infinitely differentiable.
+\end{lemma}
+
+\begin{proof}
+    For any $n\in\mathbb{Z}^{\ge0},$ it follows from Lemma \ref{lem:d} that $f^{(n)}$ exits and thus $f$ is $n$ times differentiable. As $n$ is arbitrary, $f$ is thus infinitely differentiable.
+\end{proof}
+\subsection*{(a)}
+To use the Taylor Formula, we must compute the sequence of coefficients $(a_n).$ For each $n\in\mathbb{Z}^{\ge 0}$, we have that
+\begin{alignat*}{2}
+    a_n &= \frac{f^{(n)}(0)}{n!} && \text{as defined in Thm 6.6.2}\\
+    &= \frac{n!/(1-0)^{n+1}}{n!} \qquad&&\text{by Lemma \ref{lem:d}}\\
+    &= 1/(1-0)^{n+1} &&\text{as $n!$ cancels out}\\
+    &= 1.
+\end{alignat*}
+Thus, we have that $(a_n) = (1,1,\cdots).$
+Therefore, the Taylor Series for $f$ is (as expected) the geometric series
+\[\sum_{n=0}^{\infty}x^n=1+x+x^2+x^3+\cdots.\]
+\subsection*{(b)}
+% We know that the geometric series has a radius of convergence of $R=1.$ Therefore, this Taylor series is infinite differentiable on the interval $(-R,R).$ Thus, the assumptions for the Lagrange's Remainder Theorem hold. We thus have that for any $N\in\mathbb{N}$
+By the Lagrange's Remainder Theorem, we have that
+\begin{alignat*}{2}
+    E_N(x)&= \frac{f^{(N+1)}(c)}{(N+1)!}x^{N+1} &&\text{as defined in Thm 6.6.3}\\
+    &= \frac{(N+1)!/(1-c)^{N+2}}{N+1)!}x^{N+1}\qquad&&\text{by Lemma \ref{lem:d}}\\
+    &=\frac{x^{N+1}}{(1-c)^{N+2}}
+\end{alignat*}
+as desired.
+\subsection*{(c)}
+
+We first note that $f$ is defined on $(-1,1)$ and thus infinitely differentiable on this interval by Lemma \ref{lem:i}. Therefore, the assumptions for the Lagrange's Remainder Theorem (LRT) holds both on the interval $(-1,1)$ and $[0, 1/4]$.\\
+
+\noindent
+\textbf{LRT is not sufficient to show that the Taylor series for $f$ converges to $f$ on $(-1,1).$}
+
+Broadly this is as we are not able to put a sufficient bound on the value of $c$ to show that $E_N(x)$ converges.
+As a concrete example, consider $x=0.8.$ It is thus possible, that the ``correct'' value for $c$ is $c=0.3.$ %maybe explain this more
+This implies that 
+\begin{equation} \label{eq:x1c}
+    \frac{x}{1-c} = \frac{0.8}{1-0.3} = \frac{8}{7}> 1.
+\end{equation}
+Thus, we have that the geometric sequence $(g_n)$ where
+\[g_n = \left( \frac{x}{1-c}\right ) ^n = \left( 8/7\right ) ^n\] 
+diverges. We thus have that the $n$'th term of $E_N(x)$ (where $n$ is arbitrary) 
+is
+\begin{alignat}{2}\label{eq:simp}
+    E_N^{(n)}(x) &= \frac{x^{N+1}}{(1-c)^{N+2}}\nonumber \qquad&&\text{by prev. subquestion}\\
+    &= \frac{x}{(1-c)^2}\times\frac{x^{N}}{(1-c)^{N}}\nonumber\\
+    &=\frac{x}{(1-c)^2}g_n \\
+    &= \frac{8}{49}g_n. &&\text{by \eqref{eq:x1c}} \nonumber
+\end{alignat}
+As each term $E^{(n)}_N(x)$ in $E_N(x)$ is a constant multiple of $g_n$ in $(g_n)$.
+Therefore, by the ALT, as $(g_n)$ diverges, it must be that $E_N(x)$ also
+diverges. Hence, the LRT is not sufficient for this case as it is very possible that our value for $c$ is such that our Taylor series does not converge to $f$ at $x=0.8.$\\
+
+\noindent
+\textbf{LRT is sufficient to show that the Taylor series for $f$ converges to $f$ on $[0, 1/4].$}
+
+Because we only consider $x\in[0,1/4],$ we also only consider $c \in [0,1/4].$ Thus, we have that
+\begin{alignat*}{2} 
+    c &\le 1/4\\
+    1-c &\ge 1 - 1/4 \qquad&&\\
+    1-c &\ge 3/4\\
+    1-c&> x. && \text{as $x\in[0,1/4]\Rightarrow x\le1/4<3/4$}
+\end{alignat*}
+Thus as we know that $x\ge0$ and $(1-c)\ge 0,$ therefore, it holds that
+\[0\le\frac{x}{1-c}< 1.\]
+Thus, the geometric sequence $(g_n)$ where
+\[g_n = \left( \frac{x}{1-c}\right ) ^n\] 
+converges to $0$. We thus have that the $n$'th term of $E_N(x)$ (where $n$ is arbitrary) 
+is
+\[E_N^{(n)}(x) = \frac{x}{(1-c)^2}g_n\]
+as seen in \eqref{eq:simp}. Therefore, by the ALT, we have that $E_N(x)$ converges to $0$. It thus follows that the Taylor series for $f$ converges to $f$ on $[0, 1/4].$
+
+\newpage
+\section*{Problem 5}
+
+\subsection*{(a)}
+
+As will be proven in the next subquestion, $(g_n)$ converges to $f'$ when $f$ is differentiable. Thus $(g_n)$ converges to $f'(x)=2x.$
+
+\subsection*{(b)}
+
+If $f$ is differentiable then $g = f'.$
+
+\begin{proof}
+    Fix $\epsilon > 0$ and $c \in\mathbb{R}.$ As $f$ is differentiable, we have by definition of differentiabliliy that
+    \begin{equation*}
+        \lim_{x\to c} \frac{f(c)-f(x)}{c-x} = f'(c).
+    \end{equation*}
+    Therefore, by definition of functional limit, there exists $\delta > 0$ s.t.
+    \begin{equation} \label{eq:de2}
+        0<|x-c|<\delta\qquad\textbf{ implies }\qquad\left |\frac{f(c)-f(x)}{c-x}-f'(c)\right |<\epsilon/2.
+    \end{equation}
+    % We now construct the difference quotient function $d$ where
+    % \begin{equation*}
+    %     d(x) = \begin{cases}
+    %       \frac{f(x)-f(c)}{x-c} & x\neq c\\
+    %       f'(c) & x=c.  
+    %     \end{cases}
+    % \end{equation*}
+    % We have that $d$ is well-defined as $f$ is differentiable and therefore $f'(c)$ exists. 
+    % % Furthermore, we can show $d$ is continuous on $\mathbb{R}$. Specifically, for any $x \in \mathbb{R}\backslash\{c\},$ we have that $d(x)$ is continuous by the Algebraic Continuity Theorem (using the fact that $f$ is differentiable and thus continuous).
+    % Furthermore, $d$ is continuous at $c$ as the functional limit
+    % % Similarly, at $x=c,$ we have by the definition of derivative, that
+    % \[\lim_{x\to c} f(x) = \lim_{x\to c} \frac{f(x)-f(c)}{x-c}=f'(c),\]
+    % by defintion of derivative. This satisfies the Characterization of Continuity (specifically by Thm 4.3.2(iv)). Hence, $d$ is continuous at $c$ and    
+    % therefore, there exists $\delta > 0$ s.t.
+    % \begin{equation} \label{eq:de2}
+    %     |x-c|<\delta\qquad\textbf{ implies }\qquad|d(x)-d(c)|<\epsilon/2.
+    % \end{equation}
+
+    Now by the Archimedean principle, pick $N\in\mathbb{N}$ s.t. $1/N < \delta.$ Now considers some $n\ge N.$ It thus follows that $0<1/n < \delta.$ Therefore, we have that
+    \[0<|(c+1/n) -c| = |1/n| = 1/n<\delta,\]
+    and simlarly
+    \[0<|(c-1/n) -c| =  \left |-1/n\right | = 1/n <\delta.\]
+    Therefore, by \eqref{eq:de2} we have that
+    \begin{equation} \label{eq:i}
+        \left|\frac{f(c)-f(c-1/n)}{c-(c-1/n)} - f'(c)\right|< \epsilon / 2,
+    \end{equation}
+    and similarly
+    \begin{equation} \label{eq:ii}
+        \left|\frac{f(c)-f(c+1/n)}{c-(c+1/n)} - f'(c)\right|< \epsilon / 2.
+    \end{equation}
+    Thus, we have that
+    \begin{alignat*}{2}
+        \left|\frac{f(c)-f(c-1/n)}{c-(c-1/n)} -f'(c) + \frac{f(c)-f(c+1/n)}{c-(c+1/n)} - f'(c)\right| &\le \left|\frac{f(c)-f(c-1/n)}{c-(c-1/n)} - f'(c)\right|\\
+        &\quad+  \left|\frac{f(c)-f(c+1/n)}{c-(c+1/n)} - f'(c)\right| &&\;\text{triang. ineq.}\\
+        \left|\frac{f(c)-f(c-1/n)}{c-(c-1/n)} + \frac{f(c)-f(c+1/n)}{c-(c+1/n)} -2f'(c)\right|&< \epsilon/2 + \epsilon/2 && \text{by \eqref{eq:i} and \eqref{eq:ii}}\\
+        \left |\frac{f(c)-f(c-1/n)}{1/n} + \frac{f(c)-f(c+1/n)}{-1/n} -2f'(x)\right | &< \epsilon\\
+        \left| \frac{f(c+1/n)-f(c-1/n)}{1/n} -2f'(c)\right | &<\epsilon\\
+        \left| \frac{f(c+1/n)-f(c-1/n)}{2/n} -f'(c)\right | &<\epsilon \qquad&&\text{as $0\le a<b\Rightarrow a/2<b$}\\
+        \left| \frac{n}{2}[f(c+1/n)-f(c-1/n)]-f'(c)\right | &<\epsilon\\
+        |g_n(c)-f'(c)| &<\epsilon. &&\text{by def. of $g_n$} 
+    \end{alignat*}
+    Therefore, we have that $(g_n)\stackrel{pw}{\to}f'.$ Hence, $g=f'.$
+\end{proof}
+
+\subsection*{(c)}
+
+The proof is very similar (spot the difference).
+
+\begin{proof}
+    % proof may require punctured nbd
+    Fix $\epsilon > 0.$ As $f'$ is uniformly continuous, choose $\delta > 0$ s.t.
+    \begin{equation} \label{eq:de3}
+        |a-b|<\delta\qquad\textbf{ implies }\qquad|f'(a)-f'(b)|<\epsilon/2.
+    \end{equation}
+    Now given $a,b\in\mathbb{R}$ s.t. $|a-b|<\delta,$ assume WLOG that $a<b.$ 
+    As $f$ is differentiable and thus also continuous on the interval $[a,b],$ it thus follows by the MVT that there exists $t\in(a,b)$ s.t. \[f'(t)=\frac{f(a)-f(b)}{a-b}.\]
+    As $t\in(a,b)$ implies that $|t-b|<\delta.$ It thus follows by \eqref{eq:de3} that
+    \begin{equation*}
+        |f'(t)-f'(b)|=\left |\frac{f(a)-f(b)}{a-b} - f'(b) \right | < \epsilon/2.
+    \end{equation*}
+    As $a,b$ were arbitrary, this generalizes to the statement
+    \begin{equation} \label{eq:de4}
+        |a-b|<\delta\qquad\textbf{ implies }\qquad\left |\frac{f(a)-f(b)}{a-b}-f'(b)\right |<\epsilon/2.
+    \end{equation}
+
+    By the Archimedean principle, pick $N\in\mathbb{N}$ s.t. $1/N < \delta.$ Now let us fix $c \in\mathbb{R}$ and consider some  $n\ge N.$ We will show that $|g_n(c)-f'(c)|<\epsilon/2.$ By our choice of $n,$ it follows that $1/n < \delta.$ Therefore, we have that
+    \[|(c+1/n) -c| = |1/n| = 1/n<\delta,\]
+    and similarly
+    \[|(c-1/n) -c| =  \left |-1/n\right | = 1/n <\delta.\]
+    Therefore, by \eqref{eq:de4} we have that
+    \begin{equation} \label{eq:ia}
+        \left|\frac{f(c)-f(c-1/n)}{c-(c-1/n)} - f'(c)\right|< \epsilon / 2,
+    \end{equation}
+    and similarly
+    \begin{equation} \label{eq:iia}
+        \left|\frac{f(c)-f(c+1/n)}{c-(c+1/n)} - f'(c)\right|< \epsilon / 2.
+    \end{equation}
+    Thus, we have that
+    \begin{alignat*}{2}
+        \left|\frac{f(c)-f(c-1/n)}{c-(c-1/n)} -f'(c) + \frac{f(c)-f(c+1/n)}{c-(c+1/n)} - f'(c)\right| &\le \left|\frac{f(c)-f(c-1/n)}{c-(c-1/n)} - f'(c)\right|\\
+        &\quad+  \left|\frac{f(c)-f(c+1/n)}{c-(c+1/n)} - f'(c)\right| &&\;\text{triang. ineq.}\\
+        \left|\frac{f(c)-f(c-1/n)}{c-(c-1/n)} + \frac{f(c)-f(c+1/n)}{c-(c+1/n)} -2f'(c)\right|&< \epsilon/2 + \epsilon/2 && \text{by \eqref{eq:ia} and \eqref{eq:iia}}\\
+        \left |\frac{f(c)-f(c-1/n)}{1/n} + \frac{f(c)-f(c+1/n)}{-1/n} -2f'(x)\right | &< \epsilon\\
+        \left| \frac{f(c+1/n)-f(c-1/n)}{1/n} -2f'(c)\right | &<\epsilon\\
+        \left| \frac{f(c+1/n)-f(c-1/n)}{2/n} -f'(c)\right | &<\epsilon \qquad&&\text{as $0\le a<b\Rightarrow a/2<b$}\\
+        \left| \frac{n}{2}[f(c+1/n)-f(c-1/n)]-f'(c)\right | &<\epsilon\\
+        |g_n(c)-f'(c)| &<\epsilon. &&\text{by def. of $g_n$} 
+    \end{alignat*}
+    Therefore, we have that $(g_n)\stackrel{unif}{\to}f'.$
+\end{proof}
+\end{document}

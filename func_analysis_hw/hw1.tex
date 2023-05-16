@@ -1,0 +1,221 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{mathtools}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Functional Analysis HW1, Thomas Zeng }
+\rhead{Math 331, Spring 2023}
+\cfoot{\thepage}
+
+
+\begin{document}
+
+\section*{1}
+
+Given that $f$ is convex and differentiable on some neighborhood $V_\epsilon(a),$ then there exists some $u$ s.t. $0<\delta<u$ implies that
+\[\frac{1}{2\delta}\int_{a-\delta}^{a+\delta}f(x) > f(a).\]
+\begin{proof}
+    % We consider three cases.
+
+    % \noindent
+    % \textbf{Case 1:} ($f'(a)\ge 0$). 
+    % WLOG, assume that $f$ is increasing on $V_\epsilon(a)$ i.e. there is no $x\in V_\epsilon(a)$ s.t. $f'(x)=0$ (if this is not the case, just set $\epsilon = |a-x|$).
+    We first claim that for all $0<j<\epsilon$ that % put into its own lemma at begining
+    \begin{equation} \label{eq:T}
+        f(a+j)-f(a)>f(a)-f(a-j).
+    \end{equation}
+    % To prove this, we use contradiction.  Namely, assume this is not true for some fixed $j$. Therefore
+    % \begin{equation} \label{eq:c}
+    %     f(a+j)-f(a)\le f(a)-f(a-j).
+    % \end{equation}
+    By the Mean Value Theorem (as $f$ is differentiable and thus also continuous), it follows that there exists points $c\in(a-j,a)$ and $c'\in(a,a+j)$ with 
+    \[f'(c) = \frac{f(a)-f(a-j)}{j} \quad\text{and}\quad f'(c') =\frac{f(a+j)-f(a)}{j}.\]
+    As $c'>c,$ by definition of convexity, we have $f'(c')> f'(c)$. Therefore, we have
+    \begin{alignat*}{2}
+        % f'(c') &> f'(c)\\
+        \frac{f(a+j)-f(a)}{j}&>\frac{f(a)-f(a-j)}{j} \qquad&& \text{by above}\\
+        f(a+j)-f(a) &> f(a)-f(a-j) &&\text{as $j>0,$}
+    \end{alignat*}
+    and hence proving \eqref{eq:T}.
+
+    Now for any $0<\delta<\epsilon,$ we therefore have that
+    \begin{alignat*}{2}
+        \int_{(0,\delta)}  f(a+j) - f(a) dj &> \int_{(0,\delta)}  f(a) - f(a-j) dj \qquad&&\text{by integral properties and \eqref{eq:T}}\\
+        \int_{0}^{\delta}  f(a+j) - f(a) &> \int_{0}^{\delta}  f(a) - f(a-j) &&\text{as $\int_{(a,b)}f=\int_{[a,b]}f$}\\
+        \int_{a}^{a+\delta} f(x) - f(a) dx&> \int_{a-\delta}^{a} f(a) - f(x) dx&&\text{change of variables}\\
+        \int_{a}^{a+\delta} f(x) + \int_{a-\delta}^{a} f(x) &>  \int_{a}^{a+\delta} f(a) + \int_{a-\delta}^{a} f(a)\\
+        \int_{a-\delta}^{a+\delta}f(x) &> \delta f(a) + \delta f(a)\\
+        \frac{1}{2\delta}\int_{a-\delta}^{a+\delta}f(x) &> f(a).
+    \end{alignat*}
+    Thus proving our claim as desired.
+    % \noindent
+    % \textbf{Case 2:} ($f'(a)<0$). This case is symetric to the first case. Just negate the signs in \eqref{eq:T} (and throughout rest of proof).
+    % \noindent
+    % \textbf{Case 3:} ($f'(a)=0$). We claim that for all $0<j<\epsilon$ that both
+    % \[f(a-j)>f(a) \quad\text{and}\quad f(a+j)>f(a).\]
+    % This result again follows simply from contradiction with the Mean Value Theorem. Specifically, if \[f(a-j)\le f(a),\] then there exists $c \in (a-j, a)$ with
+    % \[f'(c)= \frac{f(a) - f(a-j)}{j} \ge 0 = f(a) \quad\text{but}\quad c<a,\]
+    % which contradicts the convexity assumption. A similar proof works for $f(a+j).$
+
+    % It thus follows for any $0<\delta<\epsilon$ that
+    % \[\int_{(0,\delta)}f(a-j)dj >\int_{(0,\delta)}f(a)dj \quad\text{and}\quad \int_{(0,\delta)}f(a+j)dj>\int_{(0,\delta)}f(a)dj.\]
+    % Combing these two inequalities, we thus have:
+    % \begin{alignat*}{2}
+    %     \int_{(0,\delta)}f(a-j)dj + \int_{(0,\delta)}f(a+j)dj &> \int_{(0,\delta)}f(a)dj + \int_{(0,\delta)}f(a)dj\\
+    %     \int_{a-\delta}^{a+\delta}f(x)dx &> \int_{a-\delta}^{a+\delta} f(a)dx\\
+    %     \frac{1}{2\delta}\int_{a-\delta}^{a+\delta}f(x) &> f(a).
+    %  \end{alignat*}
+    %  as desired.
+\end{proof}
+\newpage
+
+\section*{2}
+The solution
+\begin{equation} \label{eq:def}
+    u(t,x) \coloneqq \sum_{n=1}^{\infty}c_ne^{-(\pi n)^2t}\sin(n\pi x)
+\end{equation}
+is continuous and solves the heat equation if $\sum_{n=1}^{\infty}|c_n|<\infty$.\\
+
+\noindent
+\textbf{We first show that $u$ is continuous.}
+\begin{proof}
+    As  $\sum_{n=1}^{\infty}|c_n|<\infty,$ therefore, there exists some $M\in\mathbb{R}$ s.t.  $\sum_{n=1}^{\infty}|c_n|<m,$ i.e. $\sum_{n=1}^{\infty}|c_n|$ is bounded. Therefore, as the partial sums of this series is monotone and bounded, it follows by Monotone Convergence Theorem that $\sum_{n=1}^{\infty}|c_n|$ converges.
+
+    We now define the sequence of functions $(f_n)$ with
+    \[f_n = c_ne^{-(\pi n)^2t}\sin(n\pi x).\]
+    Each $f_n$ is continuous by Algebraic Continuity Theorem. 
+    
+    We furthermore claim that $\sum f_n \stackrel{unif}{\to} u.$ By definition of $u$ as in \eqref{eq:def}, given that $\sum f_n$ converges, it must converge to $u$. It thus suffices to show that $\sum f_n$ is uniform convergent. Specifically, for arbitrary $n\in\mathbb{N}$ and arbitrary $x,t$ we have that
+    \begin{alignat*}{2}
+        |f_n(x,t)| &= \left |c_ne^{-(\pi n)^2t}\sin(n\pi x)\right | \qquad&&\text{by def. of $f_n$}\\
+        &\le |c_ne^{-(\pi n)^2t}| \qquad&&\text{as $-1\le \sin x \le 1$ for all $x$}\\
+        &\le  |c_n| &&\text{as $0<e^{-x}\le 1$ for $x\ge0$}\\
+    \end{alignat*}
+    Therefore define the sequence $(M_k)$ where $M_k = |c_n|.$ It thus follows that $\sum_{n=1}^{\infty} m_n = \sum_{n=1}^{\infty} |c_n|$ and therefore converges. Thus, by the Weierstraß M-Test, it follows that $\sum f_n$ is uniform convergent and thus $\sum f_n \stackrel{unif}{\to} u.$
+
+    Thus, by the Term-by-Term Continuity Theorem, $u$ is continuous.
+\end{proof}
+
+\noindent
+\textbf{We next show that $u$ solves the heat equations.}
+
+\begin{proof}
+    We first claim that the boundary conditions are met, i.e.
+    \[u(t,0)=u(t,1)=0.\]
+    This is as for any $n\in\mathbb{N}$ we have that
+    \[\sin(n\pi0)=\sin(n\pi1) =0,\]
+    and therefore
+    \[u(t,0) = u(t,1) = \sum_{n=1}^{\infty} 0 = 0\]
+    as desired.
+
+    Now we show that
+    \begin{equation} \label{eq:truth}
+        \frac{\partial }{\partial t}u = \frac{\partial^2}{\partial x^2}u.
+    \end{equation}
+    As each $f_n$ is a solution to the heat equation, it is the case that
+    \begin{equation} \label{eq:eq}
+        \frac{\partial }{\partial t}f_n = \frac{\partial^2}{\partial x^2}f_n = -c_n(\pi n)^2e^{-(\pi n)^2t}\sin(n\pi x)
+    \end{equation}
+    for arbitrary $n$.
+
+    Now consider some $c>0,$ we will show that \eqref{eq:truth} is true for $(t,x)\in (c, \infty)\times [0,1].$ With the fixed $c,$ we first define sequence $(z_n)$ with
+    \begin{equation*}
+        z_n = \frac{(\pi n)^2}{e^{(\pi n)^2c}}.
+    \end{equation*}
+    It follows by properties of exponentiation that for any $t>c$ and any $n\in\mathbb{N}$ we have
+    \begin{equation} \label{eq:tz}
+        \left | \frac{(\pi n)^2}{e^{(\pi n)^2t}} \right | \le |z_n|.
+    \end{equation}
+    Furthermore, as $z_n \to 0$ (the nonrigorous explanation being that exponentiation grows faster than quadratic), there exists $N\in\mathbb{N}$ s.t. $n\ge N$ implies that
+    \begin{equation} \label{eq:less}
+        |z_n| < 1.
+    \end{equation}
+
+    Now going back to $f_n,$ for any arbitrary $n$ we have that
+    \begin{alignat*}{2}
+        \left | \frac{\partial }{\partial t}f_n \right | &= |-c_n(\pi n)^2e^{-(\pi n)^2t}\sin(n\pi x)|\\
+        &\le |c_n(\pi n)^2e^{-(\pi n)^2t}| && \text{as $-1 \le \sin x \le 1$ for all $x$}\\
+        &= \left |c_n\frac{(\pi n)^2}{e^{(\pi n)^2t}} \right |\\
+        &\le |c_n z_n| && \text{by \eqref{eq:tz}.}
+    \end{alignat*}
+    If we further only consider $n \ge N,$ we also have that
+    \begin{alignat*}{2}
+        \left | \frac{\partial }{\partial t}f_n \right | &\le |c_n| \qquad&& \text{by \eqref{eq:less}.}
+    \end{alignat*}
+    Thus, if we define the sequence $(M_k),$ where
+    \begin{equation*}
+        M_k = \begin{cases*}
+            |c_k z_k| & $k < N$\\
+            |c_k| &o.w.
+        \end{cases*},
+    \end{equation*}
+    it follows that $\sum M_k$ converges (as it differs from $\sum |c_k|$ only in the first $N-1$ terms). Similarly, by construction, we have that $|f_k| < M_k$ for any $k.$ Therefore, by the Weierstraß M--test, we have that $\sum \frac{\partial}{\partial t}f_n$ converges uniformly. Thus, by the Term--by--Term Differentiability Theorem, it converges to $\frac{\partial}{\partial t} u.$
+
+    By \eqref{eq:eq}, it follows that $\sum \frac{\partial^2}{\partial x^2} f_n$ also converges to $\frac{\partial}{\partial t} u.$ Thus, to prove \eqref{eq:truth}, it suffices to show that $\sum \frac{\partial^2}{\partial x^2} f_n$ converges to $\frac{\partial^2}{\partial x^2} u.$
+
+    To do so, we need only repeat the same method as above (with Weierstraß M--test and Term--by--Term differentiability---which I omit for brevity) to show that $\sum \frac{\partial}{\partial x} f_n \stackrel{unif}{\to} \frac{\partial}{\partial x} u,$ and then  \emph{again} to show that $\sum \frac{\partial^2}{\partial x^2} f_n \stackrel{unif}{\to} \frac{\partial^2}{\partial x^2} u$ as desired.
+
+    Thus, we have that \eqref{eq:truth} is true for $(t,x)\in (c, \infty)\times [0,1].$ As $c$ was arbitrary, it is also true for $(t,x)\in (0, \infty)\times [0,1].$ Thus $u$ solves the heat equations as desired.
+\end{proof}
+
+\newpage
+\section*{3}
+\begin{proof}
+    When $n=m,$ we have that
+    \[\sin(n\pi x)\sin(m\pi x)= \sin^2(n\pi x).\]
+    Now using the trig. identity:
+    \[\sin^2(x)=\frac{1-\cos(2x)}{2},\]
+    it follows that
+    \begin{alignat*}{2}
+        2\int_{0}^{1} \sin(n\pi x)\sin(m\pi x)dx &=2\int_{0}^{1} \sin^2(n\pi x)dx\\
+        &= 2\int_{0}^{1} \frac{1-\cos(2n\pi x)}{2} dx\\
+        &= 2\left. \left [\frac{1}{2}x - \frac{\sin(2n\pi x)}{4n\pi}\right ]  \right\vert_0^1\\
+        &= 1.
+    \end{alignat*}
+
+    When $n\neq m,$ we can use the trig. identity
+    \[\sin x\sin y = \frac{1}{2}[\cos(x-y)+\cos(x+y)].\]
+    Specifically, it follows that
+    \begin{alignat*}{2}
+        2\int_{0}^{1} \sin(n\pi x)\sin(m\pi x)dx &= 2\int_{0}^{1} \frac{1}{2}[\cos(n\pi x-m\pi x)+\cos(n\pi x+m\pi x)]dx\\
+        &= \int_{0}^{1} \cos((n-m)\pi x)+\cos((n+m)\pi x) dx\\
+        &= \left. \frac{\sin((n-m)\pi x)}{(n-m)\pi } + \frac{\sin((n+m)\pi x)}{(n+m)\pi } \right\vert_0^1\\
+        &= 0.
+    \end{alignat*}
+\end{proof}
+
+\noindent
+\textbf{We next want to show that $c_n = \hat{u}_{0,n}$ for arbitrary $n\in\mathbb{N}$.}
+
+\begin{proof}
+    Given arbitrary $n\in\mathbb{N},$ we have that
+    \begin{alignat*}{2}
+        \hat{u}_{0,n} &= 2 \int_{0}^{1}\sin(n\pi x)u_0(x)dx\\
+        &=  2 \int_{0}^{1}\sin(n\pi x) \sum_{m=1}^{\infty}c_m\sin(m\pi x)\\
+        &= \sum_{m=1}^{\infty} 2 \int_{0}^{1}\sin(n\pi x)c_m\sin(m\pi x) &&\text{by Term--by--Term Int. Thm\footnotemark}\\
+        &= 2 \int_{0}^{1}\sin(n\pi x)\sin(n\pi x) c_n + \sum_{m=1, m\neq n}^{\infty} 2 \int_{0}^{1}\sin(n\pi x)c_m\sin(m\pi x)\\
+        &= c_n &&\text{by 1st part of this problem}
+    \end{alignat*}
+    \footnotetext{Specifically as the partial sums of $u(t,x)$ are continuous, and we assume they converge uniformly.}
+\end{proof}
+
+\end{document}

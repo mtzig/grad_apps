@@ -1,0 +1,172 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Functional Analysis HW6, Thomas Zeng }
+\rhead{Math 331, Spring 2023}
+\cfoot{\thepage}
+
+
+\begin{document}
+
+\section*{1}
+\subsection*{(a)}
+
+\textbf{We first claim that $\mathscr{L}(X,Y)$ is a vector space.}
+
+\begin{proof}
+    Let $A,B\in\mathscr{L}(X,Y).$ Define $C \coloneqq A+B$ s.t. for any $f\in X,$ we have that
+    \[Cf = Af + Bf.\]
+    We first have that $C$ is linear as
+    \[C(\alpha f + g) = A(\alpha f + g) + B(\alpha f + g) = \alpha(A+B)f + (A+B)g=\alpha Cf + Cg,\]
+    where we use the fact that $A,B$ are linear. We also have that $C$ is bounded, as for any arbitrary unit vector $f\in X,$ we have that
+    \begin{alignat*}{2}
+        \Vert Cf\Vert_Y &= \Vert Af + Bf\Vert_Y\\
+        &\le \Vert Af\Vert_Y + \Vert Bf\Vert_Y\\
+        &\le \Vert A\Vert + \Vert B\Vert.
+    \end{alignat*}
+    Thus, $\mathscr{L}(X,Y)$ is closed under addition.
+
+    Now, choose some $\alpha\in\mathbb{C}$ and let $D\coloneqq \alpha A$ s.t. for any $f\in X,$ we have that
+    \[Df = \alpha Af.\]
+    We again have that $D$ is linear as
+    \[D(\beta f+g) = \alpha A(\beta f+g) = \beta\alpha Af + \alpha Ag=\beta Df + Dg\]
+    using the linearity of $A.$ We similarly have that $D$ is bounded, as for any arbitrary unit vector $f\in X,$ we have that
+    \begin{alignat*}{2}
+        \Vert Df\Vert_y &= \Vert \alpha Af\Vert_Y\\
+        &= |\alpha| \Vert Af\Vert_y\\
+        &\le |\alpha| \Vert A\Vert.
+    \end{alignat*}
+    Thus, $\mathscr{L}(X,Y)$ is also closed under multiplication and thus a vector space.
+\end{proof}
+
+\noindent
+\textbf{We next claim that $\mathscr{L}(X,Y)$ is a normed space (namely the operator norm).}
+
+\begin{proof}
+    We first show positive definiteness. Namely, select arbitrary $A\in \mathscr{L}(X,Y) \backslash \{0\}.$ It follows that there exist $f\in X$ s.t. $\Vert Af\Vert_Y >0.$  We thus have that $\Vert A \frac{f}{\Vert f\Vert}\Vert_Y > 0$ by positive homogeneity of $\Vert \cdot\Vert_Y.$ Therefore, $\Vert A\Vert > 0,$ as desired.
+
+    We next show positive homogeneity. Namely, given arbitrary $\alpha\in\mathbb{C},$ we have that
+    \begin{alignat*}{2}
+        \Vert \alpha A\Vert &= \sup_{f\in X, \Vert f\Vert_X = 1} \Vert \alpha Af\Vert_Y\\
+        &= \sup_{f\in X, \Vert f\Vert_X = 1} |\alpha|\Vert  Af\Vert_Y\\
+        &= |\alpha| \sup_{f\in X, \Vert f\Vert_X = 1} \Vert  Af\Vert_Y\\
+        &= |\alpha| \Vert A\Vert.
+    \end{alignat*}
+    This is exactly positive homogeneity.
+
+    Lastly, we show triangle inequality. Namely, for arbitrary $A,B\in\mathscr{L}(X,Y),$ we have that
+    \begin{alignat*}{2}
+        \Vert A+B\Vert &= \sup \Vert (A+B)f\Vert_Y\\
+        &= \sup \Vert Af + Bf\Vert_Y\\
+        &\le \sup \Vert Af\Vert_Y + \Vert Bf\Vert_Y\\
+        &\le \sup \Vert Af\Vert_Y + \sup\Vert Bf\Vert_Y\\
+        &= \Vert A\Vert + \Vert B\Vert.
+    \end{alignat*}
+    It thus follows that $\mathscr{L}(X,Y)$ is a normed space.
+\end{proof}
+
+\subsection*{(b)}
+
+\begin{proof}
+    Let us assume, $O$ is not linearly indepent. That is there exists some non--zero $f_j\in O$ and some finite subset $\{f_i\}_{i=1}^n\subset O\backslash \{f_j\}$ s.t.
+    \[f_j = \sum_{i=1}^n \alpha_i f_i, \quad\text{for some }\alpha_i\in\mathbb{C}.\]
+    By orthogonality, for any arbitrary $i\le n,$ we have that
+    \begin{alignat*}{2}
+        \langle f_i, f_j\rangle &= 0\\
+        \langle f_i, \sum_{k=1}^{n}\alpha_kf_k\rangle &= 0\\
+        \sum_{k=1}^{n} \langle f_i, \alpha_k f_k\rangle &= 0\\
+        \langle f_i, \alpha_i f_i \rangle &= 0\\
+        \alpha_i &= 0.
+    \end{alignat*}
+    This therefore implies that $f_j = 0$ ---a contradiction.
+\end{proof}
+
+\section*{2}
+
+\subsection*{(a)}
+
+From Problem 1.2, we know that
+\begin{equation*}
+    2\int_{0}^{1}\sin(n\pi x)\sin(m\pi x)dx = \begin{cases*}
+        1 & n=m\\
+        0 & o.w.
+    \end{cases*}
+\end{equation*}
+This further implies that
+\begin{equation*}
+    \langle \sin(n\pi x), \sin(m\pi x)\rangle = \int_{0}^{1}\sin(n\pi x)\sin(m\pi x)dx = \begin{cases*}
+        1/2 & n=m\\
+        0 & o.w.
+    \end{cases*}
+\end{equation*}
+In other words, we have that $\Vert \sin(n\pi x)\Vert^2 = 1/2,$ and hence $\Vert \sin(n\pi x)\Vert = \sqrt{1/2}.$ Thus to normalize the vector, it suffices to multiply them by $\sqrt{2}.$
+We resultantly have the orthonormal set $\left \{\sqrt{2}\sin(n\pi x)\right \}_{n\ge 0}.$
+
+\subsection*{(b)}
+
+First, we clearly have that $\Vert x\Vert^2 = \int_0^1 x^2 = \frac{1}{3}.$
+By directly applying Parseval's relation, we thus have that
+\[\frac{1}{3} = \sum_{n=0}^{\infty} \left (\int_{0}^{1}\sqrt{2}\sin(n\pi x)xdx\right)^2.\]
+I suppose this a really amazing fact.
+
+\section*{2.2}
+
+\begin{proof}
+    Choose arbitrary vector $f.$ As $\{u_j\}$ is an orthonormal basis, it follows that,
+    \begin{equation} \label{eq:dd}
+        f = \sum_k \alpha_k u_k
+    \end{equation}
+    for some $\{\alpha_k\}.$ It similarly follows that
+    \[Af = \sum_j \langle u_j, Af\rangle u_j.\]
+    Thus, to show that $A$ is uniquely determined by its matrix elements, it suffices to show that
+    \[\langle u_j, Af\rangle =\sum_{k} \langle u_j, Au_k\rangle \alpha_k\]
+    for all $j,$ which we show as follows
+    \begin{alignat}{2}
+        \sum_{k} \langle u_j, Au_k\rangle \alpha_k &= \sum_{k} \langle u_j, Au_k\alpha_k\rangle &&\text{sesquilin. of $\langle .,..\rangle$}\nonumber\\
+        &= \left\langle u_j, \sum_{k} Au_k\alpha_k\right\rangle &&\text{cont. of $\langle .,..\rangle$}\nonumber\\
+        &= \left\langle u_j, A \left (\sum_{k} u_k\alpha_k \right)\right\rangle\; &&\text{cont. of bounded linear operator}\label{eq:bl}\\
+        &= \langle u_j, Af\rangle &&\text{by \eqref{eq:dd}}\nonumber.
+    \end{alignat}
+\end{proof}
+
+\noindent
+Our argument would break at \eqref{eq:bl} if $A$ was not bounded, as then $A$ is not continuous, and we could not pull the sum in.
+
+\section*{2.3}
+Consider the vectors 
+\begin{align*}
+     (&1+1,0,0,0,\cdots)\\
+     (&0, 1 + \frac{1}{2},0,0,\cdots)\\
+     (&0, 0,1 + \frac{1}{3},0,\cdots)\\
+      &\quad\quad\quad\vdots\\
+\end{align*}
+in $\ell^2(\mathbb{N}).$
+
+These vectors are clearly bounded as there are no vectors with norm greater than two. Similarly, it is closed, as for any two vectors $f_i$ and $f_j$ where $f_i \neq f_j,$ we have that
+$\Vert f_i-f_j\Vert > 1.$
+Therefore, there are no Cauchy sequences and thus no convergent sequences in this set. This implies that there is no limit points and so it is trivially closed. Clearly, this set has no vector with minimal norm as the norms approach $1$ but never attain it.
+
+This cannot happen in finite dimension, as we would have that any closed bounded set is compact by the Heine--Borel Theorem. Therefore, the norm function must attain its minimum in the set (since it is continuous).
+
+\end{document}

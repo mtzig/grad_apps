@@ -1,0 +1,367 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis PS8, Thomas Zeng }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\newcounter{relctr} %% <- counter for relations
+\everydisplay\expandafter{\the\everydisplay\setcounter{relctr}{0}} %% <- reset every eq
+\renewcommand*\therelctr{\alph{relctr}} %% <- label format
+
+\newcommand\labelrel[2]{%
+  \begingroup
+    \refstepcounter{relctr}%
+    \stackrel{\textnormal{(\alph{relctr})}}{\mathstrut{#1}}%
+    \originallabel{#2}%
+  \endgroup
+}
+\AtBeginDocument{\let\originallabel\label} %% <- store original definition
+
+\begin{document}
+
+
+\section*{6.6.5}
+\subsection*{a}
+% e^x, verify converge uniformly to e^x on any interval of form -R, R
+
+As $f(0)=f'(0)=f^{(n)}(0)=1$ for all $n\in\mathbb{N},$ it thus follows that the Taylor expansion is
+\[S_N(x)=\sum_{n=0}^N x^n/n!.\]
+
+Now we want to show that $S_N$ converges uniformly to $e^x$ on any of interval of form $[-R,R].$
+
+\begin{proof}
+    Fix $N\in\mathbb{N}$ and $R> 0.$ To show $S_N$ converges  uniformly to $e^x$ on $[-R,R]$, it suffices to show the error function $E_N$ converges uniformly to $0$. Thus fix $\epsilon >0.$
+    
+    Now for any $c$ satisfying $|c|<|x|$ and $x\in[-R, R]$ it follows that $c<R$ and therefore
+    \begin{equation} \label{eq:cb}
+        e^c < e^R.
+    \end{equation}
+    As $f$ is infinitely differentiable, and thus $N+1$ differentiable, thus the Lagrange's Remainder Theorem applies. For any $x\in [-R, R],$ we thus have that
+    \begin{equation} \label{eq:l}
+        E_N(x) = \left |\frac{f^{(n+1)}(c)}{(N+1)!}x^{N+1} \right | \labelrel={a}\left |\frac{e^c}{(N+1)!}x^{N+1} \right |\labelrel\le{b}\left |\frac{e^R}{(N+1)!}R^{N+1} \right |
+    \end{equation}
+    where \eqref{a} is true as $f^{n}(c)=e^c$ for all $n\in\mathbb{N}$ and \eqref{b} is true by \eqref{eq:cb} and since $x\in[-R,R].$ As shown in class, any sequence of the form $b^n/n!$ where $b>0$ converges to $0.$ It thus follows by the ALT (as $e^R$ is a constant) and the Order Limit Theorem that \eqref{eq:l} converges to $0$ as $N$ goes to infinity. That is there exists some $N$ s.t. $n\ge N$ implies that
+    \[ E_n(x) \le \left |\frac{e^R}{(n+1)!}R^{n+1} \right |<\epsilon\]
+    as desired. Therefore, $E_N$ converges uniformly to $0$ and thus $S_N$ converges uniformly to $e^x$ on $[-R, R].$
+\end{proof}
+ 
+\section*{7.2.2}
+
+\subsubsection*{a}
+We note that $f$ is decreasing on the interval $[1,4].$ Therefore, for any $[x_{k-1},x_k]\subseteq [1,4]$ we have that $m_k = f(x_k)$ and $M_k=f(x_{k-1}).$
+\begin{align*}
+    L(f,P) &= f(3/2)\times(3/2-1) + f(2)\times(2-3/2)+f(4)\times(4-2)\\
+    &= 2/3\times1/2 + 1/2\times1/2+1/4\times2\\
+    &=13/12.
+\end{align*}
+
+\begin{align*}
+    U(f,P) &= f(1)\times(3/2-1) + f(3/2)\times(2-3/2)+f(2)\times(4-2)\\
+    &= 1\times1/2 + 2/3\times1/2+1/2\times2\\
+    &=11/6.
+\end{align*}
+
+\begin{align*}
+    U(f,P)-L(f,P) &= 11/6-13/12\\
+    &=9/12.
+\end{align*}
+
+\subsubsection*{b}
+
+Denote $P' = P \cup \{3\}.$ Therefore, $P'$ is a refinement of $P.$ By Lemma 7.2.3, we know that $U(f,P)\ge U(f,P')$ and $L(f,P)\le U(f,P').$ Because we know that $f$ is decreasing on $[1,4],$ therefore these two inequalities are actually strict, and therefore we would have that $U(f,P')-L(f,P')<U(f,P)-L(f,P).$
+\subsubsection*{c}
+$f$ is clearly continuous on the bounded interval $[1,4].$ 
+
+Thus, as detailed in the proof of Theorem 7.2.9, we want to find a $\delta$ s.t. $|x-y|<\delta$ implies that
+\begin{equation}
+    |f(x)-f(y)|<\frac{\epsilon}{4-1}= 2/15.
+\end{equation}
+Now consider $\delta = 2/15.$ We would then have the following:
+\begin{alignat*}{2}
+    |y-x| &< 2/15 &&\text{by our choice of $\delta$}\\
+    \left | \frac{y-x}{y} \right | &< 2/15 \quad&&\text{ as $y\ge 1$}\\
+    \left | 1 - \frac{x}{y}\right | &< 2x/15 \quad&&\text{ as $x\ge 1$}\\
+    \left | 1/x - 1/y\right | &< 2/15
+    % \left | 1/x - 1/y\right | &< \epsilon/3
+\end{alignat*}
+as desired.
+
+Therefore, the partition $P'=[1,1.1,1.2,1.3,\cdots,4]$ with $\Delta x_k = 0.1<\delta,$  would allow us to have $U(f,P')-L(f,P')<2/5.$
+% Now consider $\delta = 0.1.$ Now given $x\in[1,4],$ we would thus have that
+% Therefore we have that % fix this crap
+% \begin{alignat*}{2}
+%     \frac{0.1}{1.1} &<\frac{2}{15}\\
+%     \frac{\delta}{x(x+\delta)} &<\frac{2}{15}\\
+%     \frac{x+\delta -x}{x(x+\delta)} &< \frac{2}{15}\\
+%     \left | \frac{1}{x} - \frac{1}{x+\delta} \right |  &< \frac{2}{15},\\
+%     % |f(x)-f(y)|&<\frac{2}{15}\\
+% \end{alignat*}
+% and similarly
+% \begin{alignat*}{2}
+%     \frac{1}{9} &<\frac{2}{15}\\
+%     \frac{.1}{.9} &<\frac{2}{15}\\
+%     \frac{\delta}{x(x-\delta)} &<\frac{2}{15}\\
+%     \frac{x+\delta -x}{x(x-\delta)} &< \frac{2}{15}\\
+%     \left | \frac{1}{x}-\frac{1}{x-\delta} \right | &< \frac{2}{15}\\
+% \end{alignat*}
+
+
+\section*{7.2.4}
+
+$g$ must be the constant function.
+
+\begin{proof}
+    First we have that for any $ x_k, x_{k+1}\in P$ it must be that $L(f,\{x_k, x_{k+1}\})\le U(f,\{x_k, x_{k+1}\})$ by Lemma 7.2.4. Therefore, as we have that $L(f,P)=U(f,P),$ this implies that $L(f,\{x_k, x_{k+1}\}) =  U(f,\{x_k, x_{k+1}\}).$ In other words, the infimum and supremum of the set $\{f(x):x\in[x_{k-1},x_k]\}$ is the same value. Therefore, $g$ must be constant on each $[x_k,x_{k+1}].$ Furthermore, as each interval  $[x_k,x_{k+1}]$ shares an endpoint with its ``adjacent'' invervals, therefore $g$ must be constant on $[a,b].$
+\end{proof}
+
+As the constant function is continuous, therefore $g$ is continuous. It is similarly, clearly integrable as for any partition, we have that $m_k= M_k$ for any $k$. Thus, $\int_a^b g= (b-a)g(a).$ 
+
+\section*{7.2.5}
+
+\begin{proof}
+    Fix $\epsilon > 0.$ We want to show there exists some partition $P$ s.t. $U(P)-L(P)<\epsilon.$ As $f_n$ converges uniformly to $f,$ there exists some $n\in\mathbb{N}$ s.t.
+    \begin{equation*}
+        |f_n(x)-f(x)|<\frac{\epsilon}{3(b-a)}.
+    \end{equation*}
+    As $f_n$ is integrable, there exists some partition $P$ s.t.
+    \begin{equation*}
+        U(f_n,P)-L(f_n,P)<\epsilon/3.
+    \end{equation*}
+    Now by our choice of $n,$ it follows that
+    \begin{equation}
+        L(f,P)\ge \sum (m_k-\epsilon/(3(b-a)))(x_k-x_{k-1}) =L(f_n,P)-\epsilon/3
+    \end{equation}
+    and
+    \begin{equation}
+        U(f,P)\le \sum (M_k+\epsilon/(3(b-a)))(x_k-x_{k-1})=U(f_n,P)+\epsilon/3.
+    \end{equation}
+    Therefore, we have that
+    \begin{alignat*}{2}
+        U(f,P)-L(f,P)&\le U(f_n,P)+\epsilon/3 - L(f_n,P)+\epsilon/3\\
+        &<\epsilon
+    \end{alignat*}
+    as desired.
+\end{proof}
+
+\section*{7.3.1}
+
+\subsection*{a}
+
+Given an arbitrary partition $P=\{x_1=0, x_2,\cdots,x_n=1\}$ we have that for any sub-interval $[x_{k-1},x_{k}]$ that the left endpoint $x_{k-1}$ is less than $1.$ Therefore, $m_k=\inf\{f(x):x\in[x_{k-1},x_k]\}=1.$ It thus follows that
+\begin{align*}
+    L(f,P) &= \sum m_k (x_k-x_{k-1})\\
+    &= \sum 1(m_k-m_{k-1})\\
+    &= 1-0\\
+    &= 1.
+\end{align*}
+
+\subsection*{b}
+
+Consider $P=\{0,.89,1\}.$ It follows that
+\begin{align*}
+    U(L,P) &= \sum M_k (x_k-x_{k-1})\\
+    &= 1(.9-0) + 2(1-.89)\\
+    &<1.1.
+\end{align*}
+
+\subsection*{c}
+
+WLOG assume $\epsilon < 1$ as o.w. the partition $P=\{0,1\}$ would work. % maybe elaborate on this
+
+Let $d$ be a value s.t. $1-\epsilon<d<1.$ Now consider the partition $P=\{0,d, 1\}.$ It follows that
+\begin{alignat*}{2}
+    U(L,P) &= \sum M_k (x_k-x_{k-1})\\
+    &= 1(d-0) + 2(1-d)\\
+    &= d + 2 - 2d\\
+    &= 2-d\\
+    &< 2 - (1-\epsilon)\\ % should break this into two cases, one for when epsilon 
+    &< 1+\epsilon.
+\end{alignat*}
+
+\section*{7.3.3}
+
+\begin{proof}
+    Fix $\epsilon>0.$ By the Archimedean principle, there exists some $N\in\mathbb{N}$ s.t. for any $n\ge N$ we have that $1/n < \epsilon/2.$ Now let $c = \min\{\epsilon/(2N), 1/(n-1)-1/n\}.$ Consider the partition 
+    \begin{equation*}
+        P=\left \{\underbrace{0,\frac{1}{N}}_{A}, \overbrace{\underbrace{\frac{1}{N-1}-c/2, \frac{1}{N-1}+c/2}_{B},  \frac{1}{N-2}-c/2, \frac{1}{N-2}+c/2,\cdots, 1-c/2, 1}^{C}\right \}.
+    \end{equation*}
+    
+    We note that $\sup\{f(x), x\in A\}< \epsilon/2$ by our choice of $N$ and that the length of the interval $A$ is at most $1$. Now we note that $C$ consits of $N-1$ subintervals of length at most $c$ (as in $B$.) Furthermore, for any subintervals e.g. $B,$ we have that $\sup\{f(x), x\in B\}\le 1$ (as $f$ is bounded above by $1$ on the interval $[0,1]$). Therefore, we have that
+    \begin{alignat*}{2}
+        U(f,P) &\le \epsilon/2 + (N-1)c \qquad&&\text{area of $A \le \epsilon/2$ and $N-1$ subintervals of area $\le c$}\\
+        &< \epsilon/2 + Nc\\
+        &< \epsilon/2 + N\epsilon/(2N) &&\text{by our def. of $c$}\\
+        &= \epsilon.
+    \end{alignat*}
+    As the irrationals are dense in $\mathbb{R},$ it clearly holds that $L(f,P)=0.$ It thus follows that
+    \begin{equation*}
+        U(f,P)-L(f,P)<\epsilon-0 = \epsilon.
+    \end{equation*}
+    % Consider P = 0, 1/N, 1/(N-1)-c/2, 1/(N-1)+c/2, ... 1 - c/2, 1
+        % where c = epsilon/2N
+    % U < 1/N + c*1
+\end{proof}
+
+Thus, $f$ is integrable. As $L(f)=0,$ it thus follows that $\int_{0}^{1}f = 0.$
+
+\section*{7.3.5}
+\subsection*{a}
+Consider $f_n$ on the interval $[0,1]$ as follows
+\begin{equation*}
+    f_n(x)=\begin{cases}
+        1 & x = a/b \text{ for some } a,b\in\mathbb{N},\; b\le n\\
+        0 & \text{o.w.}
+    \end{cases}
+\end{equation*}
+Here we have that $(f_n)$ converges point wise to the Dirichlet's function which is not integrable.
+
+\section*{7.4.1}
+
+\subsection*{a}
+
+\begin{proof}
+    There are three cases:
+    \begin{description}
+        \item[Case 1: $m \ge 0.$] This implies that $f(x)\ge 0$ for all $x\in A.$ Therefore $M=M'$ and $m=m'.$ Therefore, $M-m = M'-m'.$
+        \item[Case 2: $M \le 0.$] This implies that $f(x)< 0$ for all $x\in A.$ Therefore $M' = |m|$ and $m' = |M|.$ Therefore, $M-m = M'-m'.$
+        \item[Case 3: $M\ge 0, m<0.$] Therefore $M-m \ge M$ and $M-m\ge |m|.$ As $M' = \max{M, |m|},$ it follows that $M-m \ge M'.$ As $m' \ge 0,$ therefore $M-m\ge M'-m'.$ 
+    \end{description}
+\end{proof}
+\subsection*{b}
+
+\begin{proof}
+    Fix $\epsilon>0.$ As $f$ is integrable, therefore there exists partition $P$ s.t.
+    \begin{alignat*}{2}
+        U(f,P)-L(f,P) &< \epsilon\\
+        \sum (M_k- m_k)(x_k-x_{k-1}) &< \epsilon\\
+        \sum (M'_k- m'_k)(x_k-x_{k-1}) &< \epsilon &&\text{by previous subquestion}\\
+        U(|f|,P)-L(|f|,P) &< \epsilon\
+    \end{alignat*}
+    as desired.
+\end{proof}
+
+
+\subsection*{c}
+
+\begin{proof}
+    There are two cases.
+    \begin{description}
+        \item[Case 1: $\int f \ge 0$.] Then as $|f|\ge f,$ therefore by part iv of Theorem 7.4.2, we have that 
+        \begin{alignat*}{2}
+            \int f &\le \int |f|\\
+            \left |\int f\right | &\le \int |f|. \qquad&&\text{as $\int f\ge 0 \Rightarrow \int f = \left |\int f\right |$}
+        \end{alignat*}
+        \item[Case 2: $\int f < 0$.] Then as $-|f| \le f,$ therefore by part iv of Theorem 7.4.2, we have that 
+        \begin{alignat*}{2}
+            -\int |f| &\le \int f\\
+            \int |f| &\ge -\int f\\
+            \int |f| &\ge \left |\int f\right |.\qquad&&\text{as $\int f< 0 \Rightarrow -\int f = \left |\int f\right |$}
+        \end{alignat*}
+    \end{description}
+\end{proof}
+
+\section*{7.4.3}
+
+\subsection*{a}
+Consider the function $f$ on the interval $[0,1]$ where
+\begin{equation*}
+    f(x)= \begin{cases}
+        1, & x=a/b\; a,b\in\mathbb{N}\\
+        -1, & o.w.
+    \end{cases}
+\end{equation*}
+We would thus have that $f$ is not integrable (similar argument as for Dirichlet's Function). However, $|f|$ is a constant function at $1$ which is integrable.
+\subsection*{b}
+
+Consider the function in question 7.3.3. This is a function with infinitely many points greater than $0$. However, the integral is $0$.
+
+\section*{7.4.5}
+
+\subsection*{a}
+
+\begin{proof}
+    By definition of upper sum, we have that
+    \begin{alignat*}{2}
+        U(f,P) &= \sum M^f_k (x_k-x_{k-1})\\
+        U(g,P) &= \sum M^g_k (x_k-x_{k-1})\\
+        U(f+g,P) &= \sum M^{f+g}_k (x_k-x_{k-1}).
+    \end{alignat*}
+    For any subinterval $[x_{k-1},x_k]$ of $P,$ we have that for any $x\in[x_{k-1},x_k],$ $f(x)\le M^f_k$ and $g(x)\le M^g_k.$ It thus follows that $(f+g)(x)=f(x)+g(x)\le M^f_k+M^g_k.$ Therefore, $M^{f+g}_k\le  M^f_k+M^g_k.$
+
+    It thus follows that\begin{equation*}
+        U(f+g,P)\le U(f,P)+U(g,P).
+    \end{equation*}
+\end{proof}
+
+An example where the inequality is strict is as follows. Define $f,g$ on $[0,1]$ where
+\begin{equation*}
+    f(x)=\begin{cases}
+        1 & x= 0.5\\
+        0 & o.w.
+    \end{cases}
+\end{equation*}
+and similarly
+\begin{equation*}
+    g(x)=\begin{cases}
+        1 & x= 0.6\\
+        0 & o.w.
+    \end{cases}
+\end{equation*}
+Now let $P = \{0,1\}.$ It thus follows that
+\begin{equation*}
+    U(f+g,P)= 1 < U(f,P)+U(g,P) = 1+1.
+\end{equation*}
+\subsection*{b}
+\begin{proof}
+    % rewrite for clarity
+    First we WTS that that $f+g$ is integrable.
+    As $f,g$ are integrable, by the Sequential Criterion for Integrability, we have that there exists sequences of partitions $(P^1_n)$ and $(P^2_n)$ s.t. 
+    \begin{equation*}
+        \lim U(f,P^1_n)-L(f,P^1_n)=0
+    \end{equation*}
+    and
+    \begin{equation*}
+        \lim U(g,P^2_n)-L(g,P^2_n)=0.
+    \end{equation*}
+    Now consider the sequence of partitions $(P_n)$ where 
+    \[P_n = P^1_n\cup P^2_n.\] As each $P_n$ is a refinement of $P^1_n$ and $P^2_n,$ it thus follows from Lemma 7.2.3 and the Order Limit Theorem that \[\lim U(f,P_n)-L(f,P_n)=0\] and \[\lim U(g,P_n)-L(g,P_n)=0.\] Therefore, by the ALT, we have that
+    \begin{equation}\label{eq:t}
+        \lim U(f,P_n)+ U(g,P_n)- L(f,P_n) - L(g,P_n)=0.
+    \end{equation}
+    By previous subquestion, we know that 
+    \begin{equation} \label{eq:true}
+        U(f+g,P_n)\le  U(f,P_n)+ U(g,P_n).
+    \end{equation}
+    By similar proof, it follows that $L(f+g,P_n)\ge  L(f,P_n)+ L(g,P_n).$ It thus follows from Lemma 7.2.4 and the Order Limit Theorem that \[\lim U(f+g,P_n) - L(f+g,P_n) =0.\] Therefore, $f+g$ is integrable.
+    
+
+    We now WTS that $\int f+g = \int f + \int g.$ By \eqref{eq:true} and substituting into \eqref{eq:t}, we have that
+    \begin{equation} \label{eq:s}
+         \lim U(f+g,P_n) - L(f,P_n) - L(g,P_n)=0.
+    \end{equation}
+    In other words, \eqref{eq:t} and \eqref{eq:s} imply via ALT that $\lim U(f+g,P_n)$ = $\lim U(f,P_n) + \lim U(g,P_n).$ This implies that $U(f+g)= U(f)+U(g)$ as desired.
+    % We namely claim that $\lim U(f+g,P_n)= \lim U(f, P_n) + \lim U(g, P_n)$
+    % Furthermore, we have that $\lim U(f+g,P_n) - L(f,P_n) - L(g,P^2_n) = \lim U(f,P_n)+ U(g,P_n)- L(f+g,P_n)=0.$ It thus follows that $\lim U(f+g,P_n) = \lim L(f+g, P_n) = \lim U(f,P_n)+ U(g,P_n) = U(f)+U(g)$ as desired. 
+\end{proof}
+\end{document}

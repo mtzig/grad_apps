@@ -1,0 +1,282 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis PS6, Thomas Zeng }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\begin{document}
+
+\section*{5.2.3}
+
+\subsection*{a}
+
+% prove deriv of h(x)=1/x
+
+Let $c$ be in the domain of $h$. We thus have by definition of derivative that
+\begin{equation} \label{eq:ddef}
+    h'(c) = \lim_{x\to c}\frac{h(x)-h(c)}{x-c}. 
+\end{equation}
+Now from a past example in the textbook, we know that for any $x,c\neq 0,$ the following identity holds:
+\begin{equation} \label{eq:dident}
+    1/x-1/c = \frac{c-x}{xc}.
+\end{equation}
+Therefore, we have
+\begin{alignat}{2}
+    \frac{h(x)-h(c)}{x-c} &= \frac{1/x-1/c}{x-c} &&\text{by def. of }h\nonumber\\
+    &= \frac{(c-x)/(xc)}{x-c} &&\text{by \eqref{eq:dident}}\nonumber\\
+    &=-\frac{(x-c)/(xc)}{x-c} \qquad&&\text{algebra}\nonumber\\
+    &= -1/(xc) \label{eq:simp}.
+\end{alignat}
+Therefore we have that
+\begin{alignat*}{2}
+    h'(c) &= \lim_{x\to c}\frac{h(x)-h(c)}{x-c} \qquad&&\text{by \eqref{eq:ddef}}\\
+    &= \lim_{x\to c} -\frac{1}{xc} &&\text{by \eqref{eq:simp}}\\
+    &= -c^{-2} &&\text{by Alegebraic Theorem for Functional Limits}.
+\end{alignat*}
+\subsection*{b}
+    % use part a and chain rule to show 5.2.4iv
+    \begin{proof}
+        Consider $h(x)=1/x.$ We thus have by algebra that
+        \begin{equation} \label{eq:funci}
+            f/g = f[h\circ g].
+        \end{equation}
+        Therefore, provided $g(c)\neq 0$ we thus have
+        \begin{alignat*}{2}
+            (f/g)'(c) &= (f[h\circ g])'(c) &&\text{by \eqref{eq:funci}}\\
+            &=f'(c)(h\circ g)(c) + f(c) (h\circ g)'(c) &&\text{by product rule}\\
+            &= f'(c)/g(c) + f(c)(h\circ g)'(c) &&\text{as }h\circ g(c)=1/g(c)\\
+            &= f'(c)/g(c) + f(c)[-g(c)^{-2}]g'(c) \qquad&&\text{by previous subquestion}\\
+            &= \frac{f'(c)g(c)}{g(c)^2} - \frac{f(c)g'(c)}{g(c)^2}\  &&\text{algebra}\\
+            &= \frac{g(c)f'(c)-f(c)g'(c)}{[g(c)]^2}.
+        \end{alignat*}
+    \end{proof}
+
+\subsection*{c}
+\begin{proof}
+    First we rewrite the difference quotient as
+    \begin{alignat}{2}
+        \frac{(f/g)(x)-(f/g)(c)}{x-c} &= \frac{f(x)/g(x)-f(c)/g(c)}{x-c} &&\text{as }(f/g)(x)=f(x)/g(x)\nonumber\\
+        &= \frac{f(x)/g(x)-f(c)/g(x)+f(c)/g(x)-f(c)/g(c)}{x-c} \qquad&&\text{algebra}\nonumber\\
+        &=\frac{1}{g(x)}\frac{f(x)-f(c)}{x-c}-f(c)\frac{1/g(c)-1/g(x)}{x-c} &&\text{algebra}\nonumber\\
+        &=\frac{1}{g(x)}\left [ \frac{f(x)-f(c)}{x-c}\right ] - \frac{f(c)}{g(c)g(x)}\left [ \frac{g(x)-g(c)}{x-c}\right ]. &&\text{by \eqref{eq:dident}} \label{eq:difq}
+    \end{alignat}
+    We now note that as $f,g$ are differentiable and thus continuous, it holds that $\lim_{x\to c}f(x)=f(c)$ and $\lim_{x\to c}g(x)=g(c).$ It thus follows that
+    \begin{alignat*}{2}
+        (f/g)'(c)&=\lim_{x\to c}  \frac{(f/g)(x)-(f/g)(c)}{x-c} &&\text{by def. of derivative}\\
+        &= \lim_{x\to c}\frac{1}{g(x)}\left [ \frac{f(x)-f(c)}{x-c}\right ] - \frac{f(c)}{g(c)g(x)}\left [ \frac{g(x)-g(c)}{x-c}\right ] \qquad&&\text{by \eqref{eq:difq}}\\
+        &= \frac{1}{g(c)}\lim_{x\to c}\left [\frac{f(x)-f(c)}{x-c} \right ] - \frac{f(c)}{g(c)^2}\lim_{x\to c}\left [\frac{g(x)-g(c)}{x-c}\right ] &&\text{by functional limit ALT}\\
+        &=\frac{f'(c)}{g(c)}-\frac{f(c)g'(c)}{g(c)^2} &&\text{by def. of derivative}\\
+        &=\frac{g(c)f'(c)-f(c)g'(c)}{[g(c)]^2}. &&\text{algebra}
+    \end{alignat*}
+    % \begin{alignat*}{2}
+    %     (f/g)'(c)&=
+    % \end{alignat*}
+\end{proof}
+
+\section*{5.2.7}
+\subsection*{a}
+Consider $a=1.1.$ 
+\begin{lemma} \label{lem:1}
+    Given $a>1,$ then $g_a$ is differentiable.
+\end{lemma}
+
+\begin{proof}
+    At any point besides $x=0,$ we have that $g_a$ is differentiable for any $a$ since it is the product and composition of differentiable functions (at any point besides $0$). Thus, we only need to consider the value of $a$ s.t. $g_a'(0)$ exists or in other words that
+    \begin{equation} \label{eq:dconv}
+        \lim_{x\to 0}\frac{g_a(x)-g_a(0)}{x-0}=\lim_{x\to 0}\frac{x^a\sin1/x}{x}
+    \end{equation}
+    converges. As $|\sin 1/x|\le 1,$ we note that  for all $x\in\mathbb{R}$ we have 
+    \begin{equation}\label{eq:squeezeone}
+        -x^a/x\le (x^a\sin1/x)/x \le x^a/x.
+    \end{equation}
+    Furthermore, we note that for $a>1$ we have that 
+    \begin{equation}\label{eq:squeeze}
+        \lim_{x\to 0}x^a/x=\lim_{x\to 0}-x^a/x=0.
+    \end{equation}
+    Thus, given $a>1,$ with \eqref{eq:squeezeone} and \eqref{eq:squeeze} we use the Squeeze Theorem (book exercise 4.2.11) to claim that \eqref{eq:dconv} converges to $0$ as well. Therfore $g_a'(0)$ exists when $a>1.$
+\end{proof}
+
+\begin{lemma} \label{lem:2}
+    Given $1<a<2,$ then $g_a'$ is unbounded on $[0,1]$.
+\end{lemma}
+
+\begin{proof}
+    We first go back to calculus, to claim that for any $a$ we have that
+    \begin{equation} \label{eq:gendiv}
+        g_a'(x) = \underbrace{ax^{a-1}\sin 1/x}_{(i)} - \overbrace{x^{a-2} \cos1/x}^{(ii)}
+    \end{equation}
+    where we use the product rule and chain rule. Now for any $b<0$ we have that $x^b$ is unbounded on the interval $[0,1]$. And similarly, if $b>0,$ then $x^b$ is bounded on the interval $[0,1]$ (namely by $0$ and $1$).
+    
+    Therefore, by above, when $1<a < 2,$ we have that ($i$) is bounded and $(ii)$ is not and therefore \eqref{eq:gendiv} is unbounded.
+\end{proof}
+
+Thus by lemma \ref{lem:1} and \ref{lem:2}, we have that $a=1.1$ works.
+
+\subsection*{b}
+
+Consider $a=3.$ Following the same format as \eqref{eq:gendiv}, we would thus have
+\begin{equation} \label{eq:gendiv3}
+    g_3'(x) = \underbrace{3x^{2}\sin 1/x}_{(i)} - \overbrace{x \cos1/x}^{(ii)}
+\end{equation}
+By lemma \ref{lem:1} we would have that ($i$) in \eqref{eq:gendiv3} is differentiable (as it is the composition of differentiable functions). However. ($ii$) in \eqref{eq:gendiv3} is not differentiable -- namely at $0$ (by similar proof as in book for $x\sin 1/x$). Therefore, $g_3'$ is not differentiable -- as otherwise we could use the Alegebraic Differentiability Theorem to show that ($ii$) is differentiable.
+
+Now we note that ($i$) is continuous since it is differentiable. For ($ii$) we can use proof similar as in the book for $x\sin 1/x$ to show that it is continuous. Therefore, by the Algebraic Continuity Theorems, \eqref{eq:gendiv3} is continuous.
+
+\section*{5.3.0}
+
+% if derivative is always greater than 0, then function is strictly increasing
+
+% consider points wlog assume y greater than x
+
+\begin{proof}
+    Given $x,y\in A$ where $x<y$. The restriction of $g$ to the interval $[x,y]$ is necessarily continuous on $[x,y]$ as $g$ is differentiable on $A\supseteq [x,y].$ By similar logic, it is differentiable on $(x,y).$ Therefore, by the MVT, there exists $c\in (x,y)$ s.t.
+    \begin{equation*}
+        g'(c) = \frac{g(y)-g(x)}{y-x}.
+    \end{equation*}
+    Therefore, by our assumptions we have that
+    \begin{equation} \label{eq:gz}
+        \frac{g(y)-g(x)}{y-x} > 0.
+    \end{equation}
+    As we stated that $x<y$, it follows that $y-x > 0.$ Therefore, in order for \eqref{eq:gz} to hold, it must be that $g(y)>g(x).$ Therefore $g$ is strictly increasing.
+\end{proof}
+
+\section*{5.3.1}
+
+\subsection*{a} 
+
+\begin{proof}
+    As $A=[a,b]$ is closed and bounded, it is therefore compact. As $f'$ is continuous, therefore, by the Extreme Value Theorem, there exists $K$ s.t. 
+    \begin{equation} \label{eq:evt}
+        |f'(x)|\le K
+    \end{equation}
+    for all $x \in A.$
+
+    Now as $f$ is differentiable on $[a,b]$ it is necessarily continuous on $[a,b]$ (as all differentiable functions are continuous) and differentiable on $(a,b).$ Now let $x,y\in A.$ By the MVT, there exists $c\in A$ s.t.
+    \begin{equation*}
+        \frac{f(y)-f(x)}{y-x}=f'(c).
+    \end{equation*}
+
+    By \eqref{eq:evt}, we know that $|f'(c)|\le K.$ Therefore, $|\frac{f(y)-f(x)}{y-x}|\le K.$ As $x,y$ were arbitrary, therefore $f$ is Lipschitz.
+\end{proof}
+
+% \begin{lemma} \label{lem:cs}
+%     Let $f:[a,b]\to\mathbb{R},$ not be Lipschitz. Now consider $c\in (a,b),$ it follows that either the restriction $f|_{[a,c]}$ or $f|_{[c,b]}$ is not Lipschitz.
+% \end{lemma}
+
+% \begin{proof}
+%     We prove this by contradiction. That is assume both $f|_{[a,c]}$ and $f|_{[c,b]}$ are Lipschitz. Therefore there exists $M_1$ and $M_2$ that serve as an upper bound on the ``slopes'' of $f|_{[a,c]}$ and $f|_{[c,b]}$ respectively. Now let $M = \max\{M_1,M_2\}.$ Now for any $x,y\in [a,c]$ or $x,y\in[c,b],$ it follows by our assumption that
+%     \begin{equation*}
+%         \left | \frac{f(x)-f(y)}{x-y}\right |\le M.
+%     \end{equation*}
+%     Next, if we have $y\in [a,c]$ and $x\in[c,b]$ where $x\neq y,$ we have that
+%     \begin{alignat*}{2}
+%         \left | \frac{f(x)-f(y)}{x-y}\right | &=  \left | \frac{f(x)-f(c)+f(c)+f(y)}{x-y}\right | &&\text{algebra}\\
+%         &\le \left | \frac{f(x)-f(c)}{x-y} \right | + \left | \frac{f(c)-f(y)}{x-y} \right | \qquad&&\text{triangle inequality}\\
+%         &\le \left | \frac{f(x)-f(c)}{x-c} \right | + \left | \frac{f(c)-f(y)}{c-y} \right | &&\text{as }y\le c \le x\\
+%         &\le M + M &&\text{by our def. of }M\\
+%         &= 2M.
+%     \end{alignat*}
+%     Therefore, we have $f$ is Lipschitz, a contradiction.
+% \end{proof}
+
+% \noindent
+% \textbf{Now we prove this problem.}
+% \begin{proof}
+%     First we assume that $f$ is not Lipschitz.
+%     We now construct a sequence $(c_n)$ as follows. As $f$ is not Lipschitz, we can find some $x,y\in A$ s.t.
+%     \begin{equation*}
+%         \left | \frac{f(x)-f(y)}{x-y}\right |> 1.
+%     \end{equation*}
+%     As $f$ is differentiable on $A,$ it follows that $f$ is differentiable and continuous on $[x,y].$ Therefore, by the MVT, there exists some point $c\in [x,y]$ where $|f'(c)|>1.$ Let $c_1 = c.$ By Lemma \ref{lem:cs} we are guaranteed to be able to continue this process. That is $f$ is not Lipschitz on either $[x,c]$ or $[c,y]$ and thus choosing the non-Lipschitz interval we can again use MVT to guarantee a $c_2$ in that interval where $|f'(c_2)|>2.$ We can repeat this process to find $c_n$ where $|f'(c_n)|>n$ in general.
+
+%     As $(c_n)$ is in $A$ -- a closed and bounded and therefore compact set -- thus by definition, there exists a subsequence $(c_{n_k})$ that converges to some value $k.$ However, $(f'(c_{n_k}))$ does not converge to $f'(k)$ as by our construction, $(f'(c_n))$ is unbounded, therefore the subsequence $(f'(c_{n_k}))$ is divergent. Therefore, by the Criterion for Discontinuity, $f'$ is discontinuous -- a contradiction. Therefore, $f$ is Lipschitz.
+% \end{proof}
+
+\section*{5.3.5}
+\subsection*{a}
+
+\begin{proof}
+    By Algebraic Continuity Theorems and Algebraic Differentiability Theorems, we have that $h$ is continuous on $[a,b]$ and differentiable on $(a,b).$ Therefore, by the MVT, there exists $c\in(a,b)$ s.t.
+    \begin{alignat}{2}
+        h'(c) &= \frac{[f(b)-f(a)]g(b)-[g(b)-g(a)]f(b)-[f(b)-f(a)]g(a)+[g(b)-g(a)]f(a)}{b-a} \quad&&\text{def. of MVT}\nonumber\\
+        &= \frac{[f(b)-f(a)][g(b)-g(a)]-[f(b)-f(a)][g(b)-g(a)]}{b-a} &&\text{distr. prop.}\nonumber\\
+        &= 0. &&\text{algebra} \label{eq:z}
+    \end{alignat}
+    Now using the Alegebraic Differentiability Theorems, we have that in general
+    \begin{equation} \label{eq:divd}
+        h'(x) = [f(b)-f(a)]g'(x)-[g(b)-g(a)]f'(x).
+    \end{equation}
+    Thus using \eqref{eq:divd} we have
+    \begin{alignat*}{2}
+        h'(c) &= [f(b)-f(a)]g'(c)-[g(b)-g(a)]f'(c) &&\text{by \eqref{eq:divd}}\\
+        0 &= [f(b)-f(a)]g'(c)-[g(b)-g(a)]f'(c) \qquad&&\text{by \eqref{eq:z}}\\
+        [f(b)-f(a)]g'(c) &=[g(b)-g(a)]f'(c),
+    \end{alignat*}
+    as desired.
+\end{proof}
+
+\section*{5.2.10}
+
+As we have shown in exercise $5.2.7$, the equation 
+\begin{align*}
+    g_a(x)=\begin{cases}
+        x^a\sin 1/x&x\neq 0\\
+        0&x=0
+    \end{cases}
+\end{align*}
+is differentiable on $\mathbb{R}$ for any $a>1$. Therefore, $g_2(a)$ is differentiable. Similarly, $x/2$ is a linear function and thus differentiable. Thus, by the Algebraic Differentiability Theorems, $g(x)$ which is the sum of $g_2(x)$ and $x/2$ is thus differentiable.
+
+Now, as shown in section 5.1, we have $g_2'(0)=0$. Similarly, $(x/2)'(0) = 1/2$ by calculus. Thus again, by the Algebraic Differentiability Theorems, we have $g'(0) = 0 + 1/2 = 1/2>0.$
+
+Now consider any open interval $(i,j)$ containing $0.$
+
+By the Archimedean principle, we can find some $N$ s.t. for any $n\ge N$ we have $0<1/n<j.$ Now choose $a \ge N$ s.t. $a \mod 4 = 3.$ Let  $x=\frac{1}{(a+2)\pi/2}$ and $y = \frac{1}{a\pi/2}.$ We thus have $0<x<y$ and $x,y\in (i,j).$ Now note by our construction, that $\sin 1/x = 1$ and $\sin 1/y = -1.$ Therefore, we have:
+\begin{align*}
+    g(x) &=\frac{1}{2(b+2)\pi/2} + \left ( \frac{1}{(b+2)\pi/2} \right )^2\\
+    g(y) &=\frac{1}{2b\pi/2} - \left ( \frac{1}{b\pi/2} \right )^2.
+\end{align*}
+Now we have
+\begin{align}
+    \frac{1}{2b\pi/2}-\frac{1}{2(b+2)\pi/2} &= \frac{2(b+2)\pi/2-2b\pi/2}{(b+2)\pi b\pi}\nonumber\\
+    &= \frac{2\pi}{(b+2)b\pi^2}\nonumber\\
+    &< \frac{2\pi}{b^2\pi^2}\nonumber\\
+    &< \frac{2\pi}{b^2\pi^2/32}\nonumber\\
+    &= \frac{\pi/4}{b^2(\pi/2)^2}\nonumber\\
+    &<\frac{1}{b^2(\pi/2)^2} \label{eq:ineq}
+\end{align}
+% Similarly, we know that
+% \begin{equation*}
+%     \frac{1}{b\pi/2} > \frac{1}{(b+2)\pi/2}
+% \end{equation*}
+% and therefore
+% \begin{equation} \label{eq:ineq2}
+%     -\left ( \frac{1}{b\pi/2} \right )^2 < \left ( \frac{1}{(b+2)\pi/2} \right )^2.
+% \end{equation}
+Thus, from \eqref{eq:ineq} %and \eqref{eq:ineq2}, it follows that $$
+it follows that 
+\begin{equation*}
+    \frac{1}{2b\pi/2} - \left ( \frac{1}{b\pi/2} \right )^2 < \frac{1}{2(b+2)\pi/2}.
+\end{equation*}
+Thus $g(y)<g(x).$
+\end{document}

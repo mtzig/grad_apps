@@ -1,0 +1,318 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis PS3, Thomas Zeng }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\begin{document}
+
+\section*{2.5.1}
+
+\subsection*{a}
+
+This is not possible. If the sequence has some subsequence that is bounded. Then by the Bolzano-Weierstrass Theorem, the bounded subsequence must itself have a subsequence that converges. And clearly the subsequence of a subsequence is still a subsequence.
+
+\subsection*{b}
+
+Let $(a_n) = (0,1,0,1,....).$ The subsequnce $(a_{n_k})$ where each $n_k$ is even converges to $1$. Similarly the subsequnce $(a_{n_{k'}})$ where each $n_{k'}$ is odd converges to $0$. 
+
+
+\subsection*{c}
+
+Consider the function $f:\mathbb{N}^2\to\mathbb{R}$ where for $(x_0,x_1)\in\mathbb{N}^2$ we have
+\[f((x_0,x_1)) = 1/x_0. \]
+As $\mathbb{N}^2$ is bijective with $\mathbb{N},$ there exists some bijective map $h:\mathbb{N}\to\mathbb{N}^2.$
+Using $h$ we define the sequence $(a_n)$ where $a_n = f\circ h(n).$
+
+More informally, such a sequence could look like
+\begin{align*}
+    (1&,\\
+    1&,1/2,\\
+    1&,1/2,1/3,\\
+    1&,1/2,1/3,1/4,\cdots).
+\end{align*}
+
+By our construction, for each $i \in\{1,1/2,1/3,...\}$ there exists an infinite subsequence $(a_{n_k}) = (i,i,i,...)$ in $(a_n).$ Thus there exists a subsequence that converges to each $i.$
+
+\subsection*{d}
+
+This is not possible. Any sequence that contains subsequences converging to every point in $h=\{1,1/2,1/3,...\}$ must also contain a subsequence that converges to $0.$
+
+%more formal proof here?
+Specifically, let $(\epsilon_n) = \{1/3,1/4,1/5,...\}.$ 
+We can then construct a subsequence $(a_{n_k})$ where for every $k\in\mathbb{N},$ we have $a_{n_k}$ is within $\epsilon_{k}$ of $1/k$ by using the fact that we have subsequences that converge to each $1/k.$ This subsequence would converge to $0$ which is not in $h.$
+
+\section*{2.5.5}
+
+\begin{proof}
+    % By the Bolzano-Weierstrass Theorem, since $(a_n)$ is bounded, it contains a convergent subsequence, which by our assumption would converge to $a.$
+
+    We first show that $(a_n)$ converges by contradiction. Assume $(a_n)$ diverges. Therefore $(a_n)$ does not converge to $a.$ Thus, for some $\epsilon > 0,$ we have that for any $N\in\mathbb{N}$ there exists $n\ge N$ s.t. $|a_n-a|\ge\epsilon.$
+
+    Therefore, we can use this $\epsilon$ to construct the subsequence $(a_{n_k})$ where
+    $a_{n_1}=a_n$
+    for some $n>N_1=1$ where the above statement is true.
+    And in general
+    $a_{n_k}=a_{n_i}$
+    for some $n_i>N_k=n_{k-1}$ where the above statement is true.
+
+    % we generate $n_1$ as
+    % \[n_1 = \min\{n|n\ge1\wedge |a_n-a|\ge\epsilon \},\]
+    % and in general for any $n_k$ as
+    % \[n_k = \min\{n|n> n_{k-1}\wedge |a_n-a|\ge\epsilon \}.\]
+    % % We note that each $n_k$ is well-defined due to the $\epsilon$ we use.
+
+    As $(a_{n_k})$ is a subsequence of a bounded sequence. It itself is bounded. By the Bolzano-Weierstrass Theorem, it contains a convergent subsequence, which by our assumption would converge to $a.$  However, in our construction of $(a_{n_k}),$ there is no values in this sequence within $\epsilon$ of $a.$  Thus the subsequence of $(a_{n_k})$ could not converge to $a.$ This is a contradiction.
+    Thus $(a_n)$ converges. And as a sequence is a subsequence of itself, $(a_n)$ thus converges to $a.$
+\end{proof}
+
+\section*{2.6.1}
+
+\begin{proof}
+    Let $(a_n)\to a.$
+    Fix $\epsilon>0.$ As $(a_n)$ is convergent, there exists some $N\in\mathbb{N}$ s.t. for all $n\ge N$ we have that
+    \begin{equation}\label{eq:conv}
+        |a_n-a|<\epsilon/2.
+    \end{equation}
+    Therefore for any $m,n\ge N$ we have by the triangle inequality that
+    \begin{align}
+        |a_n-a_m|&\le|a_n-m| + |m-a_m|\nonumber\\
+        &<\epsilon/2 +\epsilon/2\label{eq:1}\\
+        &<\epsilon\nonumber
+    \end{align}
+    where \eqref{eq:1} is true by \eqref{eq:conv}.
+\end{proof}
+
+
+\section*{2.6.4}
+
+\subsection*{a}
+
+% elaborate more on this one
+
+This sequence is Cauchy. Cauchy sequences are convergent. Therefore we can use the ALT to show that the sequence $(a_n-b_n)$ is convergent. Furthermore,  given $(a_n-b_n) \to c,$ we  have that for each $n\in N$ by the reverse triangle inequality (refer to first problem-set for proof of this):
+\begin{equation*}
+    ||a_n-b_n| - |c|| \le |a_n-b_n - c|.
+\end{equation*}
+Therefore, for any $\epsilon > 0$ we can choose $N\in\mathbb{N}$ s.t. for any $n\ge N$ we have
+\[||a_n-b_n| - |c|| <\epsilon\]
+by choosing the $N$ s.t.
+\[|a_n-b_n - c|<\epsilon.\]
+Thus, $(c_n)=(|a_n-b_n|)\to|c|.$ Thus it is Cauchy.
+\subsection*{b}
+Consider $(a_n)=(1,1,1,...).$ Here $(c_n)$ would diverge and thus not be Cauchy.
+
+\subsection*{c}
+
+Consider the alternating harmonic sequence i.e. $(a_n) = (1, -1/2, 1/3, -1/4, ...).$ As $(a_n)\to 0,$ it is Cauchy. However, $(c_n)= (1, -1, 0, -1, 0, ...)$ diverges and is not Cauchy.
+
+\section*{2.6.7}
+
+\subsection*{b}
+
+\begin{proof}
+    Let $(a_n)$ be some bounded sequence. By definition of bounded, for some $M\in\mathbb{R}$ we have $|a_n|\le M$ for all $n\in\mathbb{N}.$ 
+    
+    We now construct a subsequence $(a_{n_k})$ exactly as in the book when it proved BWT under assumption of AoC. See p. 64  of the text for this construction.
+    Therefore, we know that for any $n_k\ge k,$ we have that $a_{n_k} \in I_k$ where $I_k$ is one of the nested interval created during the construction of the subsequence and is of length $M(1/2)^{k-1}.$ 
+    
+    Now fix $\epsilon>0.$ This is where we need to assume the Archimedean Property so that we can choose some $N\in\mathbb{N}$ s.t.
+    \begin{equation} \label{eq:n}
+        N > \log_{2}(m/\epsilon) +1.
+    \end{equation}
+    % \[N > \log_{2}(m/\epsilon) +1.\]
+    Now for any $n\ge N$ we have that
+    \begin{align}
+        n&\ge N\nonumber\\
+        &> \log_{2}(m/\epsilon) +1\label{eq:2}\\
+        n - 1  &> \log_{2}(m/\epsilon)\nonumber\\
+        2^{n-1} &> m/\epsilon\nonumber\\
+        m(1/2)^{n-1} &< \epsilon\nonumber
+    \end{align}
+    where \eqref{eq:2} is true by \eqref{eq:n} and the rest is true by algebra.
+    In otherwords, the length of $I_n$ is strictly smaller than $\epsilon$ for all $n\ge N.$ Now for any $n_k,m_k\ge N,$ by our definition of $(a_{n_k}),$ we have that $a_{n_k},a_{m_k}\in I_N.$ Thus we have
+    \[|a_{n_k}-a_{m_k}| \le \text{length of }I_N < \epsilon.\]
+    Therefore by the Cauchy Criterion, $(a_{n_k})$ converges.
+\end{proof}
+
+\section*{2.7.2}
+\subsection*{a}
+We know that the geometric series 
+\[\sum_{n=0}^\infty \frac{1}{2^n}\]
+converges as $\frac{1}{2}<1.$ Thus the sequence
+\[\sum_{n=1}^\infty \frac{1}{2^n}\]
+converges as well.
+As for all $k\in\mathbb{N}$ we have
+\[0\le\frac{1}{2^n+n}\le\frac{1}{2^n}.\]
+Thus, by the Comparison Test 
+\[\sum_{n=1}^\infty\frac{1}{2^n+n}\]
+also converges.
+\subsection*{b}
+From Example 2.4.4 in the book we know that
+\[\sum_{n=1}^\infty \frac{1}{n^2}\]
+converges. As for all $k\in\mathbb{N}$ we have
+\[\left | \frac{\sin n}{n^2} \right | \le \frac{1}{n^2},\]
+by the Comparison Test,
+\[\sum_{n=1}^\infty \left | \frac{\sin n}{n^2} \right |\]
+converges. Therefore by the Absolute Convergence Test we have that
+\[\sum_{n=1}^\infty  \frac{\sin n}{n^2} \]
+converges.
+
+\section*{2.7.3}
+\subsection*{a}
+
+\textbf{We first prove the first statement.}
+\begin{proof}
+    Assume $\sum_{k=1}^\infty b_k$ converges. Fix $\epsilon > 0.$ By the Cauchy Criterion for Series, choose $N\in \mathbb{N}$ s.t. $n>m\ge N$ implies
+    \[|b_{m+1}+...+b_n|<\epsilon.\]
+    By our assumptions we have that
+    \[|a_{m+1}+...+a_n|\le|b_{m+1}+...+b_n|.\]
+    It thus follows that
+    \[|a_{m+1}+...+a_n|<\epsilon,\]
+    and thus by the Cauchy Criterion for Series, $\sum_{k=1}^\infty a_k$ converges.
+\end{proof}
+
+\noindent
+\textbf{We next prove the second statement.}
+\begin{proof}
+    Assume $\sum_{k=1}^\infty a_k$ diverges Fix $\epsilon > 0.$ By the inverse of the Cauchy Criterion for Series, for all $N\in \mathbb{N}$  there is some $n>m\ge N$ s.t.
+    \[|a_{m+1}+...+a_n|\ge\epsilon.\]
+    By our assumptions we have that
+    \[|a_{m+1}+...+a_n|\le|b_{m+1}+...+b_n|.\]
+    It thus follows that
+    \[|b_{m+1}+...+b_n|\ge\epsilon,\]
+    and thus by the contrapositive of the Cauchy Criterion for Series, $\sum_{k=1}^\infty b_k$ diverges.
+\end{proof}
+
+% 2.7.4abcd
+
+\section*{2.7.4}
+
+\subsection*{a}
+Define the sequence $(a_n) = (0,1,0,1,...)$ and $(b_n) = (1,0,1,0,...).$
+Clearly $\sum a_n$ and $\sum b_n$ diverge to infinity. However, $\sum a_nb_n = 0$ and thus it converges.
+
+\subsection*{b}
+
+% if sequence converges absolutely then it is not possible
+Let $\sum x_n$ be the alternating harmonic series. Thus $\sum x_n$ converges. Now let $(y_n) = (1,-1,1,-1,..).$ Clearly $(y_n)$ is bounded and $\sum x_ny_n$ is the harmonic series which diverges to infinity.
+
+\subsection*{c}
+
+This is not possible. This is just a bunch of applications of the ALT for series:
+\begin{align*}
+    \sum (x_n+y_n)\text{ converges }&\Rightarrow \sum -(x_n+y_n)\text{ converges }\\
+    &\Rightarrow \sum x_n+ -(x_n+y_n)\text{ converges }\\
+    &\Rightarrow \sum -y_n\text{ converges }\\
+    &\Rightarrow \sum y_n\text{ converges }.
+\end{align*}
+
+\subsection*{d}
+% might need to explaoin more
+Let $(x_n) = (0,1/2,0,1/4,0,1/6,0,1/8,...).$ Intuitively, the subsequence of $(x_n)$ at even indexed values is the harmonic sequence while it is $(0,0,0,...)$ at the odd indexed values. As the odd indexed values are zeros, we have that
+\[\sum (-1)^nx_n = \sum x_n.\]
+And as the harmonic series diverges, $\sum x_n$ diverges as it is basically the harmonic series with some $0$'s in between.
+% More formally we define it as
+% \begin{align*}
+%     x_n=\begin{cases}
+%         0&\quad n\mod 2 = 1\\
+%         1/n&\quad n\mod 2 = 0.
+%     \end{cases}
+% \end{align*}
+% Therefore $(x_n)$ satisfies the condition $0\le x_n\le1/n.$ Now let $(s_n)$ be the partial sums of $(x_n),$ we thus have for when $n$ is even that
+% \begin{align*}
+%     s_n &= 1/2 + 0 + 1/4+ 0 + 1/6+... + 1/n\\
+%     &= 1/2 + 1/4 + 1/6+... +1/n\\
+%     &= (1+1/2+1/3+...\frac{1}{n/2})/2\\
+%     &=  s'_{n/2}/2
+% \end{align*}
+% where $(s'_n)$ is the partial sums of the harmonic series. 
+% % As $(s'_n)$ diverges, it follows from the ALT that $(s'_n)/2$ diverges. Thus as $(s_n)$ contains a subsequence (namely the subsequence of terms when $n$ is odd) that itself is a subsequence of a divergent monotonic sequence (namely $(s'_n)/2$), 
+% It follows  from the fact that $(s'_n)$ diverges that $(s_n)$ diverges. 
+Therefore $\sum (-1)^nx_n = \sum x_n$ diverges.
+% 2.7.9abc
+
+\section*{2.7.9}
+
+\subsection*{a}
+
+Let $\epsilon = |r'-r|.$ By definition of convergence, there is $N\in\mathbb{N}$ s.t. for $n\ge N$ we have 
+\[\left | \frac{a_{n+1}}{a_n}\right | \in V_\epsilon(r).\]
+As $r' < r,$ it follows from our epsilon and the definition of $\epsilon$-neighborhood that any point in $V_\epsilon(r)$ is less than $r'.$ Thus we have
+\begin{align*}
+    % \left | \frac{a_{n+1}}{a_n} - r\right | &< \epsilon\\
+    % \left | \frac{a_{n+1}}{a_n} - r\right | &< |r'-r|\\
+    \left | \frac{a_{n+1}}{a_n}\right | &< r'\\
+    |a_{n+1}|&\le |a_n|r'.
+\end{align*}
+
+\subsection*{b}
+% mention alt
+$\sum |a_N|(r')^n$ is a geometric series with $r' < 1.$ Thus it converges. Therefore by the ALT, $|a_N|\sum (r')^n$ also converges.
+
+\subsection*{c}
+% make more formal
+% For all $n> N$ we have by Part a that $|a_n| \le |a_N|(r')^n.$ Thus the assumption of the Comparison test is eventually true for the sequences $\sum |a_N|(r')^n$ and \dots
+
+First we choose some $N\in\mathbb{N}$ s.t. property from Part a holds. We next show that for $n>N,$ the equation
+\begin{equation}\label{eq:ih}
+    a_n\le |a_N|(r')^{n-N}
+\end{equation}
+is true using induction.
+
+For the base case where $n=N+1,$ from Part a we have
+\begin{align*}
+    |a_n| &= |a_{N+1}|\\
+    &\le |a_N|r'\\
+    &= |a_N|(r')^{n-N}.
+\end{align*}
+
+Now we assume the inductive hypothesis where \eqref{eq:ih} is true for some $k >N.$ Thus using Part a again, we have
+\begin{align*}
+    |a_{k+1}|&\le |a_k|r'\\
+    &\le |a_N|(r')^{k-N}r'\\
+    &= |a_N|(r')^{k+1-N}.
+\end{align*}
+Therefore through induction, we have shown \eqref{eq:ih} to hold.
+
+Now construct the sequence $(b_n)$ where
+\begin{align*}
+    b_n=\begin{cases}
+        0&\quad n\le N\\
+        |a_N|(r')^{n-N}&\quad n >N.
+    \end{cases}
+\end{align*}
+By our construction, $\sum b_n = |a_N|\sum(r')^n.$ Therefore by part b, we have that $\sum b_n$ converges. Furthermore, as it is eventually true (specifically for all $n>N$) that
+\begin{align*}
+    0\le |a_n| \le |a_N|(r')^{n-N}=b_n
+\end{align*}
+by \eqref{eq:ih}; it follows from the comparison test that $\sum |a_n|$ converges. Therefore $\sum a_n$ converges absolutely.
+% By Part a, we can show via induction that for $n>N$ the relation $|a_n| \le |a_N|(r')^n$ holds. Specifically, for the base case when $n=N+1$ we have
+% \begin{align*}
+%     |a_{N+1}|&\le |a_N|r'
+% \end{align*}
+
+
+
+% Therefore by the comparison test, as $|a_N|\sum (r')^n = \sum |a_N|(r')^n$ converges, this implies $\sum |a_n|$ also converges. Thus, $\sum a_n$ converges absolutely.
+\end{document}

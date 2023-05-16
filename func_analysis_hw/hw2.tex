@@ -1,0 +1,346 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Functional Analysis HW2, Thomas Zeng }
+\rhead{Math 331, Spring 2023}
+\cfoot{\thepage}
+
+
+\begin{document}
+
+\section*{1.6}
+
+\begin{proof}
+    ($\Rightarrow$) We assume that $X$ is a Banach space and
+    \begin{equation}\label{eq:as}
+        \sum_{j=1}^\infty ||f_j||<\infty.
+    \end{equation} 
+    We will show that
+    \begin{equation} \label{eq:pff}
+        \sum_{j=1}^\infty f_j 
+    \end{equation}
+    converges. We first fix $\epsilon > 0.$ By \eqref{eq:as} and the Cauchy Criterion, it follows that there exists $N\in\mathbb{N}$ s.t. $m,n\ge N$ implies that
+    \begin{alignat*}{2}
+       | \Vert f_{m+1}\Vert + \cdots + \Vert f_n\Vert |&< \epsilon\\
+       \Vert f_{m+1}\Vert  + \cdots + \Vert f_n\Vert  &<\epsilon \qquad&& \text{by Positive Definiteness of Norm}\\
+       \Vert f_{m+1} + \cdots + f_n \Vert  &< \epsilon && \text{by Triangle Inequality}.
+    \end{alignat*}
+    Therefore, it follows that \eqref{eq:pff} is Cauchy and therefore convergent by the Cauchy Criterion.
+
+    ($\Leftarrow$) Let $X$ be a normed space s.t. every absolutely convergent series converges. We will show that $X$ is complete. 
+    Let $(f_j)$ be a Cauchy sequence. Using property of Cauchyness, we next construct the sequence $(N_j)$ s.t. for each $j\in\mathbb{N}$ we have that $m,n \ge N_j$ implies that
+    \begin{equation} \label{eq:tprop}
+        \Vert f_n-f_m\Vert  < \left(\frac{1}{2}\right)^j.
+    \end{equation}
+    Now consider the series
+    \begin{equation} \label{eq:sub}
+        f_{N_1} + \sum_{j=1}^{\infty}f_{N_{j+1}} - f_{N_{j}}.
+    \end{equation}
+    By \eqref{eq:tprop} and Positive Definiteness, it follows that for each $k \in \mathbb{N}$ we have that
+    \[0 \le \sum_{j=1}^{k}\Vert f_{N_{j+1}} - f_{N_{j}}\Vert  < \sum_{j=1}^k \left( \frac{1}{2}\right )^j.\]
+    Therefore, by the Order Limit Theorem, Algebraic Limit Theorem and convergence of geometric series, it follows that \eqref{eq:sub} is absolutely convergent and thus convergent by our assumption. Therefore, its partial sums are also convergent. As the partial sums are a subsequence of $(f_j)$, it follows that $(f_j)$ also converges (as Cauchy sequence converges iff a subseqeunce converges).
+
+    Therefore, $X$ is complete, as desired.
+\end{proof}
+
+% \newpage
+
+\section*{1.7}
+
+\begin{proof}
+    Consider the set $A$ of all vectors of the form:
+    \[\alpha^\alpha = (1,\alpha,\alpha^2,\cdots),\quad \alpha \in (0,1).\]
+    This is an uncountable set as there is a bijection from $(0,1)\to A$---namely defined by the equation above. It thus suffices to show that the vectors of $A$ are linearly independent.
+
+    Now consider any arbitrary finite subset $B=\{\beta_i^{\beta_i}\}_{i=1}^n$ of $A.$ We claim that the elements of $B$ are linearly independent in the first $n$ dimensions. Specifically, we can create a matrix
+    \[V = \begin{bmatrix}
+        1 & \beta_1 & \beta_1^2 & \cdots & \beta_1^n\\
+        1 & \beta_2 & \beta_2^2 & \cdots & \beta_2^n\\
+        \vdots\\
+        1 & \beta_n & \beta_n^2 & \cdots & \beta_n^n\\
+    \end{bmatrix},\]
+    by enumerating every vector in $B$ up to the $n$'th dimension. As $V$ is a Vandermonde matrix, it follows that $\det(V)\neq0$ iff all $\beta_i$'s are distinct. As that is the case here, it follows that $\det(V)\neq 0$ and thus the vectors of $B$ are linearly independent. 
+    
+    As $B$ was arbitrary, it follows that $A$ is a set of linearly independent vectors.
+\end{proof}
+
+\section*{1.8}
+
+\textbf{We first show every vector space $X$ has a Hamel basis.}
+\begin{proof}
+    Let $P$ be the set of all linearly independent subsets of $X$ with the set inclusion ordering. Let $C \subseteq P$ be a chain. We claim that $\bigcup C$ is an upper bound on $C.$ Clearly $\bigcup C \ge c$ for all $c\in C$ by definition of set inclusion ordering. It thus suffices  to show that $\bigcup C \in P,$ i.e. $\bigcup C$ is a set of linearly independent vectors.
+
+    We do so by contradiction, assume $C$ is not a set of linearly independent vectors. Thus, there exists a finite subset $D \subseteq C$ s.t. $D$ is not linearly indepent. As $C$ is ordered, therefore there exists some $c \in C$ s.t. $D \subseteq c.$ Therefore, $c\notin P,$ a contradiction.
+
+    Hence $\bigcup C$ is an upper bound on $C.$ Therefore, by Zorn's lemma, there exists a maximal set in $P,$ i.e. a Hamel Basis exists.
+\end{proof}
+
+\noindent
+\textbf{We next show any linear combination is uniquely determined.}
+
+\begin{proof}
+    Let $x = \sum_{j=1}^{n}c_ju_{\alpha_j}.$ We first claim that the vectors $\{u_{\alpha_j}\}$ are uniquely determined. Specifically assume they are not i.e.
+    \begin{equation*}
+        x = \sum_{j = 1}^{n}c_ju_j = \sum_{j=1}^{m}c'_ju'_j
+    \end{equation*}
+    where there is some $u'_k \neq u_i$ for all $i=1,\dots,n.$ It then follows that
+    \begin{equation*}
+        u'_k = c_k'^{-1}\left (\sum_{j = 1}^{n}c_ju_j - \sum_{j=1,j\neq k}^{m}c'_ju'_j\right ).
+    \end{equation*}
+    That is $u'_k$ is linearly dependent on a set of vectors that does not contain $u'_k,$ which is a contradiction.
+
+   
+
+    It similarly must be that $\{c_j\}$ is uniquely determined. Specifically consider the following case where
+    \begin{equation*}
+        x = \sum_{j=1}^{n}c_ju_j = \sum_{j=1}^{n}c'_ju_j.
+    \end{equation*}
+    It follows that
+    \begin{alignat}{2}
+        x - x &= \sum_{j=1}^{n}c_ju_j - \sum_{j=1}^{n}c'_ju_j\nonumber\\
+        0 &= \sum_{j=1}^{n}(c_j - c'_j)u_j. \label{eq:utr}
+    \end{alignat}
+    From the independents of the $u_j$'s, in order for \eqref{eq:utr} to be true, for each $j\in1,\dots,n$ we must have
+    \[c_j-c'_j = 0.\]
+    In other words $c_j = c'_j$ for all $j,$ hence proving uniqueness.
+\end{proof}
+
+\section*{1.10}
+
+\begin{proof}
+    Let the sequence $(a^n)$ where $a^n = (a_j^n)_{j=1}^\infty$ be Cauchy. Then by definition, for $\epsilon > 0,$ there exists $N\in\mathbb{N}$ s.t. $m,n\ge N$ implies that
+    \begin{equation*}
+        \Vert a^m - a^n \Vert_p < \epsilon/2.
+    \end{equation*}
+    Or in other words,
+    \begin{equation} \label{eq:cauch}
+        \left (\sum_{j=1}^{\infty} |a_j^m - a_j^n|^p \right)^{1/p} < \epsilon/2.
+    \end{equation}
+    It thus follows that
+    \begin{equation*}
+        |a_j^m-a^n_j | < \epsilon/2
+    \end{equation*}
+    for any fixed $j$ as otherwise \eqref{eq:cauch} wouldn't hold. Thus, $(a_j^n)$ is a Cauchy sequence for fixed $j.$ By completeness of $\mathbb{C},$ we have that
+    \begin{equation} \label{eq:lima}
+        \lim a_j^n \to a_j, \qquad\text{for some } a_j\in\mathbb{C}.
+    \end{equation}
+    Now let us define
+    \[a = (a_j)_{j=1}^\infty.\]
+    We claim that $a \in \ell^p(\mathbb{N})$ and $(a^n)\to a.$ Specifically, for any fixed $k\in\mathbb{N},$ it follows from \eqref{eq:cauch} that for any $m\ge N$ we have
+    \begin{alignat}{2}
+        \sum_{j=1}^{k} |a_j^m - a_j^n|^p &\le \sum_{j=1}^{\infty} |a_j^m - a_j^n|^p\nonumber\\
+        \left (\sum_{j=1}^{k} |a_j^m - a_j^n|^p \right)^{1/p} &\le  \left (\sum_{j=1}^{\infty} |a_j^m - a_j^n|^p \right)^{1/p}\nonumber\\
+        &< \epsilon/2. \label{eq:e1}
+    \end{alignat}
+    It also follows from \eqref{eq:lima} that we can choose some $r \in\mathbb{N}$ with $r \ge N$ s.t.
+    \begin{equation} \label{eq:e2}
+        \sum_{j=1}^{k}|a_j - a^r_j| < \epsilon/2.
+    \end{equation}
+    It thus follows that
+    % \begin{equation*}
+    %     \left ( \sum_{j=1}^{k} |a_j - a_j^n|^p \right )^{1/p} < \epsilon.
+    % \end{equation*}
+    \begin{alignat*}{2}
+        \left ( \sum_{j=1}^{k} |a_j - a_j^n|^p \right )^{1/p} &<  \left ( \sum_{j=1}^{k} |a_j - a_j^r|^p \right )^{1/p} +  \left ( \sum_{j=1}^{k} |a_j^r - a_j^n|^p \right )^{1/p} \quad&& \text{by triang. ineq.}\\
+        &< \sum_{j=1}^{k}|a_j - a^r_j| + \left ( \sum_{j=1}^{k} |a_j^r - a_j^n|^p \right )^{1/p} && \text{by Exercise 1.17}\\
+        &= \epsilon/2 + \epsilon/2 &&\text{by \eqref{eq:e1} and \eqref{eq:e2}}\\
+        &= \epsilon.
+    \end{alignat*}
+    Therefore, by Monotone--Convergence it follows that as $k\to\infty$ we have
+    \begin{equation} \label{eq:epa}
+        \left ( \sum_{j=1}^{\infty} |a_j - a_j^n|^p \right )^{1/p} = \Vert a - a^n \Vert_p <\epsilon.
+    \end{equation}
+    Thus $(a-a^n)\in\ell^p(\mathbb{N}).$ By vector space properties, it follows that
+    \[a = a^n + (a-a^n)\in\ell^p(\mathbb{N}).\]
+    Furthermore, as $\epsilon$ was arbitrary, \eqref{eq:epa} implies that $(a^n) \to a.$ Therefore, $\ell^p(\mathbb{N})$ is complete, as desired.
+\end{proof}
+
+\section*{1.11}
+
+
+\textbf{We first show that $\ell^\infty(\mathbb{N})$ is a vector space.}
+
+\begin{proof}
+    Let $a,b \in \ell^\infty(\mathbb{N}).$ Therefore, $|a_n|<N$ and $|b_n|<M$ for all $n\in\mathbb{N}$ for some $N,M \in \mathbb{N}.$ Therefore, $a + b$ is bounded by $N+M$ and thus
+    \[\Vert a+b\Vert_\infty = \sup_{j\in\mathbb{N}}|a_j + b_j| \le N+M.\]
+    Therefore, we have proved closure under addition.
+
+    It also follows for any $c \in \mathbb{N}$ that $|ca_n| < |c|N$ for all $n\in \mathbb{N}.$ Thus
+    \[\Vert ca\Vert_\infty = \sup_{j\in\mathbb{N}}|ca_j| \le |c|N.\]
+    Therefore, we have proved closure under multiplication.
+\end{proof}
+
+\noindent
+\textbf{We next show that $\ell^\infty(\mathbb{N})$ is a normed space.}
+
+\begin{proof}
+    For positive definiteness, it follows from the fact that for any bounded sequence $a$ we have $\sup_{j\in\mathbb{N}}|a_j| = 0$ if and only if is the sequence $a = (0,0,\cdots),$ and otherwise it is greater than $0$. Positivite homogeneity follows in same way from above proof for closure under multiplication. Triangle inequality follows similarly from above proof for closure under addition.
+\end{proof}
+
+
+\noindent
+\textbf{Lastly, we show that $\ell^\infty(\mathbb{N})$ is complete.}
+
+\begin{proof}
+    Let the sequence $(a^n)$ where $a^n = (a_j^n)_{j=1}^\infty$ be Cauchy. Then by definition, for $\epsilon > 0,$ there exists $N\in\mathbb{N}$ s.t. $m,n\ge N$ implies that
+    \begin{equation*}
+        \Vert a^m - a^n \Vert_\infty < \epsilon/2,
+    \end{equation*}
+    that is
+    \begin{equation} \label{eq:csup}
+        \sup_{j\in\mathbb{N}} |a^m_j-a^n_j| < \epsilon/2.
+    \end{equation}
+    It thus follows that
+    \begin{equation} \label{eq:infe}
+        |a_j^m-a^n_j | < \epsilon/2
+    \end{equation}
+    for any fixed $j$ as otherwise \eqref{eq:csup} wouldn't hold. Thus, $(a_j^n)$ is a Cauchy sequence for fixed $j.$ By completeness of $\mathbb{C},$ we have that
+    \begin{equation*}
+        \lim a_j^n \to a_j, \qquad\text{for some } a_j\in\mathbb{C}.
+    \end{equation*}
+    Now let us define
+    \[a = (a_j)_{j=1}^\infty.\]
+    For any fixed $k\in\mathbb{N},$ and $m\ge N$ it follows from \eqref{eq:infe} that
+    \begin{equation*}
+        \sup_{j\le k}|a_j^m-a_j^n| < \epsilon/2.
+    \end{equation*}
+    Thus, as $m\to \infty,$  we have that
+    %  by continuity of norm and sequential characterization of Continuity that
+    \begin{equation*}
+        \lim_{m\to\infty}\sup_{j\le k}|a_j^m-a_j^n|=\sup_{j\le k}|a_j-a_j^n| \le \epsilon/2 < \epsilon.
+    \end{equation*}
+    Now, if we consider $k\to \infty,$ by Monotone--Convergence, we have
+    \begin{equation}\label{eq:i}
+        \sup_{j\in\mathbb{N}}|a_j-a_j^n| = \Vert a - a^n \Vert_\infty < \epsilon.
+    \end{equation}
+    Therefore $(a-a^n)\in\ell^\infty(\mathbb{N}).$ By vector space properties, it follows that
+    \[a = a^n + (a-a^n)\in\ell^\infty(\mathbb{N}).\]
+    Furthermore, as $\epsilon$ was arbitrary, \eqref{eq:i} implies that $(a^n) \to a.$ Therefore, $\ell^\infty(\mathbb{N})$ is complete.
+\end{proof}
+
+\section*{1.13}
+
+\begin{proof}
+    Let $A$ be the set of all sequences of zero and one. This set is uncountable, and for any $x,y \in A,$ we have that
+    \begin{equation*}
+        \Vert x-y\Vert_\infty = \begin{cases}
+            1 & x\neq y\\
+            0 & o.w.
+        \end{cases}.
+    \end{equation*}
+    In other words, we can create a disjoint $\epsilon$-ball around each vector in $A$ (just set $\epsilon$ to $1$).
+
+    Thus, any dense set in $\ell^\infty(\mathbb{N})$ must contain one vector from each $\epsilon$-ball. As there are an uncountable number of these balls (since they are each associated with a unique element from the uncountable set $A$), it thus follows that any dense set is uncountable. Therefore, $\ell^\infty(\mathbb{N})$ is not separable.
+\end{proof}
+
+\section*{1.17}
+
+\textbf{We first show that $p_0 \le p$ implies $\ell^{p_0}(\mathbb{N})\subset \ell^{p}(\mathbb{N})$.}
+
+
+\begin{proof}
+    Let $(f_n) \in \ell^{p_0}(\mathbb{N}).$ We claim that $(f_n) \in \ell^{p}(\mathbb{N}).$ To help us, we first state the following (which is verifiable\footnote{Specifically we can show $\sum |f_j| \le (\sum |f_j|^n)^{1/n}$ by the fact that $(\sum |f_j|)^m \ge \sum |f_j|^m$ for $m\ge 1$. It then follows that $\left( \sum_{j=1}^{N} |f_j|\right )^n \le \sum_{j=1}^{N}|f_j|^n.$}) that for $0<n\le 1$ it follows that
+    \begin{equation} \label{eq:less}
+        \left( \sum_{j=1}^{N} |f_j|\right )^n \le \sum_{j=1}^{N}|f_j|^n.
+    \end{equation}
+    Therefore, for any $k\in\mathbb{N},$ we have that
+    \begin{alignat}{2}
+        \left(\sum_{j=1}^{k}|f_j|^p\right)^{p_0/p} &\le \sum_{j=1}^{k} (|f_j|^p)^{p_0/p} && \text{by \eqref{eq:less} since $p_0\le p$}\nonumber\\
+        &= \sum_{j=1}^{k} |f_j|^{p_0})\nonumber\\
+        \left(\sum_{j=1}^{k}|f_j|^p\right)^{1/p} &\le \left(\sum_{j=1}^{k} |f_j|^{p_0})\right)^{1/p_0} \qquad&& \text{by the $1/p_0$'th power of both side.} \label{eq:prevp}
+    \end{alignat}
+    If we thus take $k\to\infty,$ by Order--Limit Theorem, it follows that
+    \[\Vert f_j\Vert_p \le \Vert f_j \Vert_{p_0}.\]
+    Therefore, $f_j \in \ell^p(\mathbb{N})$ as desired.
+\end{proof}
+
+\noindent
+\textbf{We next show that $\lim_{p\to\infty}\Vert a \Vert_p = \Vert a \Vert_\infty$.}
+
+\begin{proof}
+    Let $a \in \ell^p(\mathbb{N})$ for some $p\in\mathbb{N}.$ This implies that
+    \begin{equation} \label{eq:super}
+        \Vert a \Vert_\infty = \sup_{j\in\mathbb{N}}|a_j|= a_k \qquad\text{for some }k\in\mathbb{N}
+    \end{equation}
+    as otherwise $\sum_{j=1}^{\infty}|a_j|^p$ would not converge.\footnote{Namely, we could find infinite terms of $a$ s.t. their absolute values are within some sufficiently small $\epsilon$ of $\sup_{j\in\mathbb{N}}|a_j|$. This would imply that $\sum_{j=1}^{\infty}|a_j|^p \ge \sum_{j=1}^{\infty}(\sup_{k\in\mathbb{N}}|a_k|-\epsilon)^p$ and would thus diverge---a contradiction.} By homogeneity of norm, WLOG assume that $|a_k|=1.$
+
+
+    Now, fix $\epsilon > 0.$ As $\sum_{j=1}^{\infty}|a_j|^p$ converges, there exists some $N\in\mathbb{N}$ s.t.
+    \begin{equation} \label{eq:aje}
+        \sum_{j=N}^{\infty}|a_j|^p < \epsilon/2.
+    \end{equation}
+    Now choose some $p_0\ge p$ s.t.
+    \begin{equation} \label{eq:agee}
+        N^{1/p_0}<1 +  \epsilon/2.
+    \end{equation}
+    For any $q\ge p_0,$ we would have
+    \begin{alignat*}{2}
+        \Vert a \Vert_q &= \left(\sum_{j=1}^{\infty}|a_j|^q\right)^{1/q}\\
+        &\le \left(\sum_{j=1}^{N-1}|a_j|^q\right)^{1/q} + \left(\sum_{j=N}^{\infty}|a_j|^q\right)^{1/q}\qquad&&\text{by Triang. Ineq.}\\
+        &\le \left(\sum_{j=1}^{N-1}|a_k|^q\right)^{1/q} + \left(\sum_{j=N}^{\infty}|a_j|^q\right)^{1/q}&&\text{by \eqref{eq:super}}\\
+        &< N^{1/q} + \left(\sum_{j=N}^{\infty}|a_j|^q\right)^{1/q}&&\text{as we assume $|a_k|=1$}\\
+        &\le N^{1/q}  + \left(\sum_{j=N}^{\infty}|a_j|^p\right)^{1/p} &&\text{as $p\le q$ and by \eqref{eq:prevp}}\\
+        &<1 + \epsilon/2 + \epsilon/2 &&\text{by \eqref{eq:aje} and \eqref{eq:agee}}\\
+        &=|a_k| + \epsilon.
+    \end{alignat*}
+    As $\epsilon$ is arbitrary, this implies that  $\lim_{p\to\infty}\Vert a \Vert_p \le |a_k| = \Vert a\Vert_\infty.$
+    Now we also have for any $q\ge p$ that
+    \begin{alignat*}{2}
+        \Vert a \Vert_q &= \left(\sum_{j=1}^{\infty}|a_j|^q\right)^{1/q}\\
+        &\ge (|a_k|^q)^{1/q} \qquad&&\text{as $a_k$ is a term of $a$}\\
+        &=|a_k|.
+    \end{alignat*}
+    Hence, it is also the case that  $\lim_{p\to\infty}\Vert a \Vert_p \ge |a_k| = \Vert a\Vert_\infty.$ Thus, by the squeeze theorem, it follows that  $\lim_{p\to\infty}\Vert a \Vert_p = \Vert a\Vert_\infty,$ as desired.
+    
+
+    % By Homogeneity of the norm, WLOG assume that $\Vert a \Vert_\infty = \sup_{j\in\mathbb{N}} |a_j| = 1.$ It is clear that $\lim_{p\to\infty}\Vert a \Vert_p \ge 1.$ As by definition of supremum, for any $\epsilon > 0,$ we can find $a_j$ s.t. $ 1 - a_j < \epsilon.$ Thus for any $p$ it follows that
+    % \begin{alignat*}{2}
+    %     \Vert a \Vert_p &\ge (a_j^p)^{1/p}\\
+    %     &= a_j\\
+    %     &\ge 1 \qquad&\text{as we can choose arbitrary small $\epsilon$.}
+    % \end{alignat*}
+
+    % We similarly claim that $\lim_{p\to\infty} \Vert a \Vert_p \le 1.$ Specifically, by our first assumption, we have that $|a_j|\le 1$ for any $j\in\mathbb{N}.$ Therefore, for any fixed $k \in \mathbb{N}$ we have that
+    % \begin{alignat*}{2}
+    %     \Vert (a_1,\cdots,a_k) \Vert_p &\le \left (\sum_{j=1}^{k}1^p\right )^{1/p}\\
+    %     &=k^{1/p}\\
+    %     &= 1 &&\text{as $p\to \infty.$}
+    % \end{alignat*}
+    % It thus follows as we take $k\to\infty$ that $\lim_{p\to\infty} \Vert a \Vert_p \le 1.$
+
+    % Therefore, by the squeeze theorem, it follows that $\lim_{p\to\infty} \Vert a \Vert_p = 1 = \Vert a \Vert_\infty.$
+\end{proof}
+
+\section*{1.19}
+
+\begin{enumerate}[i]
+    \item Not a subspace as it is not closed under addition
+    \item It is a closed subspace (as any sequence of convergent even functions must converge to even function)
+    \item It is a subspace but not closed as polynomials are dense in $C(I)$.
+    \item It is a closed subspace (as bounded degree polynomials cannot converge uniformly to functions that are not also of bounded degree).
+    \item It is a subspace but not closed as piecewise linear functions can approximate other functions
+    \item It is a subspace but not closed (consider functions that converge to $|x|$)
+    \item It is not a subspace as it is not closed under scalar multiplication.
+\end{enumerate}
+\end{document}

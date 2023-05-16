@@ -1,0 +1,140 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Functional Analysis HW4, Thomas Zeng }
+\rhead{Math 331, Spring 2023}
+\cfoot{\thepage}
+
+
+\begin{document}
+
+\section*{1}
+
+\begin{proof}
+    Given $K$ is bounded, it follows that $K\subseteq B_\epsilon(0)$ for some $\epsilon>0.$ Therefore $\overline{K}\subseteq \overline{B}_\epsilon(0).$ 
+    % as otherwise there exists $x \in \overline{K}\backslash \overline{B}_\epsilon(0)$ which then implies there is some $x' \in K\backslash B_\epsilon(0)$ by viture of $x$ being a limit point. But this contradicts our bounded assumption about $K$. 
+    Hence, $\overline{K}$ is bounded. As $X$ is finite--dimensional, by the Heine--Borel Theorem, it follows that $\overline{K}$ is compact. Therefore $K$ is relatively compact and thus totally bounded.
+\end{proof}
+
+\section*{1.37}
+
+Consider the family of functions $F = \{f_n\}_{n=1}^\infty$ where $f_n : x\mapsto n.$ Each $f_n$ is a constant function and thus continuous i.e. $F \subset C[0,1].$ It is equicontinuous, as for any fixed $\epsilon$ and $x,$ it suffices to use $\delta = 1.$ It is not bounded, as for any $c \in \mathbb{R}^+,$ we have that $\Vert f_{\lceil c\rceil}\Vert_\infty \ge c.$
+
+\section*{1.38}
+
+\subsection*{(i)} This set is not relatively compact. As it contains the family of functions $\{x^n\}_{n=1}^\infty$ which is not not equicontinuous.
+
+\subsection*{(ii)} This set is not relatively compact as it is not bounded, i.e. the family of functions I defined in question 1.37 would suffice.
+
+\subsection*{(iii)} This is relatively compact. This set is clearly bounded. It thus suffices to show that it is equicontinuous. Namely, for any $f\in F.$ For fixed $\epsilon$ and $a\in[0,1].$ Let $\delta = \epsilon^2,$ and consider $b \in [0,1]$ s.t. $|b-a|<\delta.$ WLOG, assume $b\le a.$ It now follows on the inner product space of $C[b,a]$ (with the $\Vert \cdot\Vert_2$ norm) that
+\begin{alignat*}{2}
+    |f(a)-f(b)| &= \left | \int_{b}^{a}f'(x) \right |\\
+    &= |\langle f', 1\rangle |\\
+    &\le \Vert f'\Vert_2\Vert 1\Vert_2 \qquad&&\text{Cauchy-Schwartz}\\
+    &\le \Vert 1\Vert_2 &&\text{as $\Vert f'\Vert_2\le 1$ on $C[0,1]\Rightarrow\Vert f'\Vert_2\le 1$ on $C[b,a]$\footnotemark}\\
+    &\le \sqrt{a-b}&&\text{def. of 2-norm}\\
+    &< \sqrt{\delta}\\
+    &=\epsilon.
+\end{alignat*}
+\footnotetext{Specifically as $\int_{0}^{b}f'(x)^2$ is an increasing function since $f'(x)^2\ge 0$ for all $x.$}
+% This is relatively compact. Specifically, it is clearly bounded by construction of set. It is also equicontinuous, as for any $\epsilon$ and $x$ it suffices to set $\delta \coloneqq\epsilon.$ Specifically, by the MVT and the restriction that $\Vert f'\Vert _\infty \le 1,$ it follows that this would work.
+
+\section*{1.42}
+
+\subsection*{(i)} This is linear as for any $c\in\mathbb{C},$ we have that
+\[A(cf)(x) = (1-x)xcf(x^2)=c(1-x)xf(x^2)=c(Af)(x)\]
+and for any $f,g\in C[0,1],$
+\[A(f+g)(x)=(1-x)x(f+g)(x^2)=(1-x)xf(x^2)+(1-x)xg(x^2)=(Af + Ag)(x).\]
+We have that
+\[\Vert A\Vert = \sup_{f\in C(I), \Vert f\Vert_\infty =1} \Vert Af\Vert_\infty = \max_{x\in[0,1]}(1-x)x = .25.\]
+
+\subsection*{(ii)} This is not linear as consider $f: x\mapsto x^2$ and  $c=5.$ It follows that:
+\[A(cf)(x) = (1-x)xf([cx]^2)\neq c(1-x)xf(x^2)=c(Af)(x^2) = cAf(x).\]
+
+\subsection*{(iii)} This is linear by Algebraic Integrability Theorems. It follows that
+\begin{alignat*}{2}
+    \Vert A \Vert &= \sup_{f\in C[0,1],\Vert f\Vert_\infty=1}  \Vert Af\Vert_\infty\\
+    &=\left \Vert\int_{0}^{1}(1-x)ydy\right \Vert_\infty\ &&\text{max when $f:y\mapsto 1$}\\
+    &= \left\Vert(1-x)\frac{y^2}{2}\bigg |_0^1\right\Vert_\infty\\
+    &= \frac{1}{2}.
+\end{alignat*}
+
+\section*{1.46}
+ \begin{proof}
+    That $C^1(I)$ is a vector space follows directly from Algebraic Continuity and Differentiability Theorems. That $\Vert\cdot\Vert_{\infty,1}$ is a norm, follows directly form the fact that it is defined as the sum of two norms.\footnote{Specifically the norm $\Vert \cdot\Vert_\infty$ and the norm $\Vert \cdot \Vert'_\infty$ where $\Vert f\Vert'_\infty = \Vert f' \Vert_\infty.$ The latter can be shown to be a norm easily via algebraic differentiability theorems.}
+
+    It thus suffices to show that $C^1(I)$ is complete. Thus consider $(f_n)$ some Cauchy sequence in $C^1(I).$ As $\Vert\cdot\Vert_{\infty,1}$ is a stronger norm than $\Vert \cdot\Vert_\infty,$ it follows that $(f_n)$ is a Cauchy sequence in $C(I)$ and thus converge uniformly to some function $f.$ By same argument, $(f'_n)$ is a Cauchy sequence in $C(I)$ and thus converge uniformly to some function $g.$ By differentiable limit theorem, it follows that $f' =g.$ By cont. limit theorem, as each $f'_n$ is continuous, it follows that $f'$ is continuous. Therefore $f\in C^I(I).$ Clearly $(f_n)\to f$ w.r.t. $\Vert\cdot\Vert_{\infty,1},$ as for any $\epsilon>0,$ choose $N_1$ s.t.
+    \[n\ge N_1 \Rightarrow \Vert f_n-f\Vert_\infty < \epsilon/2\]
+    and choose $N_2$ s.t.
+    \[n\ge N_2 \Rightarrow \Vert f'_n-f'\Vert_\infty < \epsilon/2.\]
+    Now for any $n\ge \max\{N_1,N_2\},$ It follows that
+    \[\Vert f\Vert_{\infty,1}=\Vert f\Vert_\infty+\Vert f'\Vert_\infty<\epsilon/2+\epsilon/2=\epsilon.\]
+    Thus, $C^1(I)$ is complete and hence a Banach space.
+ \end{proof}
+
+ \section*{1.47}
+\textbf{First we show that $\Vert AB\Vert \le\Vert A\Vert\Vert B\Vert.$}
+
+\begin{proof}
+    Consider arbitrary $A,B\in\mathscr{L}(X).$ Now for any $f\in X$ s.t. $\Vert f\Vert = 1,$ we have that
+    \begin{alignat*}{2}
+        \Vert ABf\Vert_X &= \Vert Af_b\Vert_X &&\text{where $f_b=Bf$}\\
+        &= \Vert B\Vert \Vert Af'_b\Vert_X \quad&&\text{where $f'_b=\frac{f_b}{\Vert B\Vert}$}\\
+        &\le\Vert B\Vert\Vert A\Vert &&\text{as $\Vert Af'_b\Vert_X\le\Vert A\Vert.$}
+    \end{alignat*}
+    As $f$ was arbitrary, it follows that $\Vert AB\Vert \le \Vert A\Vert \Vert B\Vert.$
+\end{proof}
+
+\noindent
+\textbf{Next, we show multiplication is continuous.}
+
+\begin{proof}
+    First, we fix $\epsilon > 0.$ WLOG, assume $\epsilon <1.$ Now chose $N_1$ s.t.
+    \[n\ge N_1 \Rightarrow \Vert A_n-A\Vert < \min \left\{\frac{\epsilon}{3\Vert B\Vert}, \frac{\epsilon}{3} \right\}\]
+    and $N_2$ s.t.
+    \[n\ge N_2 \Rightarrow \Vert B_n-B\Vert <  \min \left\{\frac{\epsilon}{3\Vert A\Vert}, \frac{\epsilon}{3} \right\}.\]
+    Now for any $n\ge\max\{N_1, N_2\},$ it follows that
+    \begin{alignat*}{2}
+        \Vert A_nB_n-AB\Vert &= \Vert (A_n-A)B + A_n(B_n - B)\Vert\\
+        &=  \Vert (A_n-A)B + A(B_n-B) + (A_n-A)(B_n-B)\Vert\\
+        &\le \Vert (A_n-A)B\Vert + \Vert A(B_n-B)\Vert + \Vert(A_n-A)(B_n-B)\Vert \quad&&\text{triang. ineq.}\\
+        &\le\Vert A_n-A\Vert\Vert B\Vert + \Vert A\Vert\Vert B_n-B\Vert + \Vert A_n-A\Vert\Vert B_n-B\Vert &&\text{first part of this prob.}\\
+        &< \epsilon/3 + \epsilon/3 + \epsilon^2/9 &&\text{as $|\epsilon| < 1\Rightarrow \epsilon^2 < |\epsilon|$}\\
+        &< \epsilon.
+    \end{alignat*}
+    % We first claim that $A_mB_n\stackrel{unif}{\to} A_mB.$ Specifically, for any $\epsilon>0,$ choose $N$ s.t.
+    % \[n\ge N\Rightarrow \Vert B_n-B\Vert < \epsilon/\Vert A\Vert.\]
+    % It thus follows that
+    % \[\Vert A_m B_n - A_m B\Vert\le\Vert A_m\Vert\Vert B_n-B\Vert<\epsilon.\]
+    % Similarly, we have that $A_mB\to AB.$ Namely, for any $\epsilon>0,$ just choose $N$ s.t.
+    % \[m\ge n\Rightarrow \Vert A_m-A\Vert <\epsilon/\Vert B\Vert.\]
+    % It then follows that
+    % \[\Vert A_mB - AB\Vert \le \Vert B\Vert\Vert A_m-A\Vert<\epsilon.\]
+    % Thus, as $A_mB_n\stackrel{unif}{\to} A_mB,$ and $A_mB\to AB,$ it follows that
+    % \[\lim_{n\to\infty} A_nB_n = \lim_{m\to\infty}\lim_{n\to\infty}A_mB_n = AB.\]
+\end{proof}
+
+
+
+\end{document}

@@ -1,0 +1,283 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis PS5, Thomas Zeng }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\begin{document}
+
+\section*{4.2.1}
+
+\subsection*{c}
+
+\begin{proof}
+    Fix $\epsilon > 0.$ As $V_\epsilon(L)$ is bounded, there exists some $b\in\mathbb{R}$ s.t. $|v|<b$ for all $v\in V_\epsilon(L).$ This further implies that for all $f(x)\in V_\epsilon(L)$ we have that
+    \begin{equation} \label{eq:fb}
+        |f(x)|<b.
+    \end{equation}    
+    Now let $\epsilon_f = \epsilon/(2M)$ and $\epsilon_g = \epsilon/(2b).$ By definition of functional limit,
+    there exists $\delta_f$ and $\delta_g$ s.t. for all $x\in A$ we have
+    \begin{equation} \label{eq:ef}
+        0<|x-c|<\delta_f \Rightarrow |f(x)-L|<\epsilon_f
+    \end{equation}
+    and similarly
+    \begin{equation} \label{eq:eg}
+        0<|x-c|<\delta_g \Rightarrow |g(x)-M|<\epsilon_g.
+    \end{equation}
+    Now let $\delta = \min\{\delta_f,\delta_g\}.$
+    We thus have that given $x\in A,$
+    \begin{alignat*}{2}
+        0<|x-c|<\delta \Rightarrow& |f(x)-L|<\epsilon_f && \text{Follows from \eqref{eq:ef}}\\ 
+        &|g(x)-M|<\epsilon_g && \text{Follows from \eqref{eq:eg}}\\
+        \Rightarrow& M|f(x)-L| < \epsilon/2 && \text{Follows from def. of $\epsilon_f$}\\
+        &|f(x)||g(x)-M| < \epsilon/2 &&\text{Follows from def. of $\epsilon_g$ and \eqref{eq:fb}}\\
+        \Rightarrow&  M|f(x)-L| + |f(x)||g(x)-M| < \epsilon &&\text{algebra}\\
+        \Rightarrow& |f(x)M - LM| + |f(x)g(x)-f(x)M|<\epsilon \quad&&\text{algebra}\\
+        \Rightarrow& |f(x)g(x) - f(x)m+f(x)m-LM|<\epsilon &&\text{Triangle Inequality}\\
+        \Rightarrow& |f(x)g(x)-LM|<\epsilon.
+    \end{alignat*}
+\end{proof}
+
+\section*{4.2.2}
+
+\subsection*{a}
+Let $\delta = 1/5.$ As the largest interval s.t. the image of any point in it is in the $\epsilon$-neighborhoeed of the limit is $(14/5,16/5).$
+% This is as $5(14/5)-6 = 9-\epsilon = 8.$ Therefore $\delta = 3 - 14/5 = 1/5.$
+
+\subsection*{b}
+Let $\delta=3.$ As the largest interval is $(1,9).$
+\subsection*{c} % incorrect?
+Let $\delta = \pi-2.$ As the largest interval is $[2,5).$
+% as rance is [2, 5)
+\subsection*{d}
+Let $\delta = \pi-3.$ As the largest interval is $[3,4)$
+
+\section*{4.2.9}
+
+\subsection*{a}
+
+Fix $M>0.$ Let $\delta < 1/\sqrt{M}.$ Now for any $x$ we thus have
+\begin{alignat*}{2}
+    0<|x-0|<\delta &\Rightarrow 0<|x|<\delta \qquad\qquad&&\text{by definition of absolute value}\\
+    & \Rightarrow 0 < x^2 < \delta^2\\
+    & \Rightarrow x^2 < 1/M &&\text{by def. of }\delta\\
+    & \Rightarrow 1/x^2 > M &&\text{algebra}\\
+    & \Rightarrow f(x) > M &&\text{by definition of }f(x).
+\end{alignat*}
+
+\subsection*{b}
+
+
+\begin{definition}
+    $\lim_{x\to\infty}f(x)=L$ means that for all $\epsilon>0$ we can find $M>0$ s.t. for all $x\ge M,$ it follows that $|f(x)-L|<\epsilon.$
+\end{definition}
+
+\noindent
+We now show that $\lim_{x\to\infty}1/x=0.$
+\begin{proof}
+    Fix $\epsilon>0$. Let $M >1/\epsilon$ using the Archimedean priniciple. We note that by deifinition, $M>0.$ Now for any $x\ge M$ we have that
+    \begin{alignat*}{2}
+        x\ge M &\Rightarrow x > 1/\epsilon &&\text{by our definition of }M\\
+        & \Rightarrow1/x < \epsilon&&\text{algebra}\\
+        & \Rightarrow|1/x - 0| < \epsilon \qquad\qquad&&\text{as }x\ge M \text{ and thus }x>0 
+    \end{alignat*}
+    as desired.
+\end{proof}
+ 
+\section*{4.3.3}
+
+\subsection*{a}
+
+\begin{proof}
+    Fix $\epsilon > 0.$ Now let $c\in A.$ By definition of continuity, there exists some $\delta_g > 0$ s.t. for any $y\in B$ we have
+    \begin{equation} \label{eq:g}
+        |y-f(c)|<\delta_g \Rightarrow |g(y)-g(f(c))|<\epsilon.
+    \end{equation}
+    For similar reason, there exists $\delta_f > 0$ s.t. for any $x\in A$ we have
+    \begin{equation} \label{eq:f}
+        |x-c|<\delta_f \Rightarrow |f(x)-f(c)|<\delta_g.
+    \end{equation}
+    Therefore, putting together \eqref{eq:g} and \eqref{eq:f}, we get
+    \begin{equation*}
+        |x-c|<\delta_f \Rightarrow |f(x)-f(c)|<\delta_g \Rightarrow |g(f(x))-g(f(c))|<\epsilon.
+    \end{equation*}
+    as desired.
+\end{proof}
+
+\section*{4.3.7}
+
+\subsection*{a}
+
+\begin{proof}
+    We will use the Criterion for Discontinuity. Let $g:\mathbb{R}\to\mathbb{R}$ be the Dirchlet's function. We consider two cases. 
+    
+    For the first case, let $c\in\mathbb{Q}.$ We note that $c$ is a limit point as every point is a limit point in $\mathbb{R}.$ Now define the sequeunce $(x_n)$ where $x_n = c + \pi/n.$ Clearly $(x_n)\to c.$ However as each $x_n$ is irrational, we thus have
+    \begin{equation*}
+        (g(x_n)) = (0,0,0,\cdots).
+    \end{equation*}
+    At the same time, as by our definition $c$ is rational, thus $g(c)=1$.
+    Therefore we have that
+    \begin{equation*}
+        (g(x_n)) = (0,0,0,\cdots)\to 0 \neq 1 = f(c).
+    \end{equation*} 
+    Thus using the Criterion for Discontinuity, we conclude that the Dirchlet's function is not continuous at any $c\in\mathbb{Q}.$
+
+    By same argument, for any $c\in\mathbb{I}$ (the set of irationals), let us define $(x_n)$ where $x_n$ is $c$ truncated after the $n$'th value after the decimal. Therefore if $c=\pi,$ we would have $(x_n)=(3.1,3.14,3.141,\cdots).$
+    With this sequence, we get $(x_n)\to c$ but
+    \begin{equation*}
+        (g(x_n)) = (1,1,1,\cdots)\to 1 \neq 0 = f(c)
+    \end{equation*}
+    since each $x_n$ is rational. Thus using the Criterion for Discontinuity, we conclude that the Dirchlet's function is not continuous at any $c\in\mathbb{I}.$
+
+    Therefore the Dirchlet's function is nowhere-continuous on $\mathbb{R}.$
+\end{proof}
+
+\subsection*{b}
+
+\begin{proof}
+    There are two cases. In the first case let $c = 0.$ Consider the sequence $(x_n)=\pi/n.$ Here we have $(x_n)\to 0 = c.$ But $(f(x_n))=(0,0,0,\cdots)\to 0 \neq 1 = f(0).$
+
+    In the second case, consider $c=m/n$ where $m/n$ is in the lowest terms and $c>0.$ Now consider the sequence $(x_n)$ where $x_n = m/n + \pi/2.$ We thus have that $(x_n)\to m/n = c.$ But $(f(x_n))\to 0 \neq 1/n = f(c).$
+\end{proof}
+
+\subsection*{c}
+
+\begin{proof}
+    Let $c$ be irrational. Fix $\epsilon > 0.$ By Archimedean priniciple, there exists some $n\in\mathbb{N}$ s.t. $1/n<\epsilon.$ Now consider the set
+    \begin{equation*}
+        A = \{x\in\mathbb{Q}: t(x)\ge1/n \text{ and } x\in[\text{floor}(c), \text{ciel(c)}]\}.
+    \end{equation*}
+    We assert that $A$ must be a finite set. To meet the condition that $t(x)\ge 1/n$, given $x = a/b\in\mathbb{Q}\backslash\{0\}$ in the lowest terms, it must be that $b\le n$ if it is to be in $A.$ Therefore there are finite number of possible values for $b$. Similarly, by the second condition, there is a finite number of possible values for $a$ corresponding to each $b$ in order to have $x\in[\text{floor}(c), \text{ciel(c)}]$ (namely at most $b$ possibilities for each $b$). Therefore, there are finite possible combination of valid values of $a$ and $b$. Thus $A$ is finite.
+
+   Now let
+    \begin{equation*}
+        \delta = \min(\{|c-a|:a\in A\} \cup \{c-\text{floor}(c),\text{ciel}(c)-c\}).
+    \end{equation*}
+    We know that $\delta$ exists as $A$ is finite.
+    Now we show for any $x\in V_\delta(c)$ it follows that $t(x)\in V_\epsilon(0).$ If $x\in V_\delta(c)$ is irrational, then by definition of the Thomae's function, we have $t(x)=0\in V_\epsilon(0).$ Now if $x\in V_\delta(c)$ is rational, by our definition of $\delta,$ $x\notin A$ and $x\in[\text{floor}(c), \text{ciel(c)}].$ It therefore must be that $t(x) < 1/n <\epsilon.$ As by definition of the function it must also be that $t(x)>0,$ it therefore follows that $t(x)\in V_\epsilon(0).$
+
+    Therefore the Thomae functon is continuous at ever irrational number.
+    % chone 1/n < epsilon a + 1/m
+\end{proof}
+
+\section*{4.3.9}
+
+\begin{proof}
+    Let $i$ be a limit point of $K$. Therefore there exists a sequence $(a_n)\to i$ with each $a_n\in K.$ By seqeuntial characterization of continuity, $(h(a_n))\to h(i).$ By definition of $K,$ we know that for each $a_n$ we have $h(a_n)=0.$ Therefore $(h(a_n))\to 0$ and thus $h(i)=0$ . Therefore $i\in K.$ Thus $K$ contains all of its limit points and so $K$ is closed.
+\end{proof}
+
+\section*{4.4.3}
+We first show that $f(x)$ is uniformly continuous on $[1,\infty).$
+\begin{proof}
+    We first note that given $a,b\in [1,\infty),$ then we have
+    \begin{equation} \label{eq:truth}
+        0<1/a+1/b\le 2.
+    \end{equation}
+    Specifically, this is as $1/a+1/b$ is largest when $a=b=1.$
+
+    Now fix $\epsilon > 0$ and let $\delta = \epsilon/2.$ We thus have that for any $x,c\in[1,\infty)$ that
+    \begin{alignat*}{2} % explain each row
+        |x-c|<\delta \Rightarrow& |x-c|<\epsilon/2 &&\text{by def. of }\delta\\
+        \Rightarrow& \left | \frac{x-c}{xc}\right | < \epsilon/2 &&\text{as }x,c\in[1,\infty)\Rightarrow xc\ge 1\\
+        \Rightarrow& |1/x-1/c|<\epsilon/2 &&\text{algebra}\\
+        \Rightarrow&|1/x+1/c||1/x-1/c|<\epsilon \qquad&&\text{by \eqref{eq:truth}}\\
+        \Rightarrow& |1/x^2-1/c^2|<\epsilon&&\text{algebra}\\
+        \Rightarrow& |f(x)-f(c)|<\epsilon&&\text{by def. of }f(x)
+    \end{alignat*} 
+    as desired.
+\end{proof}
+
+\noindent
+Next we show that $f(x)$ is not uniform continuous on $(0,1].$
+
+\begin{proof}
+    Fix $\epsilon_0=1.$ Define $x_n=  1/(2n)$ and $y_n = 1/(2n+1).$
+    In otherwords we have
+    $$(x_n) = (1/2,1/4,1/6,\cdots)$$ and $$(y_n)=(1/3,1/5,1/7,\cdots).$$
+    Both $(x_n)$ and $(y_n)$ are subseqeunces of the harmonic sequence, therefore it follows that they both converge to $0.$ Therefore, by the ALT, it follows that $(x_n-y_n)\to 0.$ Simiarly as $x_n>y_n$ for all $n\in\mathbb{N},$ it follows that $(|x_n-y_n|)=(x_n-y_n)\to0.$ However, for any $n\in\mathbb{N}$ we have the following:
+    \begin{alignat*}{2}
+        |f(x_n)-f(y_n)| &= |f(1/(2n))-f(1/(2n+1))|\qquad &&\text{by def. of }x_n,y_n\\
+        &= |(2n)^2 - (2n+1)^2| &&\text{by def. of }f(x)\\
+        &= |4n^2 - (4n^2 +4n + 1)|&&\text{algebra}\\
+        &= |-4n-1|\\
+        &= 4n+1 &&\text{as }n\in\mathbb{N}\Rightarrow n>0\\
+        &> 1 &&\text{as }4n>0\\
+        & = \epsilon_0.
+    \end{alignat*}
+    Therefore, it cannot be uniform convergent.
+\end{proof}
+
+\section*{4.4.4}
+\subsection*{b}
+
+This is true. Specifically, we can prove this by contradiction. 
+
+\begin{proof}
+    Assume that $f(A)$ is not bounded, then we can create the sequence $(y_n)$ in $f(A)$ where $y_n=i$ for some $i\in f(A)$ s.t. $|i|> n.$
+    Clearly, this sequence diverges. We can then create the sequence $(x_n)$ where $f(x_n)=y_n.$ As $A$ is bounded, by the BWT, there exists a convergent subsequence $(x_{n_k})\to a$ where $a\in A.$ Now let $(a_n) = (a,a,a,\cdots).$ 
+    By Archimedean principle, there exists some $N\in\mathbb{N}$ s.t $f(a)< N.$ 
+    
+    Now consider the subseqeunces $(x_{n_k})=(x_{N+1},x_{N+2},\cdots).$ As $(x_n)\to a$ it follows that $(x_{n_k})\to 0$. Thus by the ALT, we know $(|x_{n_k}-a_n|)\to0.$ Now consider $\epsilon = 1.$ We thus have for any $k \in\mathbb{N}$ that
+    \begin{alignat*}{2}
+        |f(x_{n_k})-f(a_k)|&=|y_{n_k} - f(a)| \qquad\qquad&&\text{as by def. we have }f(x_n)=y_n\\
+        &\ge ||y_{n_k}|-|f(a)|| &&\text{by reverse triangle inequality}\\
+        &> |N+1 - N| &&\text{as }n_k\ge N+1\text{ and by def. of }y_n\\
+        &> 1\\
+        &=\epsilon.
+    \end{alignat*}
+     Thus by Theorem 4.4.5, $f$ is not uniformly continous, a contradiction. Thus $f(A)$ must be bounded.
+\end{proof}
+
+\section*{4.4.9}
+
+\subsection*{a}
+
+\begin{proof}
+    Fix $\epsilon>0.$ Consider $\delta = \epsilon/m.$ In other words, if for any $x,y\in A$ we have that
+    \begin{equation*}
+        |x-y|<\delta,
+    \end{equation*}
+    then:
+    \begin{alignat*}{2}
+        \left | \frac{f(x)-f(y)}{x-y} \right | &\le M &&\text{def. of Lipschitz}\\
+        |f(x)-f(y)| &\le M |x-c| \qquad\qquad&&\text{algebra}\\
+        |f(x)-f(y)| &< M\delta &&\text{by our assumption}\\
+        |f(x)-f(y)| &< \epsilon &&\text{def. of }\delta.
+    \end{alignat*}
+    Therefore, it follows that $f$ is uniformly continuous.
+\end{proof}
+\subsection*{b}
+
+No, consider the function $f:\mathbb{N}\to\mathbb{R}$ where $f(x)=x^2.$ As every point in $\mathbb{N}$ is an isolated point, $f$ trivially is uniform continuous, i.e. just consider $\delta=1$ for any $\epsilon.$ However, it is not Lipschitz, as the ``slope'' of this function is unbounded. More specifically for any $M>0$ just consider $y=\text{ciel}(M)$ and $x=\text{ciel}(M)+1.$ We would then have
+\begin{alignat*}{2}
+    x^2-y^2&> (x-1)x - y^2 &&\text{as }M>0\Rightarrow x,y>0\\
+    &=\text{ciel}(M)x-\text{ciel}(M)y \qquad&&\text{by def. of }x,y\\
+    &\ge M(x-y) &&\text{by distr. prop. and as ciel}(M)\ge M\\
+    \frac{x^2-y^2}{x-y} &> M &&\text{algebra}\\
+    \left |\frac{f(x)-f(y)}{x-y} \right | &> M &&\text{by def. of }f(x).
+\end{alignat*}
+Thus this function could not be Lipschitz.
+
+
+\end{document}

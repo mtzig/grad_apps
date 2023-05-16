@@ -1,0 +1,199 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{corollary}{Corrollary}[section]
+
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis Midterm 2 Definitions, Thomas Zeng }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\begin{document}
+\section{Basic Topology}
+
+\subsection{Open and Closed Sets}
+ 
+\begin{definition}
+    A set $O\subseteq \mathbb{R}$ is open if for all points $a\in O$ there exists an $\epsilon$-nbd $V_\epsilon(a)\subseteq O.$
+\end{definition}
+
+\begin{definition}
+    A point $x$ is a limit point of a set $A$ if every $\epsilon$-nbd $V_\epsilon(x)$ of $x$ intersets the set $A$ at some point other than $x$.
+\end{definition}
+
+\begin{theorem}
+    A point $x$ is a limit point of a set $A$ iff $x=\lim a_n$ for some sequence $(a_n)$ contained in $A$ satisfying $a_n\neq x$ for all $n\in\mathbb{N}.$
+\end{theorem}
+
+\begin{definition}
+    A point $a\in A$ is an isolated point of $A$ if it is not a limit point of $A$.
+\end{definition}
+
+\begin{definition}
+    A set $F\subseteq \mathbb{R}$ is closed if it contains its limit points.
+\end{definition}
+
+\begin{theorem}
+    A set $F\subseteq\mathbb{R}$ is closed iff every Cauchy sequence contained in $F$ has a limit that is also an element of $F$.
+\end{theorem}
+
+\begin{theorem}[Density of $\mathbb{Q}$ in $\mathbb{R}$]
+    For every $y\in\mathbb{R}$, there exists a seqeunce of rational numbers that converges to $y$.
+\end{theorem}
+
+\begin{definition}
+    Given a set $A\subseteq\mathbb{R},$ let $L$ be the set of all limit points of $A$. The closure of $A$ is defined to be $\overline{A}=A\cup L.$
+\end{definition}
+
+\subsection{Compact Sets}
+
+\begin{definition}[Compactness]
+    A set $K\subseteq\mathbb{R}$ is compact if every sequence in $K$ has a subsequence that converges to a limit that is also in $K$.
+\end{definition}
+
+\begin{definition}
+    A set $A\subseteq\mathbb{R}$ is bounded if there exists $M>0$ s.t. $|a|\le M$ for all $a\in A$.
+\end{definition}
+
+\begin{theorem}[Nested Compact Set Property]
+    If
+    \[K_1\supseteq K_2\supseteq K_3\supseteq K_4\supseteq\cdots\]
+    is a nested sequence of nonempty compact sets, then the intersection $\bigcap_{n=1}^\infty K_n$ is not empty.
+\end{theorem}
+
+\begin{definition}
+    Let $A\subseteq\mathbb{R}$. An open cover for $A$ is a collection of open sets $\{O_\lambda:\lambda\in A\}$ whose union contains the set $A$; that is, $A\subseteq \bigcup_{\lambda\in\Lambda}O_\lambda.$ Given an open cover for $A$, a finite subcover is a finite subcollection of open sets from the original open cover whose union still manages to completely contain $A$.
+\end{definition}
+
+
+\begin{theorem}[Heine-Borel Theorem]
+    Let $K$ be a subset of $\mathbb{R}.$ All of the following statements are equivalent in the sense that any one of them implies the two others:
+    \begin{enumerate}
+        \item $K$ is compact.
+        \item $K$ is closed and bounded.
+        \item Every open cover for $K$ has a finite subcover.
+    \end{enumerate}
+\end{theorem}
+
+\section{Functional Limits and Continuity}
+
+\subsection{Functional Limits}
+
+\begin{definition}[Functional Limit]
+    Let $f:A\to\mathbb{R}$, and let $c$ be a limit point of the domain $A$. We say that $\lim_{x\to c}f(x)=L$ provided that, for all $\epsilon>0$ s.t. whenever $0<|x-c|<\delta$ (and $x\in A$) it follows that $|f(x)-L|<\epsilon.$
+\end{definition}
+
+\begin{definition}[Functional Limit: Topological Versoin]
+    Let $c$ be a limit point of the domain of $f:A\to\mathbb{R}.$ We say $\lim_{x\to c}f(x)=L$ provided that, for every $\epsilon$-nbd $V_\epsilon(L)$ of $L$, there exists a $\delta$-nbd $V_\delta(c)$ around $c$ with the property that for all $x\in V_\delta(c)$ different from $c$ (with $x\in A$) it follows that $f(x)\in V_\epsilon(L).$
+\end{definition}
+
+\begin{theorem}[Sequential Criterion for Functional Limits]
+    Given a function $f:A\to\mathbb{R}$ and a limit point $c$ of $A$, the following two statements are equivalent:\begin{enumerate}
+        \item $\lim_{x\to c}f(x)=L$
+        \item For all sequences $(x_n)\subseteq A$ satisfying $x_n\neq c$ and $(x_n)\to c,$ it follows that $f(x_n)\to L.$
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}[Divergence Criterion for Functional Limits]
+    Let $f$ be a function defined on $A$, and let $c$ be a limit point of $A$. If there exist two sequences $(x_n)$ and $(y_n)$ in $A$ with $x_n\neq c$ and $y_n\neq c$ and
+    \[\lim x_n=\lim y_n=c\quad\text{but}\quad\lim f(x_n)\neq \lim f(y_n),\]
+    then we conclude that the functional limit $\lim_{x\to c}f(x)$ does not exist.
+\end{corollary}
+
+\subsection{Continuous Functions}
+
+\begin{definition}[Continuity]
+    A function $f:A\to\mathbb{R}$ is continuous at a point $x\in A$ if, for all $\epsilon >0$, there exists a $\delta>0$ s.t. whenever $|x-c|<\delta$ (and $x\in A$) it follows that $|f(x)-f(c)|<\epsilon.$
+
+    If $f$ is continuous at every point in the domain $A$, then we say that $f$ is continuous on $A$.
+\end{definition}
+
+\begin{theorem}[Characterizations of Continuity]
+    Let $f:A\to\mathbb{R}$, and let $c\in A.$ The function $f$ is continuous at $c$ iff any one of the following three conditions is met:
+    \begin{enumerate}
+        \item For all $\epsilon > 0,$ there exists a $\delta>0$ s.t. $|x-c|<\delta$ (and $c\in A$) implies $|f(x)-f(c)|<\epsilon;$
+        \item For all $V_\epsilon(f(c)),$ there exists a $V_\delta(c)$ with the property that $x\in V_\delta(c)$ (and $x\in A$) implies $f(x)\in V_\epsilon(f(c));$
+        \item If $(x_n)\to c$ (with $x_n\in A$), then $f(x_n)\to f(c).$
+    \end{enumerate}
+    If $c$ is a limit point of $A$, then the above conditions are equivalent to
+    \begin{enumerate}
+        \setcounter{enumi}{3}
+        \item $\lim_{x\to c}f(x)=f(c).$
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}[Criterion for Discontinuity]
+    Let $f:A\to\mathbb{R}$, and let $c\in A$ be a limit point of $A$. If there exists a sequence $(x_n)\subseteq A$ where $(x_n)\subseteq A$ where $(x_n)\to c$ but s.t. $f(x_n)$ does not converge to $f(c),$ we may conclude that $f$ is not continuous at $c$.
+\end{corollary}
+
+\subsection{Continuous Functions on Compact Sets}
+
+\begin{theorem}[Preservation of Complact Sets]
+    Let $f:A\to\mathbb{R}$ be continuous on $A$. If $K\subseteq A$ is compact, then $f(K)$ is compact as well.
+\end{theorem}
+
+\begin{theorem}[Extreme Value Theorem]
+    If $f:K\to\mathbb{R}$ is continuous on a compact set $K\subseteq\mathbb{R}$, then $f$ attains a maximum and minimum value. In other words, there exists $x_0, x_1\in K$ s.t. $f(x_0)\le f(x)\le f(x_1)$ for all $x\in K$.
+\end{theorem}
+
+\begin{definition}[Uniform Continuity]
+    A function $f:A\to\mathbb{R}$ is uniformly continuous on $A$ if for every $\epsilon>0$ there exists a $\delta>0$ s.t. for all $x,y\in A,$ $|x-y|<\delta$ implies $|f(x)-f(y)|<\epsilon.$
+\end{definition}
+
+\begin{theorem}[Sequential Criterion  for Absence of Uniform Continuity]
+    A function $f:A\to\mathbb{R}$ fails to be uniformly continuous on $A$ iff there exists a particular $\epsilon_0>0$ and two sequences $(x_n)$ and $(y_n)$ in $A$ satisfying
+    \[|x_n-y_n|\to 0\quad\text{but}\quad |f(x_n)-f(y_n)|\ge\epsilon_0.\]
+\end{theorem}
+
+\begin{theorem}[Uniform Continuity on Compact Sets]
+    A function that is continuous on a compact set $K$ is uniformly continuous on $K$.
+\end{theorem}
+
+\section{The Derivative}
+
+\subsection{Derivatives and the IVP}
+
+\begin{definition}[Differentiability]
+    Let $g:A\to\mathbb{R}$ be a function defined on an interval $A$. Given $c\in A,$ the derivative of $g$ at $c$ is defined By
+    \[g'(c)=\lim_{x\to c}\frac{g(x)-g(c)}{x-c},\]
+    provided this limit exists. In this case we say $g$ is differentiable at $c$. If $g'$ exists for all points $c\in A,$ we say that $g$ is differentiable on $A$.
+\end{definition}
+
+\begin{theorem}
+    If $g:A\to\mathbb{R}$ is differentiable at a point $c\in A,$ then $g$ is continuous at $c$ as well.
+\end{theorem}
+
+\begin{theorem}[Chain Rule]
+    Let $f:A\to\mathbb{R}$ and $g:B\to\mathbb{R}$ satisfy $f(A)\subseteq B$ so that the composition of $g\circ f$ is defined. If $f$ is differentiable at $c\in A$ and if $g$ is differentiable at $f(c)\in B$, then $g\circ f$ is differentiable at $c$ with $(g\circ f)'(c)=g'(f(c))\cdot f'(c)$.
+\end{theorem}
+
+\begin{theorem}[Interior Extremum Theorem]
+    Let $f$ be differentiable on an open interval $(a,b)$. If $f$ attains a maximum value at some point $c\in(a,b)$ (i.e. $f(c)\ge f(x)$ for all $x\in(a,b)$), then $f'(c)=0.$ The same is true if $f(c)$ is a minimum value.
+\end{theorem}
+
+\subsection{The Mean Value Theorems}
+
+\begin{theorem}[Mean Value Theorem]
+    If $f:[a,b]\to\mathbb{R}$ is continuous on $[a,b]$ and differentiable on $(a,b)$, then there exists a point $c\in(a,b)$ where
+    \[f'(c)=\frac{f(b)-f(a)}{b-a}.\]
+\end{theorem}
+\end{document}

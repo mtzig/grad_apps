@@ -1,0 +1,224 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Functional Analysis HW5, Thomas Zeng }
+\rhead{Math 331, Spring 2023}
+\cfoot{\thepage}
+
+
+\begin{document}
+
+\section*{1.44}
+
+That $\ell$ is a linear functional follows directly from properties of integral, i.e. refer to Abbot Theorem 7.4.2(i) and (ii). Clearly $\Vert f \Vert = \int_{0}^{1}1 = 1$ as for any unit $f,$ we have that $|f(x)|\le 1$ for all $x\in[0,1].$ And resultantly, $\ell$ attains its norm in $X$. 
+
+We have that $X_0$ is a closed subspace as its complement is open. That is, for any $f \in X_0^c$ where $f(0)=c,$ then $f\in B_{|c|}(f)\subset X_0^c.$
+
+We next claim $\ell$ does not attain its norm in $X_0.$ Namely, for any unit $f\in X_0,$ by continuity, there exists some $\delta > 0$ s.t.
+\[x < \delta \Rightarrow |f(x)| < 0.5.\]
+It thus follows that
+\begin{alignat*}{2}
+    \left |\int_{0}^{1}f \right | &\le \int_{0}^{1} |f|\\
+    &= \int_{0}^{\delta}|f| + \int_{\delta}^{1}|f|\\
+    &\le \int_{0}^{\delta}|f| + \int_{\delta}^{1}1 \quad&&\text{as $f$ is unit}\\
+    &\le \int_{0}^{\delta}0.5 + \int_{\delta}^{1}1 &&\text{by choice of $\delta$}\\
+    &< 1.
+\end{alignat*}
+As $f$ was arbitrary, clearly $\ell$ cannot attain its norm in $X_0$.
+
+
+\section*{1.45}
+
+That $K$ is linear is clear. We thus show that $K$ is bounded in both $C[0,1]$ and $\mathcal{L}^2_{cont}(0,1).$\\
+
+\noindent
+\textbf{$K$ is bounded in $C[0,1].$}
+\begin{proof}
+    First, we claim that
+    \[\max_{x\in[0,1]} \int_{0}^{1} |K(x,y)| dy\]
+    exists.\footnote{Quick Proof: Because $K$ is continuous on a compact set, it is thus uniform continuous i.e. for any $\epsilon,$ there exists $\delta$ s.t. $|x-x'|<\delta \Rightarrow |K(x,y)-K(x',y)|<\epsilon$ for all $y\in[0,1].$ It then follows for $|x-x'|<\delta$ that $|\int K(x) - \int K(x')| = |\int K(x)-K(x')|\le\int |K(x)-K(x')|< \int \epsilon = \epsilon.$ Thus, $\int Kdy$ is continuous on a compact set and hence attains a maximum.}
+    Now, let us define the unit constant map $I:y\mapsto 1.$ It thus follows for any $x$ and arbitrary unit $f\in\mathfrak{D}(K)$ that
+    \begingroup
+    \allowdisplaybreaks
+    \begin{alignat*}{2}
+        \left | \int_{0}^{1}K(x,y)f(y)dy \right | &\le \int_{0}^{1} |K(x,y)f(y)| dy\\
+        &\le \int_{0}^{1} |K(x,y)I(y)| dy \quad&&\text{as $|f(x)|\le 1 = I(y)$ for all $y\in[0,1].$}\\
+        &= \int_{0}^{1} |K(x,y)| dy\\
+        &\le \max_{x\in[0,1]} \int_{0}^{1} |K(x,y)| dy.
+    \end{alignat*}
+    \endgroup
+    As $f$ was arbitrary, it follows that
+    \[\Vert K \Vert \le \max_{x\in[0,1]} \int_{0}^{1} |K(x,y)| dy.\]
+    % Now as the constant map $I:x\mapsto 1$ is unit in $\mathfrak{D}(K),$ 
+    It also follows that
+    \[\Vert K \Vert \ge \max_{x\in[0,1]}\left |  \int_{0}^{1} K(x,y)I(y) dy \right | = \max_{x\in[0,1]} \int_{0}^{1} \left | K(x,y) dy \right |.\]
+    Therefore,
+    \[\Vert K \Vert = \max_{x\in[0,1]} \int_{0}^{1} |K(x,y)| dy\]
+    and is thus bounded.
+\end{proof}
+
+% need to show specifically what the max is computed as
+
+\noindent
+\textbf{$K$ is bounded in $\mathcal{L}^2_{cont}(0,1).$}
+
+\begin{proof}
+    Let us first denote $K_x : y\mapsto K(x,y)$ and $N: x \mapsto \Vert K_x^*\Vert_2.$ We claim that
+    \begin{equation} \label{eq:max_e}
+        \max_{x\in[0,1]}\Vert K_x^*\Vert_2
+    \end{equation}
+    exists. To do so, it suffices to show that $N$ is continuous over $[0,1].$ First as $K$ is continuous, it follows that its complex conjugate $K^*$ is continuous. 
+    % It follows that there exists $m,n\in\mathbb{C}$ s.t.
+    % \[m = \max_{(x,y)\in[0,1]^2} K(x,y)\qquad\text{and}\qquad n = \max_{(x,y)\in[0,1]^2} K^*(x,y).\]
+    As $[0,1]^2$ is compact, it follows that $K$ and $K^*$ is uniform continuous i.e. for fixed $\epsilon >0$ there exists $\delta > 0$ s.t.
+    \[|x-x'|<\delta\Rightarrow |K_x^* (y)- K^*_{x'}(y)| < \epsilon\]
+    and
+    \[|x-x'|<\delta\Rightarrow |K_x (y)- K_{x'}(y)| < \epsilon\]
+    for all $y\in[0,1].$ We thus have that
+    \begin{alignat*}{2}
+        \Vert K_x^*- K^*_{x'} \Vert_2 &= \sqrt{\int_{0}^{1}(K_x^*-K^*_{x'})^*(K_x^*-K^*_{x'})}\\
+        &= \sqrt{\int_{0}^{1}(K_x-K_{x'})(K_x^*-K^*_{x'})}\\
+        &\le \sqrt{\int_{0}^{1}|(K_x-K_{x'})(K_x^*-K^*_{x'})}|\\
+        &\le \sqrt{\int_{0}^{1}\epsilon^2}\\
+        &= \epsilon.
+    \end{alignat*}
+    This implies that $x \mapsto K_x^*$ is continuous from $[0,1]$ to $\mathcal{L}^2_{cont}(0,1).$ It then follows by continuity of norm that $N$ is continuous. Therefore, \eqref{eq:max_e} exists as desired---which we denote as $m.$
+
+
+    We now claim that $|Kf(x)| \le m$ for all $x\in[0,1]$ and unit $f\in\mathcal{L}^2_{cont}(0,1).$ Namely, for fixed $f$ and $x,$ we have that
+    \begin{alignat*}{2}
+        |Kf(x)| &\coloneqq \left | \int_{0}^{1}K(x,y)f(y)dy \right |\\
+        &= | \langle K^*_x, f \rangle | \quad&&\text{def. of inner product}\\
+        &\le \Vert K^*_x \Vert_2 \Vert f \Vert_2 &&\text{Cauchy--Schwartz}\\
+        &=  \Vert K^*_x \Vert_2&&\text{as $\Vert f\Vert_2 =1$}\\
+        &\le m.
+    \end{alignat*}
+
+    Resultantly, we have that
+    \begin{alignat*}{2}
+        \langle Kf, Kf\rangle &= \int_{0}^{1} (Kf)^* Kf\\
+        &\le \int_{0}^{1} |(Kf)^* Kf| \quad &&\text{positivity of inner product}\\
+        &= \int_{0}^{1} |(Kf)^*|| Kf|\\
+        &= \int_{0}^{1} |(Kf)|| Kf|\\
+        &\le \int_{0}^{1} m^2
+    \end{alignat*}
+    is also bounded for arbitrary unit $f.$
+    It thus follows that $\Vert Kf \Vert_2 = \sqrt{\langle Kf, Kf\rangle}$ is bounded for arbitrary unit $f$, i.e.
+    \[\sup_{f\in\mathfrak{D}(K), \Vert f \Vert = 1} \Vert Kf \Vert_2 < \infty.\]
+    Therefore, $K$ is bounded as desired.
+\end{proof}
+
+\section*{1.49}
+
+\textbf{We first show that $\mathbb{I} + B$ is invertible.}
+
+\begin{proof}
+    % Let $f$ be arbitrary unit vector in $X$.
+    % We first claim that $\sum_{n=0}^{\infty} (-1)^n B^n f $ is absolute convergent. Namely, we have that
+    % \begin{alignat*}{2}
+    %     \sum_{n=0}^{\infty} \Vert (-1)^nB^n f\Vert &= \sum_{n=0}^{\infty}\Vert B^n f\Vert \quad&&\text{pos. homo.}\\
+    %     &\le \sum_{n=0}^{\infty} \Vert B \Vert \quad&&\text{as $\Vert B^nf\Vert \le \Vert B\Vert,$\footnotemark}
+    % \end{alignat*}
+    % which converges as it is a geometric series with common ratio less than $1.$
+    % By similar proof, it follows that $\sum_{n=0}^{\infty} (-1)^n B^{n+1} f $ is also absolute convergent.
+
+    % \footnotetext{Specifically, $\Vert Bf \Vert < \Vert B \Vert$ by definition of operator norm. Now given $\Vert B^k f\Vert < \Vert B\Vert,$ since $\Vert B \Vert < 1,$ it follows that $\Vert B^k f\Vert < 1.$ Therefore, $\Vert B^{k+1} f\Vert < \Vert B\Vert$ again by def. of operator norm.}
+
+    % We now show that $\mathbb{I} + B$ is invertible, i.e. for arbitrary $f \in X$ we have that
+    % \begin{alignat*}{2}
+    %     (\mathbb{I} + B)(\mathbb{I} + B)^{-1}f &= \left [(\mathbb{I} + B)\sum_{n=0}^{\infty}(-1)^nB^n \right ]f\\
+    %     &= \left [\sum_{n=0}^{\infty}(-1)^nB^n + \sum_{n=0}^{\infty}(-1)^nB^{n+1}\right ]f\\
+    %     &= f - Bf + Bf + B^2f - B^2f \cdots \quad&&\text{abs. conv. allow rearrangements}\\
+    %     &= f,
+    % \end{alignat*}
+    % as desired.
+    \footnotetext{Specifically, $\Vert Bf \Vert < \Vert B \Vert$ by definition of operator norm. Now given $\Vert B^k f\Vert < \Vert B\Vert,$ since $\Vert B \Vert < 1,$ it follows that $\Vert B^k f\Vert < 1.$ Therefore, $\Vert B^{k+1} f\Vert < \Vert B\Vert$ again by def. of operator norm.}
+
+    We first claim that $\sum_{n=0}^{\infty} (-1)^n B^n$ is well-defined.  Namely, given any arbitrary unit $f\in X,$ we have that
+    \begin{alignat*}{2}
+        \sum_{n=0}^{\infty} \Vert (-1)^nB^n f\Vert &= \sum_{n=0}^{\infty}\Vert B^n f\Vert \quad&&\text{pos. homo.}\\
+        &\le \sum_{n=0}^{\infty} \Vert B \Vert \quad&&\text{as $\Vert B^nf\Vert \le \Vert B\Vert,$\footnotemark}
+    \end{alignat*}
+    which converges as it is a geometric series with common ratio less than $1.$ Thus, $\sum_{n=0}^{\infty} (-1)^n B^n$ is absolute convergent and thus convergent (by assumption of Banach space).
+
+    We next claim that
+    \begin{equation}\label{eq:z}
+        \lim (-1)^n B^{n+1} = 0.
+    \end{equation}
+    Namely, for any $\epsilon,$ chose $N$ s.t. $\Vert B\Vert ^{N+1} < \epsilon$ (which is possible as $\Vert B\Vert < 1$). It then follows for $n \ge N$ that
+    \begin{alignat*}{2}
+        \Vert (-1)^n B^{n+1}-0\Vert &= \Vert B^{n+1}\Vert \quad&&\text{pos. homo.}\\
+        &\le \Vert B \Vert^{n+1} &&\text{Teschl (1.64)}\\
+        &< \epsilon.
+    \end{alignat*}
+    We thus have that
+    \begin{alignat*}{2}
+        (\mathbb{I} + B)(\mathbb{I}+B)^{-1} &= (\mathbb{I} + B) \sum_{n=0}^{\infty}(-1)^nB^n\\
+        % &= \lim_{n\to\infty}(\mathbb{I} + B) \sum_{i=0}^{n}(-1)^iB^i\\
+        &= \lim_{n\to\infty} \sum_{i=0}^{n}(-1)^i[B^i + B^{i+1}]\\
+        &= \lim_{n\to\infty} \mathbb{I} + (-1)^n B^{n+1}\\
+        &= \mathbb{I} + \lim_{n\to\infty} (-1)^n B^{n+1}\\
+        &= \mathbb{I} &&\text{by \eqref{eq:z}}.
+    \end{alignat*}
+\end{proof}
+
+
+
+\noindent
+\textbf{We next show that $A+B$ is invertible if $A$ is invertible and $\Vert B\Vert < \Vert A^{-1}\Vert^{-1}.$}
+
+\begin{proof}
+    We first note that $\Vert BA^{-1}\Vert < 1.$ Namely, we have that
+    \begin{alignat*}{2}
+         \Vert BA^{-1}\Vert &\le \Vert B\Vert \Vert A^{-1}\Vert\\
+        &\le 1. \quad&&\text{by our assumption}
+    \end{alignat*}
+    It thus follows that $\mathbb{I} + BA^{-1}$ is invertible. We thus have that
+    \begin{alignat*}{2}
+        (\mathbb{I} + BA^{-1})^{-1}(\mathbb{I} + BA^{-1}) &= \mathbb{I}\\
+        (\mathbb{I} + BA^{-1})^{-1}(A + B)A^{-1} &= \mathbb{I}\\
+        A^{-1} (\mathbb{I} + BA^{-1})^{-1}(A + B)A^{-1}A &= A^{-1}\mathbb{I}A\\
+        A^{-1} (\mathbb{I} + BA^{-1})^{-1}(A + B) &= \mathbb{I}.\\
+    \end{alignat*}
+    Therefore, $A+B$ is invertible as desired.
+\end{proof}
+
+\section*{1.51}
+
+\begin{proof}
+    ($\Rightarrow$) Given a sequence $K_n \in\ker(\ell)$ s.t. $K_n \to K_\ell.$ It follows that $f(K_n) = (0,0,\cdots)$ by definition of kernel. As $\ell$ is continuous, it follows that $f(K_n)$ converges (namely to $0$.) Therefore, $f(K_\ell) = 0$ i.e. $K_\ell \in\ker(\ell).$ Therefore, $\ker(\ell)$ is closed.
+
+    ($\Leftarrow$) We prove the contrapositive. Assume $\ell$ is not continuous. Thus it is not bounded and there exists sequence of unit vectors $(x_n)$ s.t. $\ell(x_n) > n.$ Similarly, there exists vector $y$ s.t. $\ell(y)=1.$
+    Now consider the sequence $(y-x_n/n).$ For any $n,$ we have that
+    \begin{alignat*}{2}
+        \ell(y-x_n/n) &= \ell(y) - \ell(x_n)/n\\
+        &= 1 - 1\\
+        &= 0.
+    \end{alignat*}
+    Therefore, $y-x_n/n\in\ker{\ell}$ for all $n.$ However, $y-x_n/n\to y.$ Since for any $\epsilon$ consider $N$ s.t. $1/N < \epsilon.$ Then for any $n\ge N$ we have that
+    \[\Vert y-x_n/n -y\Vert = \Vert x_n/n\Vert = 1/n < \epsilon.\]
+    Clearly $y\notin\ker{\ell}$ since $\ell(y)=1.$ Thus, $\ker{\ell}$ is not closed as desired.
+ \end{proof}
+
+\end{document}

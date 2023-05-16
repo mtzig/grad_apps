@@ -1,0 +1,145 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{soul}
+
+\newcommand*{\tabulardef}[3]{\begin{tabular}[t]{@{}lp{\dimexpr\linewidth-#1}@{}}
+    #2&#3
+  \end{tabular}}
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis Exam 2 (Take home) }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\newcounter{relctr} %% <- counter for relations
+\everydisplay\expandafter{\the\everydisplay\setcounter{relctr}{0}} %% <- reset every eq
+\renewcommand*\therelctr{\alph{relctr}} %% <- label format
+
+\newcommand\labelrel[2]{%
+  \begingroup
+    \refstepcounter{relctr}%
+    \stackrel{\textnormal{(\alph{relctr})}}{\mathstrut{#1}}%
+    \originallabel{#2}%
+  \endgroup
+}
+\AtBeginDocument{\let\originallabel\label} %% <- store original definition
+
+
+\begin{document}
+
+\section*{Problem 1}
+
+\begin{proof}
+    As $A,B$ are compact, therefore they are both closed and bounded. Thus, $A\cup B$ is closed, as it is the finite union of two closed sets (namely $A$ and $B$). Similarly, by definition of boundedness, there exists $M_1,M_2\in\mathbb{R}$ s.t.
+    \[|a|<M_1 \quad\text{and}\quad|b|<M_2 \] 
+    for all $a\in A$ and $b\in B.$ Let $M=\max\{M_1,M_2\}.$ It thus follows that
+    \[|c|<M\]
+    for all $c\in A\cup B.$ As either $c\in A$ and thus $|c|<M_1\le M$ or $c\in B$ and thus $|c|<M_2\le M.$  Thus, $A\cup B$ is bounded.
+    As it is also closed, it is therefore compact.
+    % Let $O$ be an open cover of $A\cup B$. As $A,B\subseteq A\cup B,$ therfore, $O$ is also an open cover for $A,B.$ As $A$ and $B$ are compact, there exists finite subcovers $U,V\subseteq O$ s.t. $U$ covers $A$ and $V$ covers $B$. Therefore, $U \cup V\subseteq O$ is a subcover of $A\cup B.$    
+    % As the finite union of finite sets are finite, we also have that $U \cup V$ is finite. As $O$ was arbitrary, therefore for any open cover of $A\cup B,$ we can find a finite subcover. Thus, by definition of Compactness, $A\cup B$ is compact.
+\end{proof}
+
+\section*{Problem 2}
+
+\subsection*{(a)}
+
+We want to show that
+\begin{equation} \label{eq:funcl}
+    h'(0)=\lim_{x\to 0} \frac{h(x)-h(0)}{x-0}\to 0.
+\end{equation}
+
+\begin{proof}
+    Fix $\epsilon >0.$ Let $\delta = \epsilon.$ For any $x\in V_{\delta}^*(0)$, we have two cases:
+    \begin{description}
+        \item[Case 1 ($x\notin \mathbb{Q}$):]  Then $h(x)=0.$ Therefore, we have that the difference quotient
+        \begin{alignat*}{2}
+            \frac{h(x)-h(0)}{x-0} &= \frac{h(x)}{x} \qquad&&\text{as }h(0)=0 \\
+            &= \frac{0}{x} &&\text{as }f(x)=0\\
+            &= 0 &&\text{this is valid } x\in V_{\delta}^*(0)\neq 0\\
+            &\in V_\epsilon(0) &&\text{as by def. of $\epsilon$-nbd, we have }0\in V_\epsilon(0)
+        \end{alignat*}
+        for any $x\notin\mathbb{Q}.$
+        \item[Case 2 ($x\in\mathbb{Q}$):] Then $h(x)=x^2.$ Therefore,  we have the difference quotient
+        % $\frac{f(x)}{x}=\frac{x^2}{x}=x \in V_{\epsilon}(0).$
+        \begin{alignat*}{2}
+            \frac{h(x)-h(0)}{x-0} &= \frac{h(x)}{x} \qquad&&\text{as }h(0)=0 \\
+            &= \frac{x^2}{x} &&\text{as }h(x)=x^2\\
+            &= x &&\text{this is valid } x\in V_{\delta}^*(0)\neq 0\\
+            &\in V_\epsilon(0) &&\text{as }\delta =\epsilon\Rightarrow x\in V_{\delta}^*(0)\subset V_{\delta}(0)=V_{\epsilon}(0)
+        \end{alignat*}
+        for any $x\in\mathbb{Q}.$
+    \end{description}
+    Therefore, $x\in V_{\delta}^*(0)$ implies $\frac{h(x)-h(0)}{x-0}\in V_{\epsilon}(0)$.
+    Thus, by definition of functional limit, \eqref{eq:funcl} holds. Thus, we have that $h'(0)=0.$
+\end{proof}
+
+\section*{(b)}
+We want to show that
+    \begin{equation}
+        h'(1)= \lim_{x\to 0} \frac{h(x)-h(1)}{x-1}
+    \end{equation}
+    does not exist.
+\begin{proof}
+    We prove this using the Divergence Criterion for Functional Limits.
+    Define the sequence $(x_n)$ where $x_n = 1 - 1/n$ and the sequence $(y_n)$ where $ y_n = 1 - \pi/n.$ We know that the harmonic sequence converges to $0$, therefore by the Algebraic Limit Theorem, $(x_n)\to 1$ and $(y_n)\to 1.$ We further note that by our definition, for all $n\in\mathbb{N},$ we have that $x_n\in\mathbb{Q}$ and $y_n\notin\mathbb{Q}.$
+
+    % However, as $x_n\in\mathbb{Q}$ for all $n,$ we have that $\frac{f(x_n)-f(1)}{x-1}=\frac{x^2-1}{x-1}=\frac{(x-1)(x+1)}{x-1}={x+1}.$ Therefore by the algebraic functional limit theorem, $\lim \frac{f(x_n)-f(1)}{x-1}\to 2$.
+
+    Therefore, for any $n\in\mathbb{N},$ we have that $h(x_n)=x_n^2.$ Thus we have that the difference quotient
+    \begin{alignat*}{2}
+        \frac{h(x_n)-h(1)}{x_n-1} &= \frac{x_n^2-1}{x_n-1} &&\qquad\text{as }h(1)=1^2=1\text{ and } h(x_n)=x_n^2\\
+        &= \frac{(x_n-1)(x_n+1)}{x_n-1}\\
+        &= x_n+1. &&\text{this is valid as by def of $x_n,$ we have } x_n\neq 1\Rightarrow x_n-1\neq 0
+    \end{alignat*}
+    Thus by the Algebraic Limit Theorem we have that
+    \begin{equation} \label{eq:t}
+        \left (\frac{h(x_n)-h(1)}{x_n-1} \right ) = (x_n + 1) \to 1+1=2.
+    \end{equation}
+
+    Similarly, as $y_n\notin\mathbb{Q}$ for all $n\in\mathbb{N},$ therefore for any $n$, we have $h(y_n)=0.$ Thus, we have that the difference quotient
+    \begin{alignat*}{2}
+        \frac{h(y_n)-h(1)}{y_n-1} &= \frac{0-1}{y_n-1} &&\qquad\text{as }h(1)=1^2=1\text{ and } h(y_n)=0\\
+        &= \frac{-1}{-\pi/n}\\
+        &=n/\pi.
+    \end{alignat*}
+    Therefore,
+    \begin{equation} \label{eq:f}
+        \left (\frac{h(y_n)-h(1)}{y_n-1} \right ) = (1/\pi,2/\pi,3/\pi,\cdots)
+    \end{equation}
+    diverges (as it is unbounded).
+    Hence, by \eqref{eq:t} and \eqref{eq:f}, we have that
+    \begin{equation*}
+        \lim x_n = \lim y_n = 1,
+    \end{equation*}
+    but
+    \begin{equation*}
+        \lim \frac{h(x_n)-h(1)}{x_n-1} \neq \lim \frac{h(y_n)-h(1)}{y_n-1}
+    \end{equation*}
+    as the first limit converges while the second doesn't even exist.
+    Hence, by the divergence criterion for functional limits,
+    \begin{equation*}
+        \lim_{x\to 1} \frac{h(x)-h(1)}{x-1}
+    \end{equation*}
+     does not exist. Therefore, by definition of derivative, $h'(1)$ does not exist, that is $h$ is not differentiable at $x=1$.
+\end{proof}
+
+\end{document}

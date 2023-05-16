@@ -1,0 +1,269 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Functional Analysis HW3, Thomas Zeng }
+\rhead{Math 331, Spring 2023}
+\cfoot{\thepage}
+
+
+\begin{document}
+
+\section*{1.20}
+
+\textbf{We first show that $Y$ is open.}
+
+\begin{proof}
+    Choose arbitrary $f\in Y.$ By the Extreme Value Theorem, there exists $m\in\mathbb{R}$ s.t.
+    \[\min_{x\in I}f(x)=m.\]
+    By definition of $Y,$ it follows that $m>0.$ Thus consider $\epsilon = m.$ Then for any $g\in B_\epsilon(f),$ we have by definition of open ball that
+    \begin{equation} \label{eq:minb}
+        \sup_{x\in I} |f(x)-g(x)| < \epsilon.
+    \end{equation}
+    Again by the EVT, $g$ attains a minimum at some point $c\in I.$ There are now two cases:
+
+    \noindent
+    \textbf{Case 1:} $g(c) \ge \min f(x).$ It thus follows that for any $x\in I.$ We have that $g(x)\ge g(c)\ge \min f(x) = m > 0$ as desired.\\
+    \noindent
+    \textbf{Case 2:} $g(c)< \min f(x).$
+    % want to use a proof with cases instead to make it more elegant
+    By $\eqref{eq:minb},$ it follows that
+    \begin{alignat*}{2}
+        |\min f(x)-g(c)| &< m\\
+        \min f(x)- g(c) &< m \quad&&\text{As $\min f(x)>g(c)$ and $\min f(x)>0$}\\
+        m-g(c) &< m\\
+        g(c) &> 0.
+    \end{alignat*}
+    Hence $g\in Y$ and thus $Y$ is open.
+\end{proof}
+
+\noindent
+\textbf{We next show that $\overline{Y} = \{f\in C(I)| f(x)\ge0\}$.}
+
+\begin{proof}
+    This is equivalent to proving that $f$ is a limit point of $Y$ iff $f(x)\ge 0$ for all $x\in I.$
+
+    $(\Rightarrow)$ We use contradiction and assume $f$ is a limit point s.t. $f(x) = z < 0$ for some $x\in I$ and $z\in\mathbb{R}.$ By definition of limit point, there exists sequence $(f_n)$ where each $f_n\in Y$ and $(f_n)\stackrel{unif}{\to}f.$ Now let $\epsilon = |z|.$ It follows that there must be some $f_n$ s.t.
+    \[\Vert f_n -f \Vert_\infty < \epsilon.\]
+    This directly implies that
+    \[|f_n(x)-f(x)|= |f_n(x)-z|<\epsilon = |z|\]
+    which results in $f_n(x) < 0$ a contradiction.
+
+    $(\Leftarrow)$ Consider the sequence $(f_n)$ where $f_n(x) = f(x) + 1/n.$ It follows that $f_n \in Y$ and $(f_n)\stackrel{unif}{\to}f.$ Hence, $f$ is a limit point.
+\end{proof}
+
+\section*{1.21}
+
+\textbf{We first show that $B_1$ is closed ant thus is its own closure.}
+\begin{proof}
+    It suffices to show that $B^c_1$ is open. Let $b\in B^c_1.$ It follows that
+    \[\sum_{j=1}^\infty |b_j|^2 > 1.\]
+    Thus, there is some $k\in\mathbb{N}$ s.t.
+    \begin{equation*}
+        \sum_{j=1}^{k}|b_j|^2 = c > 1
+    \end{equation*}
+    for some $c\in\mathbb{R}.$ Now choose $\delta = (c-1)/k.$ Next by continuity, choose $\epsilon_1,\cdots,\epsilon_k$ s.t.
+    \begin{equation} \label{eq:epd}
+        |x -b_j|<\epsilon_j \Rightarrow ||x|^2-|b_j|^2| < \delta.
+    \end{equation}
+    Let $\epsilon = \min\{\epsilon_1,\cdots, \epsilon_k\}.$ Now consider $f \in B_\epsilon(b).$ By definition of $\ell_1$ norm, it follows that
+    \begin{equation} \label{eq:eei}
+        |f_i-b_i|<\epsilon\le\epsilon_i
+    \end{equation}
+    for $1\le i\le k.$ We thus have that
+    \begin{alignat*}{2}
+        \left | \sum_{j=1}^{k} |f_j|^2 - \sum_{j=1}^{k}|b_j|^2 \right |&=\left | \sum_{j=1}^{k}|f_j|^2 - |b_j|^2 \right | \\
+        &\le \sum_{j=1}^{k} | |f_j|^2 - |b_j|^2 | \quad&&\text{by Triangle Inequality}\\
+        &< \sum_{j=1}^{k} \delta &&\text{by \eqref{eq:eei} and \eqref{eq:epd}}\\
+        &= c-1 &&\text{by our def. of $\delta$}.
+    \end{alignat*}
+    It thus follows that 
+    \[\sum_{j=1}^{k} |f_j|^2 > 1\]
+    and hence
+    \[\sum_{j=1}^{\infty} |f_j|^2 > 1.\]
+    Therefore $f \in B_1^c$ and hence $B^c_1$ is open as desired.
+\end{proof}
+
+\noindent
+\textbf{We next show that $B_\infty = \ell^1(\mathbb{N})$ and is thus also its own closure.}
+
+\begin{proof}
+    Consider any $x \in \ell^1(\mathbb{N}).$ As $\ell^1(\mathbb{N})\subset \ell^2(\mathbb{N}),$ it follows that
+    \[\left(\sum_{j\in\mathbb{N}} |x_i|^2\right)^{\frac{1}{2}}<\infty.\]
+    It thus follows that
+    \[\sum_{j\in\mathbb{N}} |x_i|^2 < \infty\]
+    and hence $x \in B_\infty.$ Therefore, $\ell^1(\mathbb{N})\subseteq B_\infty.$ As by definition, we have that $B_\infty\subseteq\ell^1(\mathbb{N}),$
+    thus $B_\infty = \ell^1(\mathbb{N})$ as desired.
+\end{proof}
+
+\section*{1.24}
+
+\begin{proof}
+    We first have that
+    \[(\Vert f\Vert + \Vert g\Vert)^2 = \Vert f\Vert^2 + 2\Vert f\Vert\Vert g\Vert+\Vert g\Vert^2\]
+    and
+    \[\Vert f + g\Vert^2 = \Vert f\Vert^2 + \langle g,f\rangle + \langle f,g \rangle + \Vert g\Vert^2.\]
+    It thus suffices to show that
+    \[\langle g,f\rangle + \langle f,g\rangle =2\Vert f\Vert\Vert g\Vert\]
+    iff $g=0$ or $\alpha \ge 0.$ Let us thus consider two cases:
+
+    \noindent
+    \textbf{Case 1: We only consider $g=0.$} Then clearly
+    \[\langle g,f\rangle + \langle f,g\rangle = 0 = 2\Vert f\Vert\Vert g\Vert.\]
+
+    \noindent
+    \textbf{Case 2: We consider all $g\neq 0.$}  Assume WLOG that $\Vert g\Vert =1$ by homogeneity of norm and sesquilinearity of inner product.\footnote{That is if we can prove it for the case $\Vert g\Vert = 1,$ we can then use the fact that
+    $\langle \frac{g}{\Vert g\Vert},f\rangle + \langle f,\frac{g}{\Vert g\Vert}\rangle =2\Vert f\Vert\left\Vert \frac{g}{\Vert g\Vert}\right\Vert\Rightarrow \frac{1}{\Vert g\Vert} (\langle g,f\rangle + \langle f,g\rangle) = \frac{2}{\Vert g\Vert}\Vert f\Vert \Vert g\Vert \Rightarrow \langle g,f\rangle + \langle f,g\rangle =2\Vert f\Vert\Vert g\Vert.$
+    } By Cauchy--Schwartz Inequality, we have that
+    \[\langle g,f\rangle \le \Vert f\Vert\qquad\text{and}\qquad \langle f,g\rangle \le \Vert f\Vert.\]
+    Therefore, for equality to hold, it must be that
+    \[\langle g,f\rangle = \Vert f\Vert\qquad\text{and}\qquad\langle f,g\rangle = \Vert f\Vert. \]
+    The Schwartz inequality is equal iff $f$ and $g$ are parallel. So the above is only true iff $f=\alpha g$ for some $\alpha \in \mathbb{C}.$ Now as $\Vert f \Vert \ge 0$ by positive definiteness of norm, it follows that we need $\langle g,f\rangle = \langle f,g\rangle = \alpha\langle g,g\rangle \ge 0.$ This is true iff $\alpha \ge 0$---as $\langle g,g\rangle=1$ by our assumption. Hence, proving our claim. 
+\end{proof}
+
+\section*{1.26}
+
+Consider $f(x)=-\frac{1}{2}x+1$ and $g(x)=\frac{1}{2}x$ on the interval $[0,1].$ It follows that
+\[\Vert f+g\Vert = 1,\; \Vert f-g\Vert =1,\; \Vert f\Vert = 1\;\text{and } \Vert g\Vert = \frac{1}{2}.\]
+However
+\[\Vert f+g\Vert^2 + \Vert f-g\Vert^2 = 2 \neq2\Vert f\Vert^2 + 2\Vert g\Vert^2 = 2.5.\]
+Therefore, the Parallelogram Law does not hold.
+\newpage
+\section*{1.27}
+
+\textbf{We first prove the parallelogram law.}
+
+\begin{proof}
+    \begin{alignat*}{2}
+        \langle f+g,f+g\rangle + \langle f-g,f-g\rangle &= \langle f,f+g\rangle + \langle g,f+g\rangle + \langle f-g,f-g\rangle\\
+        &= \langle f,f\rangle + \langle g,g\rangle + \langle f,g\rangle + \langle g,f\rangle + \langle f-g,f-g\rangle\\
+        &= \langle f,f\rangle + \langle g,g\rangle + \langle f,g\rangle + \langle g,f\rangle\\
+        &+ \langle f,f\rangle + \langle -g,-g\rangle + \langle f,-g\rangle + \langle -g,f\rangle\\
+        &= \langle f,f\rangle + \langle g,g\rangle + \langle f,g\rangle + \langle g,f\rangle\\
+        &+ \langle f,f\rangle + \langle g,g\rangle - \langle f,g\rangle - \langle g,f\rangle\\
+        &= 2\langle f,f\rangle + 2\langle g,g\rangle
+    \end{alignat*}
+\end{proof}
+
+\noindent
+\textbf{We next prove the polarization identity law.}
+
+\begin{proof}
+
+    We first have that:
+    \begin{alignat*}{2}
+        i^n\langle f+i^ng,f+i^ng\rangle &= i^n(\langle f+i^ng,f\rangle + \langle f+i^ng, i^ng\rangle)\\
+        &=i^n(\langle f,f\rangle + \langle i^ng,f\rangle + \langle f,i^ng\rangle + \langle i^ng,i^ng\rangle)\\
+        &= i^n(\langle f,f\rangle -i^n\langle g,f\rangle + i^n\langle f,g\rangle - i^ni^n\langle g,g\rangle)\\
+        &= i^n\langle f,f\rangle +\langle g,f\rangle +(-1)^n\langle f,g\rangle + i^n\langle g,g\rangle
+    \end{alignat*}
+
+    It thus follows that
+    \begin{alignat*}{2}
+        \frac{1}{4}(\langle f+g,&f+g\rangle-\langle f-g,f-g\rangle + i\langle f-ig, f-ig\rangle -i\langle f+ig, f+ig\rangle)\\
+        &=\frac{1}{4}(\langle f,f\rangle + \langle g,f\rangle + \langle f,g\rangle + \langle g,g\rangle\\
+        & -\langle f,f\rangle + \langle g,f\rangle +\langle f,g\rangle -\langle g,g\rangle\\
+        &+i\langle f,f\rangle - \langle g,f\rangle +\langle f,g\rangle +i\langle g,g\rangle\\
+        &-i\langle f,f\rangle - \langle g,f\rangle + \langle f,g\rangle -i\langle g,g\rangle)\\
+        &= \langle f,g\rangle\\
+    \end{alignat*}
+\end{proof}
+
+\noindent
+\textbf{We lastly prove that symmetric and real-valued are equivalent.}
+
+\begin{proof}
+    ($\Rightarrow$) For arbitrary $f\in\mathfrak{Q},$ we have that
+    \begin{alignat*}{2}
+        \langle f,g\rangle &= \langle g,f\rangle^*  \qquad\qquad&&\text{by symmetry}\\
+        \langle f,f\rangle + \langle f,g-f\rangle &= \langle f,f\rangle^* + \langle g-f,f\rangle^*\\
+        \langle f,f\rangle &= \langle f,f\rangle^* &&\text{by symmetry.}
+    \end{alignat*}
+    This implies that $\langle f,f\rangle\in\mathbb{R}$ as desired.
+
+    ($\Leftarrow$) For arbitrary $f,g\in\mathfrak{Q},$ we have that
+    \begin{alignat*}{2}
+        \langle f,g\rangle^*&\\
+        =& \left (\frac{1}{4}(\langle f+g,f+g\rangle-\langle f-g,f-g\rangle + i\langle f-ig, f-ig\rangle -i\langle f+ig, f+ig\rangle)\right )^*\\
+        =& \frac{1}{4}(\langle f+g,f+g\rangle^*-\langle f-g,f-g\rangle^* + i^*\langle f-ig, f-ig\rangle^* -i^*\langle f+ig, f+ig\rangle^*)\\
+        =& \frac{1}{4}(\langle f+g,f+g\rangle-\langle f-g,f-g\rangle - i\langle f-ig, f-ig\rangle +i\langle f+ig, f+ig\rangle) &&\text{by real-val asmptn.}\\
+        =&\frac{1}{4}(\langle f,f\rangle + \langle g,f\rangle + \langle f,g\rangle + \langle g,g\rangle\\
+         -&\langle f,f\rangle + \langle g,f\rangle +\langle f,g\rangle -\langle g,g\rangle\\
+        +&i\langle f,f\rangle + \langle g,f\rangle -\langle f,g\rangle +i\langle g,g\rangle\\
+        -&i\langle f,f\rangle + \langle g,f\rangle - \langle f,g\rangle -i\langle g,g\rangle)\\
+        =& \langle g,f\rangle,
+    \end{alignat*}
+    thus proving symmetry as desired.
+\end{proof}
+
+\section*{1.30}
+
+\begin{proof}
+    We first show that the sequence $(f_n)$ is Cauchy. For any arbitrary $f_n$ we have that
+    \begin{alignat}{2}
+        \Vert f_n \Vert^2 &= \int_{0}^{2}f_n^*(x)f_n(x)dx \nonumber\\
+        &= \int_{0}^{1-1/n}0 +\int_{1-1/n}^{1}f_n^2(x) + \int_{1}^{2}1\nonumber\\
+        &= 1 + \int_{1-1/n}^{1}f_n^2(x)\nonumber\\
+        &= 1 + \int_{1-1/n}^{1} (1 +nx-n)^2dx\nonumber\\
+        &= 1 + \frac{(1+nx-n)^3}{3n} \Bigg\vert_{1-1/n}^1\nonumber\\
+        &= 1 + \frac{1}{3n}. \label{eq:in}
+    \end{alignat}
+    Therefore, for any $\epsilon > 0,$ consider $N\in\mathbb{N}$ s.t. $1/N < \epsilon.$ For any $n\ge m \ge N,$ it thus follows that
+    \begin{alignat*}{2}
+        | \Vert f_m\Vert - \Vert f_n\Vert | &= \Vert f_m\Vert - \Vert f_n\Vert \qquad&&\text{as \eqref{eq:in} implies $\Vert f_m\Vert \ge \Vert f_n\Vert$}\\
+        &\le \Vert f_m\Vert^2 - 1 &&\text{again by \eqref{eq:in}}\\
+        &= 1/(3m)\\
+        &<\epsilon. &&\text{by our choice of $N.$}
+    \end{alignat*}
+    Therefore, this sequence is Cauchy.
+
+    Now define $f$ where
+    \begin{equation*}
+        f(x) = \begin{cases}
+            0,&0\le x<1\\
+            1,&o.w.
+        \end{cases}
+    \end{equation*}
+    As $f$ is a step function, it is discontinuous and therefore not in our space. Thus, to show incompleteness, it suffices to show that our Cauchy Sequence $(f_n)\to f.$ Hence, fix $\epsilon > 0.$ Now chose some $N\in\mathbb{N}$ s.t. $1/N < \epsilon^2.$ It thus follows for any $n\ge N$ that
+    \begingroup
+    \allowdisplaybreaks
+    \begin{alignat*}{2}
+        \langle f_n-f, f_n-f\rangle &= \int_{0}^{2}(f_n-f)^*(x)(f_n-f)(x)\\
+        &= \int_{0}^{1-1/n}(f_n-f)^*(x)(f_n-f)(x)\\
+        &+\int_{1-1/n}^{1}(f_n-f)^*(x)(f_n-f)(x) + \int_{1}^{2}(f_n-f)^*(x)(f_n-f)(x)\\
+        &=\int_{0}^{1-1/n}0 +\int_{1-1/n}^{1}(f_n-f)^*(x)(f_n-f)(x) + \int_{1}^{2}0\\
+        &= \int_{1-1/n}^{1}(f_n-f)^*(x)(f_n-f)(x)\\
+        &= \int_{1-1/n}^{1}f_n^*(x)f_n(x) &&\text{as $f(x)=0$ on this intrvl}\\
+        &= \int_{1-1/n}^{1}f_n^2(x) &&\text{as $f$ is real-valued}\\
+        &= \int_{1-1/n}^{1} (1+nx-n)^2\\
+        &= \frac{(1+nx-n)^3}{3n} \Bigg\vert_{1-1/n}^1\\
+        &= \frac{1}{3n}\\
+        &<\epsilon^2.
+    \end{alignat*}
+    \endgroup
+    It thus follows that
+    \[\Vert f_n-f\Vert < \epsilon,\]
+    as desired.
+\end{proof}
+
+\end{document}

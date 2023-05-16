@@ -1,0 +1,250 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis PS2, Thomas Zeng }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\begin{document}
+\section*{2.2.1}
+The sequence $(x_n)$ where %x_n=1$
+\begin{equation*}
+    x_n = \begin{cases}
+        1,\qquad\text{$n$ is odd}\\
+        0,\qquad\text{o.w.}
+    \end{cases}
+\end{equation*}
+\textit{verconges} to $1.$ 
+\begin{proof}
+    Let $\epsilon=10,$ for any $n\in\mathbb{N}$ that is odd we have that
+    \[|x_n-x|=|1-1|=0<10=\epsilon.\]
+    Similarly, for any $n\in\mathbb{N}$ that is even we have that
+    \[|x_n-x|=|0-1|=1<10=\epsilon.\]
+\end{proof}
+ The above vercongent sequence is divergent. It also verconges to multiple values as the above proof would work to also show that it verconges to $2.$ This definition describes any sequence that is bounded below and bounded above.
+
+ \section*{2.2.2}
+ \subsection*{a}
+ \begin{proof}
+    Fix $\epsilon>0.$ By Archimedean principle, choose $N\in\mathbb{N}$ s.t. $N>3/(5\epsilon).$ For any $n\ge N$ we have:
+    \begin{align*}
+        n &\ge N\\
+        n &>\frac{3}{5\epsilon}\\
+        5n+4  &>\frac{3}{5\epsilon}\\
+        \frac{3}{5(5n+4)} &< \epsilon\\
+        \left |\frac{10n+5-10n-8}{5(5n+4)} \right | &<\epsilon\\
+        \left |\frac{2n+1}{5n+4}-\frac{2}{5} \right | &< \epsilon.\\
+    \end{align*}
+    Therefore, $\lim \frac{2n+1}{5n+1} = \frac{2}{5}.$
+ \end{proof}
+
+ \section*{2.2.7}
+ \subsection*{a}
+ It is frequently in the set $\{1\}$.
+
+ \subsection*{b}
+ The first definition is stronger as eventually implies frequently.
+
+ \subsection*{c}
+A sequence $(a_n)$ converges to $a$ if given any $\epsilon$-neighborhiood $V_\epsilon(a)$ of $a,$ $(a_n)$ is eventually in $V_\epsilon(a).$
+
+\subsection*{d}
+$(x_n)$ is not necessarily eventually in $(1.9, 2.1)$ as a counterexample is the sequence $1,2,1,2,...$ However it is frequently in $(1.9,2.1).$
+
+\section*{2.3.3}
+\begin{proof}
+    % show y_n converges
+    Fix $\epsilon>0.$ As $x_n, z_n$ converges to $l,$ $V_\epsilon(l)$ contains all but finitely many terms of $(x_n)$ and  $(z_n)$. In other words there exists $N_1, N_2\in\mathbb{N}$ s.t. for any $n_1\ge N_1$ and any $n_2\ge N_2$ we have \[x_{n_1}, z_{n_2}\in V_\epsilon(l).\]
+
+    Let $N =\max \{N_1, N_2\}.$ By above,
+    % and that $x_n\le y_n\le z_n$ for all $n\in\mathbb{N}$
+    for any $n\ge N$ we have 
+    \[l-\epsilon < x_n \le y_n \le z_n < l + \epsilon.\] 
+    Therefore, $y_n \in V_\epsilon(l)$ and consequently $V_\epsilon(l)$ contains all but finitely many terms of $y_n.$ Thus $y_n$ converges to $l.$
+\end{proof}
+
+\section*{2.3.5}
+\begin{proof}
+    % say for notational simplicty we keep the double index
+    For simplicity, we slightly abuse notation and keep the indexing where each $n\in\mathbb{N}$ corresponds to $x_n,y_n$ in the sequence $(z_n).$
+
+    $(\Rightarrow)$ Given that $(z_n)$ is convergent, for any $\epsilon>0$ we have that $V_\epsilon(\lim z_n)$ contains all but finitely many terms of $(z_n).$ That is for some $N\in\mathbb{N},$ for any $n\ge N$ we have $x_n,y_n\in V_\epsilon(\lim z_n).$ Therefore $(x_n)$ and $(y_n)$ are both convergent with $\lim x_n = \lim y_n = \lim z_n.$
+
+    $(\Leftarrow)$ Given that $(x_n)$ and $(y_n)$ both converge to the same point which we denote $l.$ For any $\epsilon>0$ we have that $V_\epsilon(l)$ contains all but finitely many terms of $(x_n)$ and $(y_n).$  That is for some $N\in\mathbb{N},$ for any $n\ge N$ we have $x_n,y_n\in V_\epsilon(l).$ Thus by definition, $(z_n)$ also converges to $l.$
+\end{proof}
+
+\section*{2.3.6}
+\begin{proof}
+    % mention that ALT implies that constance work
+    First we algebraically manipulate $b_n$ into a more amenable form:
+    \begin{align*}
+        b_n &= n-\sqrt{n^2+2n}\\
+        &= n(1-\sqrt{1+2/n})\\
+        &= \frac{n(1-(1+2/n))}{1+\sqrt{1+2/n}}\\
+        &= \frac{-2}{1+\sqrt{1+2/n}}.
+    \end{align*}
+    Next, let $(c_n)$ be defined by $c_n = \sqrt{1+2/n}.$ Therefore we have
+    \begin{align}
+        \lim c_n &= \sqrt{1+2/n}\nonumber\\
+        &= \sqrt{\lim (1 + 2/n)} \label{eq:1}\\
+        &= \sqrt{\lim(1 + 2 \cdot 1/n)} \nonumber\\
+        &= \sqrt{1} \label{eq:2}\\
+        &= 1 \nonumber
+    \end{align}
+    where \eqref{eq:1} is true by exercise 2.3.1 and \eqref{eq:2} is true by the Algebraic Limit Theorem and the fact $(1/n)\to 0.$ Therefore, we have
+    \begin{align}
+        \lim b_n &= \lim \frac{-2}{1+\sqrt{1+2/n}} \nonumber\\
+        &= \lim \frac{-2}{1+c_n} \nonumber\\
+        &= \frac{-2}{1+1} \label{eq:3}\\
+        &= -1 \nonumber
+    \end{align}
+    where \eqref{eq:3} is true by the ALT.
+\end{proof}
+
+\section*{2.3.11}
+\subsection*{a}
+\begin{proof}
+    % does not need divide 2
+    Let $(x_n)\to l.$ Fix $\epsilon > 0.$ As $(x_n)$ is convergent, there exists $N_x\in\mathbb{N}$ s.t. for all $n\ge N_x$ we have
+    \begin{equation} \label{eq:2.3.11bound}
+        |x_n - l|<\epsilon/2.
+    \end{equation}
+    Now using Archimedean principle, choose $N \in\mathbb{N}$ s.t.
+    \begin{equation} \label{eq:2.3.11N}
+        N \ge N_x - 1 + \sum_{i=1}^{N_x - 1}\frac{|x_i-l|}{\epsilon/2}.
+    \end{equation}
+    We note that from \eqref{eq:2.3.11N} we get the following inequality
+    \begin{align}
+        (N-N_x+1)\epsilon/2 \ge \sum_{i=1}^{N_x - 1}|x_i-l| &\ge 0\nonumber\\
+        (N-N_x+1)\epsilon/2 - \sum_{i=1}^{N_x - 1}|x_i-l| &\ge 0 \label{eq:2.3.11inequal}
+    \end{align}
+    Therefore, for any $n \ge N$ we have
+    \begin{align}
+        |y_n - l| &= \left |\frac{x_1+x_2+... + x_n-ln}{n}\right | \nonumber\\
+        &= \left |\frac{\sum_{i=1}^{n}(x_i - l)}{n}\right | \nonumber\\
+        &\le \frac{\sum_{i=1}^{n}|x_i - l|}{n} \label{eq:7}\\
+        &= \frac{\sum_{i=1}^{N_x-1}|x_i - l| + \sum_{i=N_x}^{n}|x_i - l|}{n}  \nonumber\\
+        &< \frac{\sum_{i=1}^{N_x - 1}|x_i - l|+ (n-N_x + 1)\epsilon/2}{n} \label{eq:8}\\
+        &= \frac{\sum_{i=1}^{N_x - 1}|x_i - l| - (n-N_x + 1)\epsilon/2 + (n-N_x + 1)\epsilon}{n} \nonumber\\
+        &\le \frac{(n-N_x + 1)\epsilon}{n} \label{eq:9}\\
+        % &= \frac{(n-N_x + 1)\epsilon}{n} \nonumber\\
+        &\le \frac{n\epsilon}{n} \nonumber \\
+        &= \epsilon \nonumber
+    \end{align}
+    where \eqref{eq:7} is true by triangle inequality, \eqref{eq:8} is true by \eqref{eq:2.3.11bound} and \eqref{eq:9} is true by \eqref{eq:2.3.11inequal}. Therefore $(y_n)\to l.$
+\end{proof}
+
+\subsection*{b}
+Let $(x_n) = 0,1,0,1,...,0,1.$ Then $(x_n)$ does not converge but $(y_n)\to 0.5.$
+
+\section*{2.4.1}
+\subsection*{a}
+% 3, 1, 1/3, 
+\begin{proof}
+    First we use induction to show that $(x_n)$ is monotone decreasing. For the base case we have $x_1 = 3$ and $x_2 = \frac{1}{4-x_1} = 1.$ Therefore $x_1 > x_2.$ Next for the inductive hypothesis we assume $x_n > x_{n+1}$ for some $n\in\mathbb{N}.$ We thus have
+    \begin{align}
+        x_{n+2} &= \frac{1}{4-x_{n+1}}\nonumber\\
+        &< \frac{1}{4 - x_n} \label{eq:IH}\\
+        &= x_{n+1} \nonumber
+    \end{align}
+    where \eqref{eq:IH} is true by the IH. Hence $(x_n)$ is monotone. 
+    
+    We next use contradiction to show $(x_n)$ is bounded by $0$. Assume for some $n>1$ we have $x_n < 0.$
+    Therefore we have
+    \begin{align*}
+        x_n &< 0\\
+        \frac{1}{4-x_{n-1}} &< 0\\
+        x_{n-1} &> 4.
+    \end{align*}
+    However as $x_1=3$ and $(x_n)$ is monotone decreasing -- this is a contradiction. Therefore as $(x_n)$ is monotone and bounded, it converges by the Monotone Convergence Theorem.
+\end{proof}
+
+\subsection*{b}
+% maybe change explanation
+$\lim x_{n+1}$ must exist as the same proof as above can be used (except now we have $x_1 = 1$) to show that it is monotone decreasing and bounded. It must be that $\lim x_n = \lim x_{n+1}$ as $\inf \{x_n : n\in\mathbb{N}\} = \inf \{x_{n+1} : n\in\mathbb{N}\}$ (since the only difference between the two sets is that the latter is missing $3$ of which is not a lower bound of either set).
+
+\subsection*{c}
+\begin{align*}
+    \lim x_{n+1} &= \lim \frac{1}{4-x_n}\\
+    \lim x_n &= \frac{1}{4-\lim x_n}\\
+     - (\lim x_n)^2 + 4\lim x_n - 1 &= 0\\
+     \lim x_n &= 2-\sqrt{3}
+\end{align*}
+
+\section*{2.4.4}
+\subsection*{b}
+% prove NIP using Monotone Convergence Theorem
+\begin{proof}
+    % the sequence a1, a2, a3, a4 is monotone increasing
+        % bounded by b_n
+        % it therefore converges to something a (no a_n > a)
+    % the seqence b1, b2, b3 is monotone decreasing
+        % bounded by a_1
+        % it therefore convegres to something b, there is no b_n < b (as otherwise infinite b_n less than b)
+    % Furthore a \le b assume not i.e. a > b
+    % by convergence exists b<b_n < an < a a contradiction
+    For each $n\in\mathbb{N},$ assume we are given a closed interval $I_n=[a_n,b_n]$ and that each $I_n$ contains $I_{n+1}.$ We now want to show that for all $n\in\mathbb{N}$ there exists $a,b\in\mathbb{R}$ s.t. 
+    \begin{equation} \label{eq:NIP}
+        a_n\le a\le b\le b_n.
+    \end{equation}
+
+    As the intervals $I_n$ are nested, the sequence $(a_n)$ is monotone increasing. Furthermore $(a_n)$ is upperbound by $b_1$. Therefore, by the Monotone Convergence Theorem $(a_n)\to a$ where $a\in\mathbb{R}.$ By similar proof $(b_n)\to b$ where $b\in\mathbb{R}.$
+
+    We further note that $a_n \le a$  for all $n\in\mathbb{N}.$ We prove this by contradiction. Assume for some $n'\in\mathbb{N}$ we have $a_{n'}> a.$ If we let $\epsilon = |a_{n'}-a|$ then as $(a_n)$ is monotone increasing, there exists the infinite sequence 
+    \[a_{n'},a_{n'+1},a_{n'+2},...\]
+    that is outside of $V_\epsilon(a)$. This is a contradiction.
+
+    By similar proof, it must be that $b\le b_n$ for all $n\in\mathbb{N}.$
+
+
+    Lastly we note that $a \le b$ which we again prove by contradiction. Assume $b<a,$ then by convergence definition and that both sequence are monotone, if we set $\epsilon = |a-b|/2$ we have
+    \[b\le b_i<a_j\le a\]
+    for some $i,j\in\mathbb{R}.$ This a contradiction as it must be that $b_i > a_j$ since the intervals are nested.
+
+    Therefore we have shown \eqref{eq:NIP}. Thus $a\in\bigcap_{i=0}^\infty I_i$ and hence proving the NIP.
+\end{proof}
+\section*{2.4.8}
+\subsection*{b}
+This series converges.
+
+\begin{proof}
+    We first denote the series $(b_n)$ where $b_n = \frac{1}{n(n+1)}.$
+    We next note the following:
+    \begin{equation} \label{eq:partial}
+        \frac{1}{n(n+1)} = \frac{(n+1)-n}{n(n+1)} = \frac{1}{n} - \frac{1}{n+1}.
+    \end{equation}
+    Threfore we can define $(s_m)$ the sequence of partial sums as the following:
+    \begin{align}
+        s_m &= b_1 + b_2 + ... + b_m \nonumber\\
+        &= (1-\frac{1}{2}) + (\frac{1}{2}-\frac{1}{3}) + ... + (\frac{1}{m}-\frac{1}{m+1}) \label{eq:p}\\
+        &= 1 - \frac{1}{m+1}\label{eq:mono}\\
+        &< 1 \label{eq:bound}
+    \end{align}
+    where \eqref{eq:p} is true by \eqref{eq:partial}. From \eqref{eq:mono} we see that $(s_n)$ is monotone increasing. From \eqref{eq:bound} we see that $(s_n)$ is bound. Therefore, by the Monotone Convergence Theorem, $(s_n)$ converges.
+
+    Resultingly, we have that the series $\sum_{n=1}^\infty\frac{1}{n(n+1)}$ converges.
+\end{proof}
+
+
+
+
+\end{document}

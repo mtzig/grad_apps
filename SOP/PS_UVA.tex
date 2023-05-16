@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[10pt]{article}
 \setlength{\textwidth}{6.3in}
 \setlength{\textheight}{9in}
 \setlength{\oddsidemargin}{0in}
@@ -25,49 +25,70 @@
 \usetikzlibrary{positioning}
 \begin{document}
 
-% 1. Tell us about your research interest and preferred focus area(s). Please describe your passion for research, ability to overcome obstacles, and experience to manage multiple projects.
-% 2. Describe your motivation to pursue an advanced degree and explain your future career aspirations.
+%for why chicago, primarily mention chenhao tan
+% also say unique labs around it (adjacent to these ideas)
+
+My academic advisor once told me that while deep learning (DL) can be powerful, she still prefers to use more conventional methods for her research due to its lack of explainability. Her comment made me realize that although DL is a potent tool, it still has significant trade-offs that hinders its usage.
+Specifically, DL models have a high capacity for generalizing patterns in data, but this comes at a trade off both in the lack of explainability of model predictions and reliance on the assumption that the data seen at inference time is i.i.d. with respect to the training data. This is especially problematic in domains such as medical imaging where explainability and fairness of model predictions is paramount; and furthermore some degree of domain-shift in data at inference time is expected. Hence, my current objective is to get a PhD to do research in industry with a focus on addressing this problem, i.e. creating robust, fair and explainable deep learning models.
 
 
+I started self-studying machine learning at the end of my sophomore year of college when my interest in the intersection of linguistics and computer science led me to wonder how machine translation algorithms worked.
+To gain practical experience, I pursued ML at a startup, SayKid, that used pre-built speech recognition models. There, I created a voice game for children premised on riddle solving using the Alexa Skills Kit. This experience underscored to me the necessity of designing robustly, as given the target audience of children, we needed to account for the unpredictability of how a child will interact with our game. At the same time, as the APIs I used abstracted away the ML model as a black box that takes in speech and returns text, it also gave me the desire to try research where I could work at a lower level with a greater focus on implementing and training models.
 
-% ability to overcome obstacles
-    % obstacles in DLN research, where we tried many different models without good results
-    % collaboration duriong REU program, I got to work with graduate/PhD students as my work was similarly related to him. 
-        % also passion for research as I was able to do research fulltime?
-
-% experience to manage multiple projects
-
+Hence, I started working with Professor David Liben-Nowell, who is studying human behavior through choice modeling. Here we quantified the effect of geographic location on people's choices -- specifically their ranking of US states by contribution to history. We used a Plackett-Luce model \cite{guiver2009bayesian} as a baseline and iterated upon it to test how a person's home state's geographic location affects their individual ranking.
+While choice modeling is not ML, they both fundamentally involve data and model building.
+%ties this part more explicitly in with my research interest
+Furthermore, although choice models are limited in what they can describe, they are highly explainable due to the choice theories that underpin them. This is in contrast to data-driven DL models that are powerful but black-box due to their empirical nature.
+I resonated with the intuitive nature of choice modeling and this juxtaposition propelled me to explore the problem of robustness and explainability in the context of DL. 
 
 
-
-My objective is to become a research scientist with the focus of creating robust, fair and explainable deep learning models -- specifically in high impact domains i.e. healthcare. %what does high impact even mean?
-I developed this goal starting at the end of my sophomore year of college when my interest in the intersection of linguistics and computer science led me to ponder how machine translation algorithms worked. To answer this question, I started watching the public online lectures of Stanford's CS244n -- NLP with Deep Learning Course --  which resultingly piqued my interest in the field of AI/ML/DL as a whole. 
-
-To explore this field, I first worked at a startup, SayKid, that uses speech recognition software to create interactive talking-robots for children. There I created a voice game premised on riddle solving using the Alexa Skills Kit. This experience underscored to me the transformative power of AI through the downstream tasks it makes possible. At the same time, I was not satisfied by working with high-level APIs where the specific architecture of the voice recognition models is abstracted away. Thus I decided to move into research, where I would get to interact closer with DL models.
-
-My first research position was with professor David Lieben-Nowell at my school, who is working on understanding human behavior through choice modeling. Here we quantified the effect of geographic location on people's choices -- specifically their ranking of US states by contribution to history. We used a Plackett-Luce model and found that a person's home state's geographic location has a statistically significant affect on their inidividual ranking.
-%placket luce
-While choice modeling is not machine learning, they have overlaps i.e. they both involve using a dataset and building a model around. Through this research, I gained experience with fundamental ML and data science frameworks e.g. PyTorch or Pandas. 
-Furthermore, due to the underpinning of choice models by theory and also their usage in prediction, it gave me a better appreciation for the necessity of robust and explainable models. I therefore decided to further explore robustness and explainability in the context of DL in my next research position.
-
- Specifically I participated in a REU program hosted by DePaul University and University of Chicago. I was advised by Professor Daniela Raicu and worked on the problem of classifying lung nodules as cancerous. I mainly focused on robust models by finding hidden stratification in types of lung nodules and worked on training models optimized over the identified stratifications using group distributionally robust optimization \cite{Sagawa*2020Distributionally}. I also worked on explainability through visualizations of dimensionally reduced features extracted from our DL model. I am the first author on a paper based off this work that will be presented in the SPIE MI medical imaging conference. This program gave me a taste of full-time research and is a primary reason for my desire to pursue research through graduate school.
-It also reinforced my interest in explainability and robustness -- especially in healthcare where correct classification and early detection can mean living longer. 
+% re-edit this as it is too long and enumeration-y and U Chicago to the non U Chicago sop
+To work more with robustness -- specifically in the medical imaging domain -- I participated in an REU program hosted by DePaul University. I was advised by Professor Daniela Raicu and focused on improving the domain-shift robustness of DL lung nodule classification models by identifying and training models over hidden stratification in types of lung nodules.
+% i.e. with group distributionally robust optimization \cite{Sagawa*2020Distributionally}.
+%wip
+Specifically, I used both domain-driven and clustering methods to find semantically meaningful subgroupings of lung nodules. Then, I compared results from our baseline ResNet-18 models -- i.e. trained using transfer learning under the principle of Empirical Risk Minimization (ERM) -- to ResNet-18 models trained with group distributionally robust optimization (gDRO) \cite{Sagawa*2020Distributionally}. Through this, we concluded that we could increase model robustness in regard to the subgroups we discovered by using gDRO.
+% my research abilities?
+% The main difficulty in this experience was finding meaningful subgroupings of the data -- this specifically was as we were not radiologists. Thus solving these problems was very rewarding and one of the large driver for why I enjoy the research process.
+%wip
+In this experience, I was able to do research full time and was first author on a paper that was accepted \cite{zengNo2023}. This program fully convinced me that I wanted to do research
+% and thus cemented my desire to pursue graduate school.
+as I found the process of solving open-ended questions -- e.g. what exactly is a ``semantically meaningful'' stratification of our dataset -- a challenging and rewarding process.
+It also again reinforced my interest in explainability and robustness as I saw first hand the need for more research in the subfields and how important it is in some ``high stakes'' domains e.g. the medical field where model predictions can greatly affect patient outcomes.
  
-While my journey into deep learning has not been very long, it has been fruitful and given me a clear direction.
-To continue in this direction, I am now doing work on reproducibility and model robustness in NLP with my senior capstone project. I am looking at counterfactual fairness in language toxicity classification by re-implementing Counterfactual Logit Pairing \cite{garg2019counterfactual} and evaluating alternative model training methods. I am also holding ML workshops in the data science club at my school to help expose other people to ML in the hopes of bring other people to this field too.
+% While my journey into deep learning is still nascent, it has been fruitful and given me a clear direction.
+To continue in this direction, I am now exploring this problem in other DL modalities -- specifically fairness in NLP. For my senior capstone project which is advised by Professor Anna Rafferty, I am looking at counterfactual fairness in language toxicity classification, re-implementing Counterfactual Logit Pairing \cite{garg2019counterfactual} and evaluating the robustness of these methods. Although language toxicity classification is an entirely different domain from my previous work of lung nodule malignancy classification, the same problem of robustness and fairness manifests here. Thus, in the future I would like to find more generalized methods to make deep learning models more transparent and accountable, 
+%like how gdro and irm have been proposed?
+as the opacity in deep learning models is a pervasive problem across different domains and modalities.
+% I have also held ML workshops in the data science club at my school to help expose other people to ML in the hopes of bring other people to this field too.
+%talk about 
+% ROSA advice: mention more about what my future direction is?
+To this end, I am applying for PhD programs as research is a fundamentally collaborative effort and not something I can develop on my own.
+% Specifically, I wish to further develop my research ability in both finding meaningful questions and also producing useful results. 
+This is with the goal of giving me the skills to eventually do research in industry, where I can help ensure AI models being deployed in the world are used responsibly and equitably.
+%centered on benefits and effects of ai on humans -- human centric research on ai
 
-Due to the democratized nature of ML, so far I've been able to dig in depth into it by myself without formally taking any ML courses at my school.
-However, research is a fundamentally collaborative effort and not something I can learn by myself. Thus I desire to get a PhD to further prepare myself for research. Specifically, I want to further develop my research ability -- in both finding meaningful questions and also producing useful results.
+Therefore, I am applying to University of Virginia as there are many professors here doing research related to my own focus.
+Specifically, I am most interested in Professor Yangfeng Ji and Professor Aidong Zhang.
+I am fascinated by Professor Ji's work with text detoxification
+\cite{wang2021simple}, trade-off between types of adversarial examples \cite{chen2022balanced} and improving explainability through data augmentation \cite{chen2019improving}.
+I similarly enjoy Professor Zhang's work with adversarial robustness of concept based models \cite{sinha2022understanding}, graph counterfactual fairness \cite{ma2022learning} and concept-level interpretability \cite{yao2022concept}.
+By working in either of the professors' labs, I can contribute with my knowledge of deep learning frameworks and strong coding experience.
+I also aim to take advantage of the overlapping interests of their work with mine to further my own goals of working on machine learning models that are robust, fair and interpretable.
+% Yangfeng Ji
+    % Improving the Explainability of Neural Sentiment Classifiers via Data Augmentation
+    % Balanced Adversarial Training: Balancing Tradeoffs between Fickleness and Obstinacy in NLP Models
+        % adverairal robustness
+    % Simple Text Detoxification by Identifying a Linear Toxic Subspace in Language Model Embeddings
+% Aidong Zhang
+    % Understanding and Enhancing Robustness of Concept-based Models
+    % Learning fair node representations with graph counterfactual fairness
+    % Concept-Level Model Interpretation From the Causal Aspect
+% Yanjun Qi
 
 
-% I specifically am applying to University of Minnesota because of its sizeable faculty in machine learning and bioinformatics. I specifically would like to work with Professor Catherine Qi Zhao in the VIP Lab or with Professor Ju Sun in the GLOVEX lab. The former lab is of interest to me due to the direct focus on explainability and generizability of models i.e. domain adaptation in \cite{li2017attention} or steep slope loss in \cite{Luo_NeurIPS_2021}. The latter lab is of interest to me due to the focus on healthcare and research in methods to improve classification performance e.g. medical transfer learning in \cite{peng2021rethink} and COVID-19 in \cite{doi:10.1148/ryai.210217}. 
-% %need to reword this better
-% Besides the faculty, I also enjoy the location of Minneapolis and the cold weather -- and ultimately I think that it can provide the right environment for me to thrive and develop as a researcher.
-
-m
 
 
-
+% \newpage
 \bibliographystyle{acm}
 \bibliography{refs} % Entries are in the refs.bib file
 

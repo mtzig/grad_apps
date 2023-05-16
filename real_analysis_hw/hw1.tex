@@ -1,0 +1,205 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis PS1, Thomas Zeng }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\begin{document}
+\section*{1.2.1}
+\subsection*{a}
+\begin{proof}
+    Assume there exists integers $p,q$ s.t.
+    \begin{equation} \label{eq:121a1}
+        \left (\frac{p}{q} \right )^2 = 3.
+    \end{equation}
+    WLOG assume $p,q$ have no common factor.
+    \eqref{eq:121a1} implies
+    \begin{equation} \label{eq:121a2}
+        p^2 = 3q^2.
+    \end{equation}
+    This implies that $3$ divides $p^2$. And as $3$ is prime, it must also be that $3$ divides $p$. Thus we can write $p=3r$, where $r$ is an integer. Substituting $3r$ for $p$ in \eqref{eq:121a2}, we get
+    \begin{align*}
+        (3r)^2 &= 3q^2\\
+        3r^2 &= q^2.
+    \end{align*}
+    This equation similarly implies that $q$ is divisible by $3$. Thus $p,q$ have the common factor $3$, a contradiction. Therefore, $\sqrt[]{3}$ is not rational.
+\end{proof}
+
+\noindent
+A similar proof would work for $\sqrt{6}$ as $6$ is factorable into $2\cdot 3$ where $2$ and $3$ are prime.
+
+\subsection*{b}
+It breaks down as we no longer get that
+\[2r^2 = q^2.\]
+Rather if we simplify, we have
+\begin{align*}
+    (2r)^2 &= 4q^2\\
+    4r^2 &= 4 q^2\\
+    r^2 &= q^2.
+\end{align*}
+Importantly, from this equation we cannot conclude that $q$ is even, and thus there is no contradiction.
+
+\section*{1.2.6}
+\subsection*{a}
+When $a,b > 0$, we have that
+\begin{align*}
+    |a + b| &= a + b\\
+    &= |a| + |b|
+\end{align*}
+\subsection*{b}
+\begin{proof}
+    For any real numbers $a,b$, we have that
+    \begin{align*}
+        (a+b)^2 &= a^2 + 2ab + b^2\\
+        &= |a|^2 + 2ab + |b|^2\\
+        &\le |a|^2 + 2|a||b| + |b|^2\\
+        &= (|a|+|b|)^2.
+    \end{align*}
+    Thus
+    \begin{align*}
+        |a+b| &= \sqrt[]{(a+b)^2}\qquad \text{(we use the positive root)}\\
+        &\le \sqrt[]{(|a|+|b|)^2}\\
+        &= |a|+|b|
+    \end{align*}
+    which is the triangle inequality.
+\end{proof}
+
+
+\subsection*{c}
+\begin{proof}
+    \begin{align}
+        |a-b| &= |[(a-c) + (c-d)] + (d-b)| \nonumber\\
+        &\le |(a-c) + (c-d)| + |d-b| \label{eq:126c1}\\
+        &\le |a-c| + |c-d| + |d-b| \label{eq:126c2}
+    \end{align}
+    \eqref{eq:126c1} and \eqref{eq:126c2} are true by triangle inequality.
+\end{proof}
+\subsection*{d}
+\begin{proof}
+    \begin{align*}
+        ||a|-|b|| &= ||a-b+b|-|b||\\
+        &\le ||a-b| + |b| - |b||\\
+        &= ||a-b||\\
+        &= |a-b|
+    \end{align*}
+\end{proof}
+
+\section*{1.2.11}
+\subsection*{a}
+There exists real numbers satisfying $a<b$, s.t. for all $n\in N$, $a+1/n\ge b.$
+
+\noindent
+The claim seems true.
+
+\subsection*{b}
+For all real numbers $x > 0,$ $x\ge 1/n$ for some $n\in N$.
+
+\noindent
+The negation seems true.
+
+\subsection*{c}
+There exists two distinct real numbers without a rational number between them.
+
+\noindent
+The claim seems true.
+
+\section*{1.3.3}
+\subsection*{a} 
+\begin{proof}
+    $B$ is bounded above as any $a\in A$ is an upper bound for $B$. Thus by AoC, $\sup B$ exists.
+    Next we show that $\sup B \in B$ by way of contradiction.
+
+    Assume $\sup B \notin B.$ Then by definition of $B,$ $\sup B$ is not a lower bound on $A.$ Thus, there exists $a\in A$ s.t. $a<\sup B.$
+    Hence $a$ is an upper bound on $B$ that is smaller than $\sup B.$ This is a contradiction.
+
+    Thus $\sup B \in B$ i.e. $\sup B = \max B.$ Thus by definition of $B,$ $\sup B = \inf A$ (that is $\sup B$ is a lower bound for $A$ since it is in $B$ and for any other lower bound $b$ of $A$, $b \le \sup B$ as $\sup B$ is the maximum in $B$).
+
+\end{proof}
+
+\subsection*{b}
+This is as it directly follows from (a) that given the AoC, bounded below implies a greatest lower bound exists.
+
+\section*{1.3.4}
+
+\subsection*{a}
+For the binary case:
+\[\sup (A_1\cup A_2) = \max (\{\sup A_1, \sup A_2\}).\]
+For the general case:
+\[\sup \left (\bigcup_{k=1}^n A_k\right ) = \max( \{\sup A_k, 1 \le k\le n\}).\]
+
+\subsection*{b}
+No, consider the case where $A_k = \{1- 1/k\}$.
+
+\section*{1.3.5}
+
+\subsection*{a}
+\begin{proof}
+    By definition of supremum, we have that for all $a\in A,$ $a \le \sup A.$ Therefore, as $c \ge 0,$ we have that for all $a \in A,$ $ca \le c\sup A.$ Thus $c\sup A$ is an upper bound on $cA.$
+
+    % show part ii
+    Now given $s$ is an upper bound on $cA$. Then for all $ca \in cA,$ we have that \[ca \le s.\]
+    Equivalently (as again $c\ge 0$), for all $a\in A,$ we have that \[a \le s/c. \]
+    Therefore, $s/c$ is an upper bound on $A$ and by definition of suprememum, we have
+    \[s/c\ge \sup A.\] This equivalently means that
+    \[s \ge c\sup A.\]
+    Thus $c\sup A$ is an upper bound on $cA$ and every other upper bound on $cA$ is greater than or equal to it. By definition of suprememum we conclude $\sup (cA) = c\sup A$. 
+
+\end{proof}
+
+\subsection*{b}
+$\sup(cA) = c\inf A$
+
+\section*{1.4.3}
+
+\begin{proof}
+    Assume $\bigcap_{n=1}^\infty (0,1/n)\neq \emptyset.$ Therefore there exists some $y \in \bigcap_{n=1}^\infty (0,1/n).$ By the Archimedean Property there exists an $n'\in\mathbb{N}$ s.t. $1/n'<y.$ Therefore $y\notin (0, 1/n')$ and thus $y \notin \bigcap_{n=1}^\infty (0,1/n).$ This is a contradiction and thus $\bigcap_{n=1}^\infty (0,1/n) = \emptyset.$ 
+\end{proof}
+
+\section*{1.4.6}
+
+\subsection*{a}
+This set is not dense. Consider the interval $(0, 0.1).$
+
+\subsection*{b}
+This set is dense. Intuitively this is the case as for any $\epsilon > 0$ we can find a $p/q$ s.t. $p/q < \epsilon.$
+
+\subsection*{c}
+This set is dense. Given $p/q$ where $p,q\in\mathbb{N},$ if $p/q$ is positive just set both $p,q$ to negative. If $p/q$ is negative set $q$ to negative and $p$ to positive.
+% This set is not dense. With algebraic manipulation we get $|p|/q\ge 1/10.$ Thus again consider the interval $(0,0.1).$
+
+\section*{1.4.8}
+
+\subsection*{a}
+Let $A=\{1-1/(2n)|n\in\mathbb{N}\}$ and let $B=\{1-1/(2n-1)|n\in\mathbb{N}\}$
+
+\subsection*{d}
+No such sequence exists.
+\begin{proof}
+    Assume the sequence of closed intervals $I_1, I_2,I_3,...$ have the given property. We next construct the sequence of sets $I'_1, I'_2, I'_3,...$ where $I'_1 = I_1$ and $I'_n = I'_{n-1}\cap I_n.$ By the property that $\bigcap_{n=1}^N I_n \neq\emptyset$ for any $N\in\mathbb{N},$ we conclude that each $I'_n$ is a closed interval and that the sequence is nested. Therefore by the Nested Interval Property, $\bigcap_{n=1}^\infty I'_n \neq\emptyset,$ and thus $\bigcap_{n=1}^\infty I_n \neq\emptyset.$ This is a contradiction and thus no such sequence exists.
+\end{proof}
+
+\section*{1.5.2} 
+The NIP assumes that the intervals are over $\mathbb{R}.$ That is not true here as the intervals are over $\mathbb{Q}.$
+
+
+\end{document}

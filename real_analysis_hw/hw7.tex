@@ -1,0 +1,338 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis PS7, Thomas Zeng }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\newcounter{relctr} %% <- counter for relations
+\everydisplay\expandafter{\the\everydisplay\setcounter{relctr}{0}} %% <- reset every eq
+\renewcommand*\therelctr{\alph{relctr}} %% <- label format
+
+\newcommand\labelrel[2]{%
+  \begingroup
+    \refstepcounter{relctr}%
+    \stackrel{\textnormal{(\alph{relctr})}}{\mathstrut{#1}}%
+    \originallabel{#2}%
+  \endgroup
+}
+\AtBeginDocument{\let\originallabel\label} %% <- store original definition
+
+\begin{document}
+
+\section*{6.2.1}
+\subsection*{a}
+
+$(f_n)\stackrel{pw}{\to} 1/x.$
+
+\begin{proof}
+    Fix $\epsilon > 0$ and let $x\in (0,\infty).$ By the Archimedean principle, choose $N\in\mathbb{N}$ s.t.
+    \[N> \frac{1}{x^3\epsilon}.\]
+    Therefore, for any $n\ge N,$ we would have
+    \begin{alignat*}{2}
+        n &\ge N\\
+        &>\frac{1}{x^3\epsilon} \qquad&&\text{by def. of $N$}\\
+        \frac{1}{nx^3}&<\epsilon\\
+        \frac{1}{x+nx^3}&<\epsilon &&\text{as $x>0$}\\
+        \left | \frac{-1}{x+nx^3}\right | &< \epsilon &&\\
+        \left | \frac{nx^2-nx^2-1}{(1+nx^2)x} \right |&<\epsilon\\
+        \left | \frac{nx^2}{(1+nx^2)x}-\frac{nx^2+1}{(1+nx^2)x}\right | &<\epsilon\\
+        \left | \frac{nx}{1+nx^2} - \frac{1}{x} \right | &<\epsilon,
+    \end{alignat*}
+    as desired.
+\end{proof}
+
+
+
+\subsection*{c}
+
+$(f_n)$ is not uniform convergent on $(0,1).$
+
+\begin{proof}
+    Fix $\epsilon>0,$ and choose arbitrary $n\in\mathbb{N}.$ Let $a=\min\{1, \frac{1}{(n+1)\epsilon}\}.$ Now choose $0<x<a.$ By our choice of $a$, we would thus have $x\in(0,1)$ and $x<\frac{1}{(n+1)\epsilon}.$
+    
+    Furthermore we would have that
+    \begin{alignat*}{2}
+        \frac{1}{(n+1)\epsilon}&> x\\
+        \frac{1}{(n+1)x}&>\epsilon\\
+        \frac{1}{nx+x} &>\epsilon\\
+        \frac{1}{nx^3+x} &>\epsilon \qquad&&\text{as $x\in(0,1)\Rightarrow x^3<x$}\\
+        \left | \frac{-1}{x+nx^3}\right | &> \epsilon &&\text{as $1= |-1|$}\\
+        \left | \frac{nx^2-nx^2-1}{(1+nx^2)x} \right |&>\epsilon\\
+        \left | \frac{nx^2}{(1+nx^2)x}-\frac{nx^2+1}{(1+nx^2)x}\right | &>\epsilon\\
+        \left | \frac{nx}{1+nx^2} - \frac{1}{x} \right | &>\epsilon.
+    \end{alignat*}
+    In other words, for all $n\in\mathbb{N},$ there is some point $x\in (0,1)$ s.t. $|f_n(x)-f(x)|\ge \epsilon.$ This is the negation of the Uniform Convergence definition. Therefore, $(f_n)$ is not uniform convergent on $(0,1).$
+\end{proof}
+
+\subsection*{d}
+
+$f_n$ is uniform convergent on $(1,\infty).$
+
+\begin{proof}
+    Fix $\epsilon>0.$ By the Archimedean principle, choose $n\in\mathbb{N}$ s.t.
+    \[N>1/\epsilon.\]
+    Now for any $n\ge N$ and for any $x\in(1,\infty),$ we have that
+    \begin{alignat*}{2}
+        n &\ge N\\
+        &> 1/\epsilon\\
+        \frac{1}{n}&<\epsilon\\
+        \frac{1}{x+nx^3}&<\epsilon \qquad&&\text{as $x>1 \Rightarrow x+xn^3 > n$}\\
+        \left | \frac{-1}{x+nx^3}\right | &< \epsilon \\
+        \left | \frac{nx^2-nx^2-1}{(1+nx^2)x} \right |&<\epsilon \\
+        \left | \frac{nx^2}{(1+nx^2)x}-\frac{nx^2+1}{(1+nx^2)x}\right | &<\epsilon\\
+        \left | \frac{nx}{1+nx^2} - \frac{1}{x} \right | &<\epsilon,
+    \end{alignat*}
+    as desired.
+\end{proof}
+
+\section*{6.2.6}
+
+\subsection*{a}
+
+For a counter example, consider $f_n$ where
+\begin{align*}
+    f_n(x)=\begin{cases}
+        x^2,\quad&|x|<n\\
+        n^2,\quad&o.w.
+    \end{cases}.
+\end{align*}
+Each $f_n$ is continuous and Lipschitz and therefore uniform continuous. However, $(f_n)\stackrel{pw}{\to}x^2$ which is not uniform continuous.
+
+This property is true if we assume $f_n$ converges uniformly. Specifically, to show that $f$ is uniform continuous, for any $\epsilon,$ use the uniform convergent to choose $f_n$ where $|f_n(x)-f(x)|<\epsilon/3.$ Then use the uniform continuity of $f_n$ to choose $\delta$ s.t. $|x-y|<\delta\Rightarrow |f_n(x)-f_n(y)|<\epsilon/3.$ We could then prove with the triangle inequality that this $\delta$ would work.
+\subsection*{b}
+
+For a counter example, consider the same $f_n$ as in part a. For each $f_n,$ the image is bounded by the interval $[0,n^2].$ However, $f=x^2$ is unbounded.
+
+This property is true if we assume $f_n$ converges uniformly. We can easily prove this through contradiction. If we assume that $f$ is not bounded, then clearly, $f_n$ for some $n\in\mathbb{N}$ must also not be bounded, which is a contradiction.
+
+\section*{6.3.1}
+
+\subsection*{a}
+We will show that $(g_n)\stackrel{unif}{\to} g$ where $g(x)=0$ on the interval $[0,1].$
+
+\begin{proof}
+    Fix $\epsilon>0.$ Now by the Archimedean principle, choose $N\in\mathbb{N}$ s.t.
+    \[N>1/\epsilon.\]
+    Now for any $n\ge N$ and any $x\in[0,1],$ we have that
+    \begin{alignat*}{2}
+        n &\ge N\\
+        &>1/\epsilon\\
+        1/n &<\epsilon\\
+        x^n/n & <\epsilon \quad&& \text{as $x\in[0,1]\Rightarrow 0< x^n\le 1$}\\
+        |x^n/n - 0| & <\epsilon\\
+        |x^n-g(x)| & <\epsilon,
+    \end{alignat*}
+    as desired.
+\end{proof}
+
+As $g$ is a constant function, by the converse of Corollary 5.3.3 (this was not explicitly proven but is obviously true), $g'(x)=0$ for all $x\in[0,1].$
+\subsection*{b}
+
+We first have that $g'_n(x)=nx^{n-1}/n = x^{n-1}$ for all $n\in\mathbb{N}.$ We will now show that $(g'_n)\stackrel{pw}{\to}h$ where
+\begin{align*}
+    h(x)=\begin{cases}
+        0,\quad&x<1\\
+        1,&x=1.
+    \end{cases}
+\end{align*}
+
+\begin{proof}
+    Fix $\epsilon > 0$ and $x\in[0,1].$ If $x=1,$ then $1^{n-1}=1=h(1)$ for any $n\in\mathbb{N}.$ Therefore, choose $N=1.$ If $x\neq 1,$ choose $N>\log_x \epsilon+1.$ For any $n\ge N,$ we would therefore have
+    \begin{alignat*}{2}
+        n &\ge N\\
+        n &> \log_x \epsilon+1\\
+        n-1 &> \log_x \epsilon\\
+        x^{n-1}&< \epsilon\\
+        |x^{n-1}-0| &< \epsilon \quad&&\text{as $x\in[0,1)\Rightarrow x^{n-1}>0$}\\
+        |x^{n-1}-h(x)| &<\epsilon, &&\text{as $h(x)=0$ for $x\in[0,1)$} 
+    \end{alignat*}
+    as desired.
+\end{proof}
+
+The derivative $g'\neq h$ as at the point $x=1,$ we have that $g'(1)=0\neq 1 = h(1).$ Therefore, by the contrapositive of Theorem 6.3.1, we have that $g'_n$ is not uniform convergent.
+
+\section*{6.3.3}
+
+\subsection*{a}
+
+First, we use the quotient rule to find $f'_n$. Namely, we have
+\begin{align*}
+    f'_n(x) &= \frac{(1+nx^2)-2x^2}{(1+nx^2)^2}\\
+    &= \frac{1-nx^2}{(1+nx^2)^2}.
+\end{align*}
+% Therefore, by the Interior Extremum Theorem, we have that $f_n$ attains a minimum maximum precisely when
+Now we have that
+\begin{alignat*}{2}
+    f'(x)&= 0\\
+    \frac{1-nx^2}{(1+nx^2)^2} &= 0\\
+    1-nx^2 &= 0\\
+    x &= \pm\sqrt{1/n}.
+\end{alignat*}
+As $f_n(-1/\sqrt{n})<f_n(1/\sqrt{n}),$ therefore, $f_n$ attains a maximum at $1/sqrt{n}$ and a minimum at $-1/\sqrt{n}.$
+
+Now we prove that $(f_n)\stackrel{unif}{\to}f$ where $f(x)=0.$
+\begin{proof}
+    Fix $\epsilon > 0.$ By the Archimedean principle, choose $N\in\mathbb{N}$ s.t.
+    \[N>1/\epsilon.\]
+\end{proof}
+Now for any $n\ge N,$ we will have the following:
+\begin{alignat*}{2}
+    f_n(1/\sqrt{n}) &= \frac{1/n}{1+n(1/\sqrt{n})^2}\\
+    &= \frac{1}{2n}\\
+    &< \frac{1}{n} &&\text{as $n\ge 1$}\\
+    &<\epsilon \quad&&\text{by def. of }\epsilon\\
+    |f'_n(1/n)-0|&<\epsilon\\
+\end{alignat*}
+In other words, the maximum value attained by $f_n$ will be within $\epsilon$ of $0.$ By similar proof, we can find the minimum value attained by $f_n$ will be within $\epsilon$ of $0.$ Therefore, for all $x\in\mathbb{R},$ we have that
+\begin{align*}
+    |f_n(x)-0| &<\epsilon\\
+    |f_n(x)-f(x)|&<\epsilon,
+\end{align*}
+as desired.
+
+\subsection*{b}
+
+As $f$ is a constant function, therefore $f'(x)=0$ for all $x$. As shown in the previous subquestion, $f'_n(x)=\frac{1-nx^2}{(1+nx^2)^2}.$
+This function goes to $0$ for any $x\neq 0,$ as $n$ goes to infinity. Therefore, $f'(x)=\lim f'_n(x)$ for any $x\neq 0.$
+
+\section*{6.3.7}
+
+\begin{proof}
+    Fix $\epsilon>0.$
+    As $(f_n(x_0))$ is convergent and therefore Cauchy, there exists $N_1\in\mathbb{N}$ s.t. given $n>m\ge N_1$ we have
+    \begin{equation} \label{eq:c2}
+        |f_n(x_0)-f_m(x_0)|<\epsilon/2.
+    \end{equation}
+    Similarly, as $(f'_n)$ converges uniformly, by the Cauchy Criterion, there exists some $N_2$ s.t. $n>m\ge N_2$ implies 
+    \begin{equation} \label{eq:c1}
+        |f'_n(x)-f'_m(x)|<\epsilon/(2|a-b|)
+    \end{equation}
+    for any $x\in[a,b].$
+    Let $N=\max\{N_1,N_2\}.$ Now choose some arbitrary $x\in[a,b].$
+
+    Now as for any $n\in\mathbb{N},$ $f_n$ is differentiable on $[a,b],$  it thus follows that it is continuous on $[a,b]$ and differentiable on $(a,b).$ Using the Algebraic Differentiability Theorems, it thus follows that $(f_n-f_m)$ for any $n,m\in\mathbb{N}$ is similarly continuous on $[a,b]$ and differentiable on $(a,b).$
+    
+    Therefore, by the MVT, for there must exist some $c$ s.t.
+    \begin{equation} \label{eq:c3}
+        (f_n-f_m)'(c) = \frac{(f_n(x)-f_m(x))-(f_n(x_0)-f_m(x_0))}{x-x_0}.
+    \end{equation}
+    Now consider some arbitrary $n,m\in\mathbb{N}$ s.t. $n>m\ge \mathbb{N},$ we can then show
+    \begin{alignat}{2}
+        |f'_n(c)-f'_m(c)|&<\epsilon/(2|a-b|) \qquad&&\text{by \eqref{eq:c1}}\nonumber\\
+        \left  |\frac{(f_n(x)-f_m(x))-(f_n(x_0)-f_m(x_0))}{x-x_0} | \right |&<\epsilon/(2|a-b|) &&\text{by \eqref{eq:c3}}\nonumber\\
+        \left | (f_n(x)-f_m(x))-(f_n(x_0)-f_m(x_0))\right | &< \frac{|x-x_0|\epsilon}{2|a-b|} &&\text{as $x,x_0\in[a,b]\Rightarrow |x-x_0|\le|a-b|$}\nonumber\\
+        &< \frac{|a-b|\epsilon}{2|a-b|} \nonumber\\
+        &<\epsilon/2. \label{eq:c4}
+    \end{alignat}
+    It thus follows that
+    \begin{alignat*}{2}
+        |f_n(x)-f_m(x)|&\le |(f_n(x)-f_m(x))-(f_n(x_0)-f_m(x_0))| + |f_n(x_0)-f_m(x_0)| \qquad&&\text{by Triangle Inequality}\\
+        &< \epsilon/2 + |f_n(x_0)-f_m(x_0)| &&\text{by \eqref{eq:c4}}\\
+        &= \epsilon/2 + \epsilon/2 &&\text{by \eqref{eq:c2}}\\
+        &= \epsilon.
+    \end{alignat*}
+    Therefore, by the Cauchy Criterion, $f_n$ converges uniformly on $[a,b].$ 
+    % \begin{equation*}
+    %     f'_n(c) = 
+    % \end{equation*}
+
+
+\end{proof}
+
+\section*{6.4.1}
+
+\begin{proof}
+    Fix $\epsilon > 0.$ As $\sum M_n$ converges, by the Cauchy criterion, there exists some $N\in\mathbb{N}$ s.t. for any $n>m\ge N$ we have
+    \begin{equation}\label{eq:cauch}
+        |M_{m+1}+\cdots+M_n|<\epsilon.
+    \end{equation}
+    Therefore, choosing this $N,$ we thus have that for any $n>m\ge N$ we have for any $x\in A$ that
+    \begin{align*}
+        |f_{m+1}(x)+\cdots + f_n(x)| &\le |f_{m+1}(x)|+\cdots+|f_n(x)|\quad&&\text{by triangle inequality}\\
+        &\le M_{m+1}+\cdots+M_n &&\text{as }|f_n(x)|\le M_n\\
+        &= |M_{m+1}+\cdots+M_n| &&\text{as each }M_n\ge 0\\
+        &<\epsilon. &&\text{by \eqref{eq:cauch}}
+    \end{align*}
+    Therefore, by the Cauchy Criterion for Uniform Convergence of Series, we have that $\sum f_n$ converges uniformly on $A$.
+\end{proof}
+
+\section*{6.4.5}
+
+\subsection*{a}
+
+\begin{proof}
+    For any $h_n(x)=x^n/n^2,$ it is continuous on the interval $[-1,1].$ Specifically, we know that $1/n^2$ is a constant function and thus continuous, similarly $x^n$ is a polynomial and thus continuous. Therefore, by the Algebraic Continuity Theorems, we have that $h_n$ is continuous.
+
+    Thus, to show $h$ is continuous, it suffices to show that $\sum h_n$ converges uniformly -- which we do using the Weierstrass M-Test. Specifically, we note that for any $x\in [-1,1]$ and any $n\in\mathbb{N}$ that
+    \begin{alignat*}{2}
+        |x^n| &\le 1 \quad&&\text{as $x^n$ attains max. at $x=1$ and min. at $x=-1$}\\
+        |x^n/n^2| &\le 1/n^2 &&\text{as $n\in\mathbb{N}\Rightarrow n^2>1$}\\
+        |h_n(x)| &\le 1/n^2.
+    \end{alignat*}
+    Thus, we need only consider the sequence $(M_n)$ where $M_n = 1/n^2$ which converges as it is a p-series with exponent greater than $1$. Therefore,  $\sum h_n$ converges uniformly and is thus continuous.
+\end{proof}
+
+\subsection*{b}
+
+\begin{proof}
+    Fix $x_0 \in (-1,1).$ Consider $M_n = x_0^n.$ Clearly, for any $n\in\mathbb{N},$ we have that $|x_0^n/n|\le M_n.$ Furthermore, as $\sum M_n$ is a geometric series, where the base $x_0\in(-1,1),$ we thus have that $\sum M_n$ converges. By the  Weierstrass M-Test. it thus follows that $\sum x^n/n$ converges uniformly at $x_0.$ As shown in previous subqeustion, $x^n/n$ is necessarily continuous at $x_0.$ Therefore, by the Term-by-term continuity Theorem, we have that $f$ is continuous at $x_0$.
+\end{proof}
+
+\section*{6.5.4}
+\subsection*{a}
+
+\begin{proof}
+    First we want to show that $F(x)$ is well-defined. For any $x_0\in (-R, R),$ we have that $\sum a_n x_0^n$ converges absolutely by Theorem 6.5.1. That is $\sum |a_n x_0^n|$ converges. Therefore, we have by the Algebraic Limit Theorem for Series that $|x_0|\sum |a_n x_0^n| = \sum |a_n x_0^{n+1}|$ also converges. Therefore, by the comparison test, we have that $\sum |a_n x_0^{n+1}|/(n+1)$ converges. Hence $\sum a_n x_0^{n+1}/(n+1)$ converges absolutely. Thus, $F$ is well defined. By theorem 6.5.7, it thus follows that $F'(x)=f(x).$
+\end{proof}
+
+\subsection*{b}
+Following Corollary 5.3.4, we have that $g = F(x)+k$ for some $k\in\mathbb{R}.$ To convert this into a power series, we would have
+that $g(x)=\sum_{n=0}^{\infty}a'_n x^n$ where $a'_0 = k$ and $a'_n=\frac{a_{n-1}}{n}$ for $n>0.$
+
+% \section*{6.6.5}
+% \subsection*{a}
+% % e^x, verify converge uniformly to e^x on any interval of form -R, R
+
+% As $f(0)=f'(0)=f^{(n)}(0)=1$ for all $n\in\mathbb{N},$ it thus follows that the Taylor expansion is
+% \[S_N(x)=\sum_{n=0}^N x^n/n!.\]
+
+% Now we want to show that $S_N$ converges uniformly to $e^x$ on any of interval of form $[-R,R].$
+
+% \begin{proof}
+%     Fix $N\in\mathbb{N}$ and $R> 0.$ To show $S_N$ converges  uniformly to $e^x$ on $[-R,R]$, it suffices to show the error function $E_N$ converges uniformly to $0$. Thus fix $\epsilon >0.$
+    
+%     Now for any $c$ satisfying $|c|<|x|$ and $x\in[-R, R]$ it follows that $c<R$ and therefore
+%     \begin{equation} \label{eq:cb}
+%         e^c < e^R.
+%     \end{equation}
+%     As $f$ is infinitely differentiable, and thus $N+1$ differentiable, thus the Lagrange's Remainder Theorem applies. For any $x\in [-R, R],$ we thus have that
+%     \begin{equation} \label{eq:l}
+%         E_N(x) = \left |\frac{f^{(n+1)}(c)}{(N+1)!}x^{N+1} \right | \labelrel={a}\left |\frac{e^c}{(N+1)!}x^{N+1} \right |\labelrel\le{b}\left |\frac{e^R}{(N+1)!}R^{N+1} \right |
+%     \end{equation}
+%     where \eqref{a} is true as $f^{n}(c)=e^c$ for all $n\in\mathbb{N}$ and \eqref{b} is true by \eqref{eq:cb} and since $x\in[-R,R].$ As factorial grows faster than exponential, it follows that \eqref{eq:l} converges to $0$ as $N$ goes to infinity. That is there exists some $N$ s.t. $n\ge N$ implies that
+%     \[ E_N(x) \le \left |\frac{e^R}{(N+1)!}R^{N+1} \right |<\epsilon\]
+%     as desired. Therefore, $E_N$ converges uniformly to $0$ and thus $S_N$ converges uniformly to $e^x$ on $[-R, R].$
+% \end{proof}
+ 
+\end{document}

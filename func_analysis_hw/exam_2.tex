@@ -1,0 +1,171 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Functional Analysis Exam 2, Thomas Zeng }
+\rhead{Math 331, Spring 2023}
+\cfoot{\thepage}
+
+
+\begin{document}
+
+\section*{Problem 1}
+
+\subsection*{(a)}
+
+\begin{proof}
+    We first show that $A^{-1}$ is closed under addition. Namely, given arbitrary $y_1, y_2 \in X$ s.t. $A^{-1}y_1 = x_1$ and $A^{-1}y_2 = x_1,$ clearly we have that
+    \[A^{-1}y_1 + A^{-1}y_2 = x_1 + y_2.\]
+    We similarly have that
+    \begin{alignat*}{2}
+        &Ax_1 + Ax_2 = y_1 + y_2 \qquad&&\text{as $A$ is bijection}\\ 
+        \Rightarrow& A(x_1 + x_2) = y_1 + y_2 &&\text{linearity of $A$}\\
+        \Rightarrow& x_1 + x_2 = A^{-1}(y_1 + y_2).
+    \end{alignat*}
+    Therefore,
+    \[A^{-1}y_1 + A^{-1}y_2 = A^{-1}(y_1+y_2)\]
+    as desired.
+
+    We next claim that $A^{-1}$ is closed under multiplication. Namely, given arbitrary $\alpha\in\mathbb{C}$ and $y\in X,$ s.t.
+    \[A^{-1}(\alpha y)=x,\]
+    it follows that
+    \begin{alignat*}{2}
+        &\alpha y = Ax\qquad&&\text{as $A$ is bijection}\\
+        \Rightarrow& y = \frac{1}{\alpha}Ax\\
+        \Rightarrow& y = A \frac{x}{\alpha} &&\text{linearity of $A$}\\
+        \Rightarrow& A^{-1}y = \frac{x}{\alpha} &&\text{as $A$ is bijection}\\
+        \Rightarrow& \alpha A^{-1}y = x.
+    \end{alignat*}
+    In other words, we have that
+    \[A^{-1}(\alpha y) = \alpha A^{-1}y,\]
+    thus proving closure under multiplication.
+\end{proof}
+
+
+\subsection*{(b)}
+
+\begin{proof}
+    We first claim that
+    \begin{equation}\label{eq:infb}
+        \inf_{x\in X,\Vert x\Vert=1}\Vert Ax\Vert >0.
+    \end{equation}
+    Namely, as $A$ is a bounded linear operator between Banach spaces (namely $X$ to $X$) that is bijective and therefore surjective, it thus maps open sets to open sets by the open mapping theorem. Therefore, $A$ must map $B_{0.5}(0)$ to some open set $A(B_{0.5}(0))$ in $X.$ As $A(0)=0$ \emph{a fortiori} from the linear property of linear operators, it follows that there exists some $\delta > 0$ s.t. $B_\delta(0)\subseteq A(B_{0.5}(0)).$ Then by the injective nature of $A,$ it follows $Ax \in B_\delta(0)$ implies that $\Vert x\Vert < 0.5,$ and thus proving \eqref{eq:infb}.
+
+    Now given arbitrary $u\in X$ where $\Vert u\Vert = 1$ and $A^{-1}u = y,$ it follows that
+    \begin{alignat*}{2}
+        &Ay = u &&\text{as $A$ is bijection}\\
+        \Rightarrow& \left\Vert A \frac{y}{\Vert y\Vert}\right\Vert = \left\Vert \frac{u}{\Vert y\Vert}\right\Vert &&\text{linearity of $A$}\\
+        \Rightarrow& \left\Vert \frac{u}{\Vert y\Vert}\right\Vert \ge \inf_{x\in X,\Vert x\Vert=1}\Vert Ax\Vert\\
+        \Rightarrow& \Vert u\Vert \ge \Vert y\Vert\inf_{x\in X,\Vert x\Vert=1}\Vert Ax\Vert &&\text{pos. homo. of norm}\\
+        \Rightarrow& 1 \ge \Vert y\Vert\inf_{x\in X,\Vert x\Vert=1}\Vert Ax\Vert &&\text{as $u$ is unit}\\
+        \Rightarrow& \Vert y\Vert \le \frac{1}{\inf_{x\in X,\Vert x\Vert=1}\Vert Ax\Vert} \qquad&&\text{well--defined by \eqref{eq:infb}}\\
+        \Rightarrow& \left\Vert A^{-1}u\right\Vert \le \frac{1}{\inf_{x\in X,\Vert x\Vert=1}\Vert Ax\Vert}.
+    \end{alignat*}
+    As $u$ was arbitrary, this implies that
+    \begin{equation} \label{eq:ai}
+        \Vert A^{-1} \Vert \le \frac{1}{\inf_{x\in X,\Vert x\Vert=1}\Vert Ax\Vert}.
+    \end{equation}
+    This shows that $A^{-1}$ is bounded. To show that \eqref{eq:ai} is actually an equality, it suffices to show that we can find $u$ s.t. $\Vert A^{-1}u \Vert$ is arbitrary close to the right--hand side of the equation.
+    Namely, for any $\epsilon>0,$ by the fact that infimum is the greatest lower bound (and some algebra I'm too lazy to do), we can choose unit vector $x_1 \in X$ s.t.
+    \begin{equation}\label{eq:aar}
+        \left|\left\Vert Ax_1\right\Vert^{-1} - \left(\inf \Vert Ax\Vert\right)^{-1}\right| < \epsilon.
+    \end{equation}
+    Now, as we have
+    \begin{alignat*}{2}
+        \left \Vert A^{-1}\frac{Ax_1}{\Vert Ax_1\Vert} \right \Vert &= \left \Vert \frac{x_1}{\Vert Ax_1\Vert}\right\Vert\\
+        &= \frac{1}{\Vert Ax_1\Vert},
+    \end{alignat*}
+    it thus follows with \eqref{eq:aar} that
+    \[\left|\left \Vert A^{-1}\frac{Ax_1}{\Vert Ax_1\Vert} \right \Vert - \left(\inf \Vert Ax\Vert\right)^{-1}\right| < \epsilon.\]
+    As $Ax_1/\Vert Ax_1\Vert$ is a unit vector, this thus further implies that
+    \[\left|\left \Vert A^{-1} \right \Vert - \left(\inf \Vert Ax\Vert\right)^{-1}\right| < \epsilon.\]
+    And hence \eqref{eq:ai} is an equality as desired.
+\end{proof}
+
+\subsection*{(c)}
+
+We have that
+\begin{alignat*}{2}
+    & \left \Vert A^{-1} \right\Vert^{-1} = \inf_{x\in X \Vert x\Vert = 1}\left\Vert Ax\right\Vert\\
+    \Rightarrow& \left \Vert A^{-1} \right\Vert^{-1} \le \sup_{x\in X \Vert x\Vert = 1}\left\Vert Ax\right\Vert\\
+    \Rightarrow& \left\Vert A^{-1} \right\Vert^{-1} \le \Vert A\Vert\\
+    \Rightarrow&\Vert A\Vert^{-1} \le \left\Vert A^{-1} \right\Vert.
+\end{alignat*}
+
+Now, as an example to show that this is not an equality, consider in $\mathbb{R}^2$ the linear operator
+\[A = \begin{bmatrix}
+    2 & 0\\
+    0 & 1
+\end{bmatrix}.\]
+As $A$ is an invertible matrix in finite dimensions, it is clearly a bijective bounded linear operator. We have $\Vert A\Vert = 2$ if we consider $u = (1,0)$ and $\Vert A^{-1}\Vert = (\inf \Vert Ax\Vert)^{-1}= 1$ if we consider $u = (0,1).$ We thus have that
+\[\Vert A\Vert^{-1} = \frac{1}{2}< 1 = \left \Vert A^{-1}\right\Vert.\]
+
+\section*{Problem 2}
+
+\subsection*{(a)}
+
+\begin{proof}
+    It suffices to prove the contrapositive. Assume $\Vert A \Vert$ is unbounded. Then there exists sequence of unit vectors $(x_n)$ s.t. the corresponding sequence $(Ax_n)$ has the property that for all $n > 1$ we have
+    \[\Vert Ax_n\Vert - \Vert Ax_{n-1}\Vert \ge 1.\]
+    It then follows by the reverse--triangle inequality, that for any $m,n\in\mathbb{N},$ we have that
+    \[\Vert A_m - A_n \Vert \ge | \Vert A_m\Vert - \Vert A_n\Vert | \ge 1.\]
+    Thus, there is no Cauchy subsequence and hence no convergent subsequence in $(Ax_n)$ as convergence implies Cauchy. As $(x_n)$ is bounded, therefore $A$ is not compact.
+\end{proof}
+
+\subsection*{(b)}
+
+\begin{proof}
+    It suffices to show that compact operators are closed under addition and multiplication.
+
+    We first show closure under multiplication. Namely, let $(f_n)$ be any arbitrary bounded--sequence in $X.$ It follows by definition, that $(Af_n)$ contains some convergent subsequences. It thus follows by the algebraic limit theorem that $(cAf_n)$ also contains some convergent subsequences for any $c\in\mathbb{C}$. Thus, $cA$ is a compact operator.
+
+    We next show closure under addition. Let $A, B$ be two compact operators. Let $(f_n)$ be some bounded sequence. Then $(Bf_n)$ must contain some convergent subsequence $(Bf_{n_x}).$ This convergent subsequence must correspond to some subsequence $(f_{n_x})$ in $(f_n).$ As any subsequence of a bounded sequence is bounded, it thus follows that $(f_{n_x})$ is bounded and hence has a convergent subsequence in $(Af_{n_x}).$ It follows by the algebraic limit theorem that $(Af_{n_x} + Bf_{n_x})$ must contain a convergent subsequence. And thus $(Af_{n} + Bf_{n})$ must also. Thus, $A+B$ is compact.
+\end{proof}
+
+\subsection*{(c)}
+
+\begin{proof}
+    We first note that $\mathscr{L}(X)$ is a normed-algebra, and is thus associative.
+
+    We now show $AB$ is compact. Namely, let $(f_n)$ be any bounded sequence in $X.$ It follows that $(Bf_n)$ is bounded as bounded operators map bounded sets to bounded sets. Therefore, $(ABf_n)$ contains a convergent subsequence since $A$ is compact. Hence, $AB$ is compact.
+
+    We next show that $BA$ is compact. Again, let $(f_n)$ be some bounded sequence in $X.$ By compactness, $(Af_n)$ contains some convergent subsequence. Therefore, $(BAf_n)$ must contain a convergent subsequence by the continuity of bounded linear operators.
+\end{proof}
+
+\section*{Problem 3}
+
+\subsection*{(a)}
+\begin{proof}
+    We first show that $A$ is linear. Namely, given arbitrary $f_1, f_2 \in \mathcal{L}^2_{\text{cont}}(0,1)$ and $
+    \alpha\in\mathbb{C}$ we have that:
+    \begin{alignat}{2}
+        A(\alpha f_1 + f_2): s &\mapsto \int_{0}^{s}k(s,t)[\alpha f_1 + f_2](t)dt \nonumber\\
+        &\mapsto \int_{0}^{s}k(s,t)[\alpha f_1(t) + f_2(t)]dt \nonumber\\
+        &\mapsto \alpha \int_{0}^{s}k(s,t)f_1(t)dt + \int_{0}^{s}k(s,t)f_2(t)dt \quad&&\text{by alg. int. theorems.}\label{eq:ait}
+    \end{alignat}
+    Observe that \eqref{eq:ait} is exactly the function defined by $\alpha Af_1 + Af_2.$ Thus, we have shown linearity.
+
+    We next claim that $A$ is bounded.
+\end{proof}
+
+\end{document}

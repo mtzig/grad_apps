@@ -1,0 +1,144 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Real Analysis PS4, Thomas Zeng }
+\rhead{Math 321, Winter 2023}
+\cfoot{\thepage}
+
+\begin{document}
+
+\section*{3.2.3}
+\subsection*{a}
+Neither. It is not open, as for any point, any $\epsilon$-neighborhood will contain an irrational since the irrationals are also dense in $\mathbb{R}.$ It is also not closed as $\sqrt{2}$ is a limit point not in $\mathbb{Q}.$
+
+\subsection*{b}
+It is not open as no points will have an $\epsilon$-neighborhood in the set. It is closed as no limit points.
+
+\subsection*{c}
+It is open as it is the union of two open sets - namely $(-\infty, 0)$ and $(0,\infty)$. It is not closed as $0$ is a limit point not in the set.
+
+\subsection*{d}
+It is neither. It is not open as there is no $\epsilon$-neighborhood around $1$ contained in the set (as $1$ is the minimum of this set). It is not closed as $\sum 1/n^2$ is a p-series that converges and therefore the value it converges to is a limit point not in the set.
+
+\subsection*{e}
+
+It is closed as no limit points. It is not open as again consider any $\epsilon$-neighborhood around $1$.
+
+\section*{3.2.4}
+\subsection*{a}
+\begin{proof}
+    If $\sup A \in A,$ then since $A\subseteq\overline{A}$, we have $\sup A \in\overline{A}.$
+
+    Otherwise, we have $\sup A \notin A$ or in otherwords
+    \begin{equation} \label{eq:truth}
+        a \neq \sup A
+    \end{equation}
+    for all $a\in A.$  By definition of upper bound, given any $a\in A$ it follows  $a\le\sup A.$ By \eqref{eq:truth}, it follows that $a<\sup A$ for any $a\in A.$
+    By Lemma 1.3.8, for any $\epsilon>0$ there exists $a\in A$ s.t. $s-\epsilon <a.$ There we have that $s-\epsilon<a<\sup a$ i.e. $a\in V_\epsilon(\sup A)$ with $a\neq \sup A$. Therefore, by definition, $\sup A$ is a limit point of $A$ and thus $\sup A\in\overline{A}$ by definition of closure.
+\end{proof}
+
+\subsection*{b}
+It cannot as there is no $\epsilon$-neighborhood around the supremum contained in $A.$ Specifically for any $\epsilon,$ the interval $(\sup A, \sup A +\epsilon)\subseteq V_\epsilon(\sup A)$ must not intersect $A$ by definition of upper bound.
+
+\section*{3.2.8}
+\subsection*{a}
+definitely closed
+\subsection*{b}
+definitely open
+\subsection*{c}
+definitely open
+\subsection*{d}
+closed
+\subsection*{e}
+definitely open as $\overline{A}^c\subseteq \overline{A^c}$ since
+\begin{align*}
+    x \in \overline{A}^c &\Rightarrow x\notin \overline{A}\\
+    &\Rightarrow x\notin A\\
+    &\Rightarrow x \in A^c\\
+    &\Rightarrow x\in \overline{A^c}.
+\end{align*}
+
+\section*{3.3.2}
+\subsection*{a}
+Not compact. Consider the sequence $(1,2,3,4,...)$ which does not contain a convergent subsequence.
+
+\subsection*{b}
+This is not compact. Consider the sequence $(x_n)$ where $x_n$ is the $n$'th decimal approximation of $\sqrt{0.5}.$ As $(x_n)$ converges to $\sqrt{0.5},$ thus any subsequence of it converges to $\sqrt{0.5}\notin\mathbb{Q}\cap[0,1].$
+
+\subsection*{c}
+This is compact as it is closed (infinite intersection of closed intervals) and bounded (it is bounded by $1$).
+
+\subsection*{d}
+Not compact. Consider the partial sums for the series $\sum 1/n^2.$ The partial sums converge to a limit not in the set.
+
+\subsection*{e}
+This is compact. It is bounded by $1$ and it is closed as its complement:
+\[(\mathbb{R}-[1/2,1])\cup \bigcup_{n=1}^\infty \left (\frac{n}{n+1},\frac{n+1}{n+2}\right )\]
+is open.
+
+\section*{3.3.9}
+% compact closed, bounded
+
+\subsection*{a}
+
+We first claim the following: 
+\begin{lemma}
+    Let $I$ be some interval s.t. $I\cap K$ is not finitely coverable. Then we can bisect $I$ in half and from the bisection select a new interval $I'$ s.t. $I'\cap K$ is also not finitely coverable.
+\end{lemma}
+
+\begin{proof}
+    We prove this by contradiction. First we bisect $I$ into two equal length intervals $I'$ and $I''$. Assume $I'\cap K$ and $I''\cap K$ are both finitely coverable. Then $I\cap K = (I'\cap K)\cup(I''\cap K)$ is also finitely coverable - a contradiction. Thus either $I'\cap K$ or $I''\cap K$ is not finitely coverable. We can choose whichever interval for which this is the case.
+\end{proof}
+
+Therefore, using the above lemma, we can generate a sequence of nested interval
+\[I_1\supseteq I_2\supseteq\cdots\]
+s.t. for each $n$, $I_n\cap K$ is not coverable.
+Specifically, let $I_0$ be some closed interval that contains $K.$ We denote $|I_0|=M.$ To construct the nested intervals, for $n\ge 1$ we construct $I_n$ by bisecting $I_{n-1}$ into two intervals and selecting the interval $I'_{n-1}$ s.t. $I'_{n-1}\cap K$ does not have a finite subcover. This is guaranteed to work by our lemma above.
+
+We furthermore claim that $\lim |I_n| = 0.$ Specifically, as we are cutting the length of each $I_{n}$ directly in half to construct $I_{n+1},$ thus for each $n,$ we have $|I_n|=M(1/2)^n.$ Thus $(|I_n|)$ is a geometric sequence and hence converges to $0$.
+
+\subsection*{b}
+
+First we claim that for each $n,$ the set $I_n\cap K$ is compact. This is true as $I_n\cap K$ is closed and bounded. Specifically $I_n\cap K$ is closed as it is the intersection of two closed sets. Similarly, it is bounded as it is the intersection of two bounded sets.
+
+Next we claim that for each $n,$ the set $I_n\cap K$ is nonempty - which we prove by contradiction. Assume $I_n\cap K$ is empty, then the empty set is a finite subcover that covers $I_n\cap K$. This contradicts our assertion that $I_n\cap K$ has no finite subcover.
+
+Therefore, as for each $n,$ the set $I_n\cap K$ is compact and nonempty. By the Nested Compact Set Property, there must be some $x\in\bigcap_{n=0}^\infty K\cap I_n.$ In otherwrods, there exists an $x\in K$ s.t. $x\in I_n$ for all $n.$
+
+\subsection*{c}
+We know that there must exist an open set $O_{\lambda_0}$ that contains $x$ as an element. This means by defintion of an open set that there exists some $\epsilon > 0$ s.t. $x\in V_\epsilon(x)\subseteq O_{\lambda_0}.$ Now choose $n$ s.t.
+\[M(1/2)^n < \epsilon.\]
+This is possible by algebra and Archimedean principle. This means that $|I_n|<\epsilon.$ Therefore we have $x\in I_n \subseteq  V_\epsilon(x)\subseteq O_{\lambda_0}.$ In otherwords, $\{O_{\lambda_0}\}$ is a finite subcover for $I_n$ - a contradiction.
+
+\section*{3.3.11}
+
+\subsection*{a}
+Let the cover be the set $\{(n-0.5,n+0.5)|n\in\mathbb{N}\}.$
+\subsection*{b}
+Given $r\in [0,1]$ is irrational,
+consider the cover $\{(-\infty, r)\cup(r+1/n,\infty)|n\in\mathbb{N}\}.$
+\subsection*{d}
+Let $(s_n)$ be the partial sums for the series $\sum 1/n^2.$ Let the cover be the set $\{(0, s_n)|n\in\mathbb{N}\}.$
+
+% \[\min_{\theta\in\Theta}\left \{ \mathcal{R}(\theta) := \max_{Q\in\mathcal{Q}}\mathbb{E}_{(x,y)\sim Q}[\ell(\theta;(x,y))]\right \}\]
+ 
+\end{document}

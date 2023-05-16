@@ -1,0 +1,249 @@
+\documentclass[10pt]{article}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-.5in}
+%\parindent=0in
+\linespread{1.3}
+\usepackage{ mathrsfs }
+\usepackage{amsthm}
+\usepackage{ amssymb }
+\usepackage{graphicx}
+\newtheorem{theorem}[]{Theorem}
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{definition}[]{Definition}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{nicematrix}
+\usepackage{mathtools}
+
+\pagestyle{fancy}
+\headheight = 14.5pt
+\lhead{Functional Analysis Exam 1, Thomas Zeng }
+\rhead{Math 331, Spring 2023}
+\cfoot{\thepage}
+
+
+\begin{document}
+
+\section*{Problem 1}
+
+\subsection*{(a)}
+
+\textbf{We first show $\overline{B}_1(0)$ is closed.}
+
+\begin{proof}
+    It suffices to show that the complement $\overline{B}^c_1(0)$ is open. Let $g \in \overline{B}^c_1(0).$ It follows that
+    \[\Vert g\Vert = c > 1 \quad\text{for some }c\in\mathbb{R}.\]
+    Now consider any $f\in B_{c-1}(g).$ It follows that
+    \begin{alignat*}{2}
+        \Vert g\Vert &\le \Vert g - f\Vert + \Vert f\Vert \qquad&&\text{triang. ineq.}\\
+        c &< c-1 + \Vert f\Vert  &&\text{def. of $\epsilon$-ball}\\
+        1 &< \Vert f \Vert.
+    \end{alignat*}
+    Therefore $B_{c-1}(g) \subseteq \overline{B}_1^c(0).$ Hence, $\overline{B}_1^c(0)$ is open.
+\end{proof}
+
+\noindent
+\textbf{We next show $\overline{B}_1(0)$ is bounded.}
+
+\begin{proof}
+    Clearly $\overline{B}_1(0)\subset B_2(0)$ and is hence bounded.
+\end{proof}
+
+\subsection*{(b)}
+
+\textbf{The statement is not true.}
+
+\begin{proof}
+    Consider the sequence $(f_n)$ where $f_n(x) = x^n.$ From Abbot, we know that this sequence of functions converge to a discontinuous function over $[0,1]$.\footnote{Specifically, this is Abbot Example 6.2.2(ii).} 
+    Let us assume for sake of contradiction that $(f_n)$ has a convergent subsequence in $C([0,1])$. This implies that $(f_n)$ has a subsequence that converges uniformly to some continuous function---as (1.27) in Teschl states that a sequence of functions converge in $C([0,1])$ iff it is uniform convergent (to a continuous function). As subsequences converge to the same limit as a convergent sequence, therefore $(f_n)$ converges to a function that is both continuous and discontinuous---a contradiction.
+\end{proof}
+
+\subsection*{(c)}
+
+% \textbf{First, observe that this problem is just way too hard.}
+
+% \begin{lemma} \label{lem:u}
+%     An infinite dimensional Banach space cannot have a countable Hamel basis.
+% \end{lemma}
+
+% \begin{proof}
+%     This is Problem 4.4 in Teschl. Below I attempt to prove it using the hint given in the problem (although I am not super confident that this proof is correct).
+
+%     Let us first assume that the infinite dimensional Banach space $X$ does have a countable Hamel basis $H=\{u_i\}.$ Now, consider $\{X_n\}_{n=1}^\infty$ where $X_n\coloneqq \text{span}\{u_j\}_{j=1}^n.$
+%     As $X_n$ is a finite dimensional subspace, by Theorem 1.8 in Teschl, all norms are equivalent. Therefore its norm is equivalent to the Euclidean norm---which is complete. It follows that $X_n$ is complete and thus closed.
+
+%     Similarly, $X_n$ must have empty interior. Specifically, assume that it is not. That is $X_n$ contains an $\epsilon$-ball for some $\epsilon>0.$ WLOG, assume that the $\epsilon$-ball is centered around $0.$ Therefore, we have $B_\epsilon(0)\subset X_n.$ But this implies that
+%     \begin{alignat*}{2}
+%         f\in X &\Rightarrow \frac{\epsilon}{\Vert f\Vert} f \in B_\epsilon(0) \qquad&&\text{def. of $\epsilon$-ball}\\
+%         &\Rightarrow f\in X_n. &&\text{closure of subspace}
+%     \end{alignat*}
+%     In otherwords, this means that $X\subseteq X_n$---which is not possible as $X_n$ is finite dimensional while $X$ is infinite dimensional.
+
+%     Thus, we have shown that each $X_n$ is nowhere dense. Therfore, we have that
+%     \[X = \bigcup_{n=1}^\infty X_n,\]
+%     is a countable union of nowhere dense sets. This contradicts the Baire category theorem (Teschl Theorem 4.1).
+% \end{proof}
+
+\begin{lemma} \label{lem:r}
+    Let $X$ be a Banach space and $W$ some proper closed subspace. For any arbitrary $\epsilon \in (0,1),$ it follows that there exists $x \in X\backslash W$ with $\Vert x\Vert = 1$ and
+    \[\inf_{w\in W} \Vert x - w\Vert \ge \epsilon.\]
+\end{lemma}
+
+\begin{proof}
+    I will use the same proof technique as for Lemma 7.4 in Teschl (which is what I modified from to get this lemma).
+    
+    As $W$ is a proper subspace, there exists some $x' \in X\backslash W.$ Furthermore, since $W$ is closed, it follows that
+    \begin{equation}\label{eq:in}
+        \inf_{w\in W} \Vert x' - w\Vert = c > 0 \qquad\text{for some }c\in\mathbb{R}.
+    \end{equation}
+    As if $c=0,$ this would imply that $x'$ is a limit point of $W$ and thus in $W.$
+
+    Therefore, there must exist some $w' \in W$ s.t. $\Vert x'-w'\Vert \le c/\epsilon$ as otherwise $c/\epsilon$ would be a lower bound on \eqref{eq:in}. Now let $x \coloneqq (x'-w')/\Vert x'-w'\Vert.$ We note that $x \in X\backslash W$ as otherwise $x'$ would be in $W$ by closure properties. We now claim that $x$ is the desired vector. Specifically, for any arbitrary $w \in W,$ we have that
+    \begin{alignat*}{2}
+        \Vert x - w\Vert &= \left\Vert\frac{x'-w'}{\Vert x'-w' \Vert} - w\right\Vert &&\text{def. of $x$}\\
+        &= \frac{1}{\Vert x'-w' \Vert}\Big\Vert x' - (w' - \Vert x'-w' \Vert w )\Big\Vert \quad&&\text{pos. homo. of norm}\\
+        &= \frac{1}{\Vert x'-w' \Vert}\Vert x' - w'' \Vert &&\text{closure of subspace\footnotemark}\\
+        &\ge \frac{c}{\Vert x'-w' \Vert} &&\text{by \eqref{eq:in}}\\
+        &\ge \epsilon. &&\text{choice of $w'$}
+    \end{alignat*}
+    As $\Vert x\Vert = 1$ by construction, the claim is proven as desired.
+\end{proof}
+\footnotetext{Specifically, $w' - \Vert x'-w' \Vert w$ is a linear combination of vectors in $W$ and is therefore in $W.$ We thus denote $w''\coloneqq w' - \Vert x'-w' \Vert w.$}
+% \newpage
+% \begin{lemma} \label{lem:i}
+%     Let $H$ be a Hamel Basis for some infinite--dimensional Banach Space $X.$ For some $\delta>0,$ it follows that there exists a subset $S_\delta\subseteq H$ with infinite size and
+%     \[\inf_{x,y\in S;x\neq y} \Vert x-y\Vert \ge \delta.\]
+% \end{lemma}
+
+
+% \begin{proof}
+%     % Clearly, $H$ must be infinite as otherwise $X$ would not be infinite--dimensional.
+%     % Let us assume that this claim is false. We will be able to reach a contradiction by constructing $H$ as a countably infinite union of finite sets.
+    
+%     % Now fix some $\delta_1 > 0.$ It thus follows from our assumption that the maximal subset $S_{\delta_1}$ must be finite in size. We first note that $S_{\delta_1}$ will be nonempty as a singleton set will trivially satisfy the conditions of $S_{\delta_1}.$ Therefore, for any $x \in H\backslash S_{\delta_1},$ there exists $y \in S_{\delta_1}$ s.t. $\Vert x-y\Vert < \delta_1$ as otherwise $x$ would be in $S_{\delta_1}.$ In other words, we have that
+%     % \[H = S_{\delta_1}\cup \bigcup_{y\in S} (B_{\delta_1}(y)\cap H)\]
+
+%     % Therefore, for each $y \in S,$ we can construct a countably infinite number of sets $\{Z_n(y)\}_{n=0}^\infty$ where
+%     % \[Z_n(y)=\{x\in H | \delta/2^{n+1}\le \Vert x - y \Vert < \delta/2^n\}.\]
+%     % It follows that $H = \bigcup_{y\in S}\{Z_n(y)\}_{n=0}^\infty.$
+%     % We note by our assumption, that each $Z_n(y)$ for arbitrary $n$ and $y$ must be of finite size, as we are assuming our original claim does not hold. 
+    
+%     % Therefore, $H$ is the finite union of countably--infinite union of finite sets. In otherwords, $H$ is countable---contradicting lemma \ref{lem:u}.
+% \end{proof}
+
+\noindent
+\textbf{We now claim that Shady Ralph is a big fat liar.}
+
+\begin{proof}
+    Refer to Theorem 4.31 in Teschl (and the proof for that).
+\end{proof}
+
+\begin{proof}
+    (Alternative Version) First, we choose arbitrary $\epsilon\in(0,1).$ We next construct a sequence $(x_n)$ s.t.
+    \[\Vert x_m-x_n \Vert\ge \epsilon \qquad\text{for all $m,n\in\mathbb{N}$ with $m\neq n.$}\]    
+    First let $x_1 \coloneqq x/\Vert x\Vert$ for some arbitrary $x \in X.$ Now given, we have generated the first $k$  terms of $(x_n),$ we generate $x_{k+1}$ as follows:
+    \begin{enumerate}
+        \item First let $W = \text{span}\{x_1,\cdots, x_k\}.$
+        \item By lemma \ref{lem:r}, choose satisfying $x_{k+1}\in X\backslash W.$
+    \end{enumerate}
+    To show that step 2 is valid, we must show that $W$ is a closed proper subspace of $X$. First it is clear that $W$ must be a proper subspace of $X$ as it is generated from a finite set of vectors and is thus finite dimensional (and hence cannot equal $X$ which is infinite dimensional). As $W$ is finitely dimensional, by Teschl Theorem 1.8, it follows that $W$ has norm equivalent to the Euclidean norm (which is complete). Thus, $W$ is complete and hence closed (as by def. of completeness, any convergent sequence in $W$ will converge to a limit in $W$).
+
+    By construction, we have that $(x_n)\in\overline{B}_1(0).$ Therefore, we have generated a sequence $(x_n)$ for which no subsequence converges. Hence $\overline{B}_1(0)$ is not sequentially compact.
+\end{proof}
+
+\newpage
+\section*{Problem 2}
+
+\subsection*{(a)}
+
+\begin{proof}
+    Consider some fixed $j\in\mathbb{N}.$ We thus have that
+    \begin{alignat*}{2}
+        \langle f_j, f\rangle &= \left\langle f_j,\sum_{n=1}^{\infty}c_nf_n\right\rangle &&\text{def. of $f$}\\
+        &= \lim_{k\to\infty} \left\langle f_j, \sum_{n=1}^{k}c_nf_n\right\rangle \qquad&&\text{continuity of $\langle..,.\rangle$}\\
+        &=\lim_{k\to\infty} \sum_{n=1}^{k} c_n\langle f_j,f_n\rangle &&\text{sesquilinearity}\\
+        &= \lim_{k\to\infty} \left [ c_j\langle f_j, f_j\rangle + \sum_{n=1,n\neq j}^{k}c_n\langle f_j,f_n\rangle \right]\\
+        &= c_j\langle f_j, f_j\rangle + \lim_{k\to\infty} \sum_{n=1,n\neq j}^{k}c_n\langle f_j,f_n\rangle\\
+        &= c_j + \lim_{k\to\infty} \sum_{n=1,n\neq j}^{k} 0 &&\text{orthonormality of $(f_n)$}\\
+        &= c_j. 
+    \end{alignat*}
+    Therefore,
+    \[c_n = \langle f_n,f\rangle \qquad\text{for each }n\ge1,\]
+    as desired.
+    % It suffices to show given we define
+    % it then follows that
+    % \[c\]
+\end{proof}
+
+\subsection*{(b)}
+
+\begin{lemma} \label{lem:1}
+    Given an orthonormal set $\{ f_1,\cdots,f_N\}$ in a Hilbert space $H.$ It follows that any $g\in H$ can be decomposed into
+    \[g = g^1_\Vert + \cdots + g^N_\Vert + g_\perp\]
+    where $g^n_\Vert$ is the projection of $g$ onto $f_n$ and $g_\perp$ is orthogonal to each $g_\Vert^n.$ 
+\end{lemma}
+
+\begin{proof}
+    We prove this using induction. For the base case, when $N=1,$ it follows directly from definition that
+    \[g = g^1_\Vert + g_\perp,\]
+    where $g_\perp$ is orthogonal to $g_\Vert^1.$
+    
+    Now for the inductive hypothesis, let us assume the above claim holds when $N=k$ for some arbitrary $k\in\mathbb{N}.$
+    It then follows that for an orthonormal set of $N=k+1,$ we can decompose $g$ into
+    \[g = g^1_\Vert + \cdots + g^k_\Vert + g'_\perp,\]
+    s.t. $g'_\perp$ is orthogonal to each $g^n_\Vert$ for $n=1,\cdots,k.$
+    Now let us define $g_{\Vert}^\perp \coloneqq \langle f_{k+1},g'_\perp\rangle f_{k+1}$ i.e.~the projection of  $g'_\perp$ on $f_{k+1},$ and $g_\perp \coloneqq g'_\perp - g_\Vert^\perp.$
+    % \begin{align*}
+    %     g_{\Vert}^\perp &\coloneqq \langle f_{k+1},g'_\perp\rangle f_{k+1}\quad\text{i.e. the proj of  $g'_\perp$ on $f_{k+1}.$}\\
+    %     g_\perp &\coloneqq g'_\perp - g_\Vert^\perp
+    % \end{align*}
+    It thus follows that
+    \[g = g^1_\Vert + \cdots + g^k_\Vert + g_\Vert^\perp + g_\perp.\]
+    It thus suffices to show that $g_\Vert^\perp = g^{k+1}_\Vert$ and $g_\perp$ is orthogonal to $g_\Vert^n$ for $n=1,\cdots,k+1.$ For the first claim, we have that
+    \begin{alignat*}{2}
+        \langle f_{k+1}, g'_\perp \rangle &= \left\langle f_{k+1}, g - \sum_{n=1}^{k}g_\Vert^n \right\rangle &&\text{construction of $g'_\perp$}\\
+        &= \langle f_{k+1}, g\rangle - \sum_{n=1}^{k}\langle f_{k+1}, g_\Vert^n\rangle \quad&&\text{sesquilinearity}\\
+        &= \langle f_{k+1}, g\rangle. &&\text{orthogonality}
+    \end{alignat*}
+    Therefore
+    \[g_\Vert^\perp = \langle f_{k+1}, g'_\perp \rangle f_{k+1} = \langle f_{k+1}, g \rangle f_{k+1} = g_\Vert^{k+1} \]
+    as desired.
+
+    For the second  claim, we have that $g_\perp \coloneqq g'_\perp - g_\Vert^\perp$ is orthogonal to $f_\Vert^{k+1}$ by definition. For any $n\le k,$ we have that
+    \begin{alignat*}{2}
+        \langle g_\perp, f_n\rangle &= \langle g'_\perp - g_\Vert^\perp, f_n\rangle\\
+        &=  \langle g'_\perp , f_n\rangle -  \langle g_\Vert^\perp, f_n\rangle \quad&&\text{linearity}\\
+        &= 0. &&\text{IH and orthonormality}
+    \end{alignat*}
+    Thus, the second claim that $g_\perp$ is orthogonal to every $g_\Vert^n$ also holds.
+\end{proof}
+
+\noindent
+\textbf{We now prove the claim of this problem.}
+
+\begin{proof}
+    It suffices to minimize the square of the expression since the square function is increasing (for non-negative values). By lemma \ref{lem:1}, we have that
+    \begin{alignat*}{2}
+        \left\Vert g - \sum_{n=1}^{N}c_nf_n\right\Vert^2 &= \left\Vert g_\perp + \sum_{n=1}^{N} g^n_\Vert - c_nf_n\right\Vert^2\\
+        &= \left\Vert g_\perp + \sum_{n=2}^{N} g^n_\Vert - c_nf_n\right\Vert^2 + \Vert g_\Vert^1 - c_1f_1\Vert^2 \quad&&\text{Pythag. Thm\footnotemark}\\
+        &= \Vert g_\perp \Vert^2 + \sum_{n=1}^{k}\Vert g_\Vert^n-c_nf_n\Vert^2. &&\text{Pythag. Thm. many times}
+    \end{alignat*}
+    This is minimized when
+    \[c_nf_n = g_\Vert^n \qquad\text{for all $n\in N,$}\]
+    which is true when $c_n$ is the ``projection scalar'' $\langle f_n,g\rangle$ as desired.
+\end{proof}
+\footnotetext{Here is a quick proof for why these two vectors are orthogonal. As each $f_n$ is parallel to $g_\Vert^n,$thus $g_\Vert^n-c_nf_n$ is akin to multiplying $g_\Vert^n$ by some scalar $s_n$. It follows that $\left\langle g_\Vert^1 - c_1f_1, g_\perp + \sum_{n=2}^{N} g^n_\Vert - c_nf_n\right\rangle = \left\langle s_1g_\Vert^1, g_\perp + \sum_{n=2}^{N} s_ng^n_\Vert \right\rangle = s_1^*\langle g_\Vert^1, g_\perp\rangle + \sum_{n=2}^{N}s_1^*s_n\langle g_\Vert^1, g_\Vert^n\rangle = 0$, where the second equality holds by sesquilinearity and the third equality holds by orthogonality of $\{f_n\}$ and lemma \ref{lem:1}.}
+\section*{Exam Haiku}
+
+Observe, 1c was % 5
+
+just too hard, but all others % 7
+
+alright---or I think?!% 5
+
+\end{document}
