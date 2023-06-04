@@ -1,0 +1,142 @@
+---
+title: "Final Project"
+author: "Tony Qiang Thomas Zeng"
+date: "2023-05-30"
+output: pdf_document
+---
+
+**1** Basic simulation set-up
+
+```{r, message=FALSE}
+sim_CI <- function (y_m, alpha, n, seed_val=123) {
+  set.seed(seed_val)
+  qg025 <- qgamma(0.025, n, n) # Calculate gamma distribution 0.025 quantile 
+  qg975 <- qgamma(0.975, n, n) # Calculate gamma distribution 0.975 quantile 
+  qt975 <- qt(0.975, n-1) # Calculate t distribution 0.975 quantile
+  T = 1000 # number of trials to run
+  
+  # Initialize all of the interval boundaries
+  alpha_hatMLE <- numeric(T)
+  alpha_hatMOM <- numeric(T)
+  exact.lower <- numeric(T) 
+  exact.upper <- numeric(T)
+  CLT.lower <- numeric(T)
+  CLT.upper <- numeric(T)
+  bootMLE.lower <- numeric(T)
+  bootMLE.upper <- numeric(T)
+  bootMOM.lower <- numeric(T)
+  bootMOM.upper <- numeric(T)
+  
+  B <- 1000
+  # Initialize the interval boundaries for bootstrap
+  bootMLE <- numeric(B)
+  bootMOM <- numeric(B)
+  
+  for(k in 1:T){
+    X <- rexp(n, rate = alpha) # Exp(alpha) random variables
+    Y <- y_m * exp(X) # Pareto(y_m, alpha) random variables
+    alpha_hatMLE[k] <- 1/ mean(log(Y / y_m)) # MLE formula
+    alpha_hatMOM[k] <- mean(Y)/(mean(Y) - y_m) # MOM formula
+     
+    # based on exact MLE CI (part d)
+    exact.lower[k] <- alpha_hatMLE[k] * qg025
+    exact.upper[k] <- alpha_hatMLE[k] * qg975 
+    
+    # based on t distribution CI (part e)
+    CLT.lower[k] <- 1/(1/alpha_hatMLE[k] + qt975 * sd(X) / sqrt(n)) 
+    CLT.upper[k] <- 1/(1/alpha_hatMLE[k] - qt975 * sd(X) / sqrt(n)) 
+
+    # bootstraping the samples
+    for(b in 1:B){
+      Y_boot <- sample(Y, replace=TRUE)
+      bootMLE[b] <- 1/ mean(log(Y_boot / y_m))
+      bootMOM[b] <- mean(Y_boot)/(mean(Y_boot) - y_m)
+    }
+    
+    # based on the bootstrap percentile method applied to the MLE estimate
+    bootMLE.lower[k] = quantile(bootMLE, 0.025)
+    bootMLE.upper[k] = quantile(bootMLE, 0.975)
+
+    # based on the bootstrap percentile method applied to the MOM estimate
+    bootMOM.lower[k] = quantile(bootMOM, 0.025)
+    bootMOM.upper[k] = quantile(bootMOM, 0.975)
+  }
+  
+  writeLines(sprintf('For y_m=%.2f, alpha=%.2f, n=%i\n', y_m, alpha, n))
+  
+  rmse_MLE <- sqrt(mean((alpha_hatMLE - alpha)^2))
+  rmse_MOM <- sqrt(mean((alpha_hatMOM - alpha)^2))
+  
+  writeLines(sprintf('rmse for MLE is %.3f \nrmse for MOM is %.3f\n', rmse_MLE, rmse_MOM))
+  
+  coverage_exact <- mean((alpha >= exact.lower) & (alpha <= exact.upper)) # compute for each CI
+  coverage_CLT <- mean((alpha >= CLT.lower) & (alpha <= CLT.upper)) 
+  coverage_MLE <- mean((alpha >= bootMLE.lower) & (alpha <= bootMLE.upper))
+  coverage_MOM <- mean((alpha >= bootMOM.lower) & (alpha <= bootMOM.upper))
+  
+  writeLines(sprintf('coverage for ex. is %.3f\ncoverage for CLT is %.3f\ncoverage for MLE is %.3f\ncoverage for MOM is %.3f\n', 
+          coverage_exact, coverage_CLT, coverage_MLE, coverage_MOM))
+  
+  width_exact <- mean(exact.upper - exact.lower)
+  width_CLT <- mean(CLT.upper - CLT.lower)
+  width_MLE <- mean(bootMLE.upper - bootMLE.lower)
+  width_MOM <-  mean(bootMOM.upper - bootMOM.lower)
+  
+  writeLines(sprintf('mean interval width for ex. is %.3f\nmean interval width for CLT is %.3f\nmean interval width for MLE is %.3f\nmean interval width for ex. is %.3f', width_exact, width_CLT, width_MLE,width_MOM))
+}
+```
+
+**2** Run the simulation
+
+```{r}
+sim_CI(y_m=8, alpha=2, n=10)
+sim_CI(y_m=8, alpha=2, n=127)
+sim_CI(y_m=8, alpha=0.2, n=127)
+sim_CI(y_m=8, alpha=0.5, n=127)
+sim_CI(y_m=8, alpha=20, n=127)
+sim_CI(y_m=8, alpha=50, n=127)
+sim_CI(y_m=8, alpha=2, n=5)
+sim_CI(y_m=8, alpha=2, n=20)
+sim_CI(y_m=8, alpha=2, n=50)
+sim_CI(y_m=8, alpha=2, n=500)
+sim_CI(y_m=8, alpha=0.5, n=20, seed_val = 69897)
+
+```
+
+**3** Estimation of earthquake magnitude distribution
+
+```{r, message=FALSE}
+earthquakes <- read.csv('https://people.carleton.edu/~apoppick/ClassData/earthquakes_8greater.csv', header = TRUE)
+head(earthquakes)
+mag <- earthquakes$Mag
+mag_min <- 8
+
+n_quakes <- nrow(earthquakes)
+
+qge025 <- qgamma(0.025,n_quakes, n_quakes)
+qge975 <- qgamma(0.975,n_quakes, n_quakes)
+alphaMLE <- 1/ mean(log(mag / mag_min))
+
+exact.lower <- alphaMLE * qge025
+exact.upper <- alphaMLE * qge975 # based on exact MLE CI (part d)
+
+writeLines(sprintf('MLE point estimate for alpha is %.3f\nwith exact 95%%-CI of (%.3f,%.3f)', alphaMLE, exact.lower, exact.upper))
+```
+
+**4** Calculate expected numbr of earthquakes greater than magnitude 9 in given year
+
+```{r}
+e_g8 <- n_quakes/(2023 - 1900 + 1) # expected earthquakes of magnitude greater than 8
+
+e_g9 <- e_g8 * (8/9)^alphaMLE
+e_g9.lower <- e_g8 * (8/9)^exact.upper
+e_g9.upper <- e_g8 * (8/9)^exact.lower
+
+writeLines(sprintf('point estimate for expected earthquakes of mag. greater than 9 is %.3f\nwith exact 95%%-CI of (%.3f,%.3f)', e_g9, e_g9.lower, e_g9.upper))
+
+
+library(EnvStats)
+hist(mag, xlab = 'Magnitude of Earthquake',
+main = 'Earthquakes of Magnitude >8 from years 1900 to 2023', freq=FALSE)
+curve(dpareto(x, location = mag_min, shape = alphaMLE), add = TRUE)
+```
